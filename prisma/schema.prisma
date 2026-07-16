@@ -1,0 +1,395 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// JK RAFFLE ECOSYSTEM - Production Schema
+// ============================================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String?
+  phone         String?
+  firstName     String
+  lastName      String
+  avatar        String?
+  occupation    String?
+  biography     String?
+  role          String    @default("member") // super_admin, admin, branch_manager, member, support, auditor
+  status        String    @default("active") // active, suspended, deactivated, pending
+  branchId      String?
+  twoFactorEnabled Boolean @default(false)
+  twoFactorSecret  String?
+  lastLoginAt   DateTime?
+  emailVerified Boolean  @default(false)
+  phoneVerified Boolean  @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  branch        Branch?   @relation(fields: [branchId], references: [id])
+  managedBranch Branch?   @relation("BranchManager")
+  tickets       Ticket[]
+  orders        Order[]
+  payments      Payment[]
+  notifications Notification[]
+  activityLogs  ActivityLog[]
+  supportTickets SupportTicket[]
+  auditLogs    AuditLog[] @relation("AuditCreator")
+  sessions     Session[]
+  memberPreferences MemberPreference?
+  wonCampaigns Campaign[]  @relation("CampaignWinner")
+
+  @@index([branchId])
+  @@index([role])
+  @@index([status])
+  @@index([email])
+}
+
+model Branch {
+  id          String    @id @default(cuid())
+  name        String
+  code        String    @unique // e.g. "JHB", "CPT", "DBN"
+  province    String?
+  city        String?
+  address     String?
+  phone       String?
+  email       String?
+  managerId   String?   @unique
+  status      String    @default("active")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  manager     User?     @relation("BranchManager", fields: [managerId], references: [id])
+  members     User[]
+  campaigns   Campaign[]
+  events      Event[]
+
+  @@index([managerId])
+  @@index([status])
+  @@index([code])
+}
+
+model Product {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  category    String    // house, vehicle, electronics, cash, vacation, other
+  value       Float     // prize value in ZAR
+  image       String?
+  images      String?   // JSON array of image URLs
+  videoUrl    String?
+  specs       String?   // JSON object with product specifications
+  status      String    @default("active") // active, archived, draft
+  featured    Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  campaigns   Campaign[]
+
+  @@index([category])
+  @@index([status])
+  @@index([featured])
+}
+
+model Campaign {
+  id              String    @id @default(cuid())
+  title           String
+  description     String?
+  productId       String
+  branchId        String
+  status          String    @default("draft") // draft, open, paused, closed, archived, completed
+  ticketPrice     Float
+  maxTickets      Int
+  soldTickets     Int       @default(0)
+  drawDate        DateTime
+  drawLocation    String?
+  terms           String?
+  featuredImage   String?
+  galleryImages   String?   // JSON array
+  videoUrl        String?
+  winnerId        String?
+  winningTicketId String? @unique
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  closedAt        DateTime?
+  drawnAt         DateTime?
+
+  product     Product  @relation(fields: [productId], references: [id])
+  branch      Branch   @relation(fields: [branchId], references: [id])
+  tickets     Ticket[]
+  orders      Order[]
+  winner      User?    @relation("CampaignWinner", fields: [winnerId], references: [id])
+  winningTicket Ticket? @relation("WinningTicket", fields: [winningTicketId], references: [id])
+  events      Event[]
+
+  @@index([productId])
+  @@index([branchId])
+  @@index([status])
+  @@index([drawDate])
+  @@index([winnerId])
+}
+
+model Ticket {
+  id            String    @id @default(cuid())
+  reference     String    @unique // JKR-AAA-123
+  campaignId    String
+  userId        String
+  orderId       String?
+  status        String    @default("active") // active, expired, won, claimed, voided
+  qrCode        String?   // base64 encoded QR
+  barcode       String?   // base64 encoded barcode
+  verifiedAt    DateTime?
+  verifiedBy    String?
+  purchasedAt   DateTime  @default(now())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  campaign     Campaign  @relation(fields: [campaignId], references: [id])
+  user         User      @relation(fields: [userId], references: [id])
+  order        Order?    @relation(fields: [orderId], references: [id])
+  verification TicketVerification[]
+  wonCampaign  Campaign? @relation("WinningTicket")
+
+  @@index([campaignId])
+  @@index([userId])
+  @@index([status])
+  @@index([reference])
+  @@index([orderId])
+}
+
+model Order {
+  id            String    @id @default(cuid())
+  userId        String
+  campaignId    String
+  ticketCount   Int
+  totalAmount   Float
+  status        String    @default("pending") // pending, paid, failed, refunded, cancelled
+  paymentMethod String?   // payfast, stripe, ozow, manual
+  paymentRef    String?
+  paidAt        DateTime?
+  refundedAt    DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  user         User      @relation(fields: [userId], references: [id])
+  campaign     Campaign  @relation(fields: [campaignId], references: [id])
+  tickets      Ticket[]
+  payment      Payment?
+
+  @@index([userId])
+  @@index([campaignId])
+  @@index([status])
+}
+
+model Payment {
+  id              String    @id @default(cuid())
+  orderId         String    @unique
+  userId          String
+  amount          Float
+  method          String    // payfast, stripe, ozow, manual
+  status          String    @default("pending") // pending, completed, failed, refunded
+  gatewayRef      String?   // reference from payment gateway
+  gatewayResponse String?   // JSON response from gateway
+  paidAt          DateTime?
+  refundedAt      DateTime?
+  refundReason    String?
+  invoiceUrl      String?
+  receiptUrl      String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  order       Order @relation(fields: [orderId], references: [id])
+  user        User  @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@index([method])
+  @@index([paidAt])
+}
+
+model TicketVerification {
+  id            String    @id @default(cuid())
+  ticketId      String
+  verifiedBy    String?
+  method        String    // qr, barcode, manual
+  location      String?
+  ipAddress     String?
+  createdAt     DateTime  @default(now())
+
+  ticket       Ticket @relation(fields: [ticketId], references: [id])
+  @@index([ticketId])
+}
+
+model Event {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  type        String    // draw, branch_event, community, promotional
+  date        DateTime
+  endDate     DateTime?
+  location    String?
+  campaignId  String?
+  branchId    String?
+  status      String    @default("upcoming") // upcoming, ongoing, completed, cancelled
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  campaign    Campaign? @relation(fields: [campaignId], references: [id])
+  branch      Branch?  @relation(fields: [branchId], references: [id])
+
+  @@index([type])
+  @@index([date])
+  @@index([branchId])
+  @@index([campaignId])
+}
+
+model Notification {
+  id          String    @id @default(cuid())
+  userId      String
+  type        String    // in_app, whatsapp, sms, email, push
+  title       String
+  message     String
+  data        String?   // JSON payload
+  status      String    @default("unread") // read, unread, delivered, failed
+  channel     String    // in_app, whatsapp, sms, email, push
+  deliveryLog String?   // JSON delivery log
+  sentAt      DateTime  @default(now())
+  readAt      DateTime?
+  createdAt   DateTime  @default(now())
+
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@index([channel])
+  @@index([sentAt])
+}
+
+model ActivityLog {
+  id          String    @id @default(cuid())
+  userId      String
+  action      String
+  entity      String?
+  entityId    String?
+  details     String?   // JSON
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime  @default(now())
+
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
+
+model AuditLog {
+  id          String    @id @default(cuid())
+  userId      String
+  action      String
+  entity      String
+  entityId    String?
+  oldValue    String?   // JSON
+  newValue    String?   // JSON
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime  @default(now())
+
+  user        User      @relation("AuditCreator", fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([action])
+  @@index([entity])
+  @@index([createdAt])
+}
+
+model SupportTicket {
+  id          String    @id @default(cuid())
+  userId      String
+  subject     String
+  description String
+  status      String    @default("open") // open, in_progress, resolved, closed
+  priority    String    @default("medium") // low, medium, high, urgent
+  category    String    // billing, technical, general, complaint
+  assignedTo  String?
+  resolution  String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  resolvedAt  DateTime?
+
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@index([priority])
+  @@index([assignedTo])
+}
+
+model Session {
+  id          String    @id @default(cuid())
+  userId      String
+  token       String
+  ipAddress   String?
+  userAgent   String?
+  expiresAt   DateTime
+  createdAt   DateTime  @default(now())
+
+  user        User      @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([token])
+  @@index([expiresAt])
+}
+
+model MemberPreference {
+  id                   String  @id @default(cuid())
+  userId               String  @unique
+  notificationsInApp   Boolean @default(true)
+  notificationsWhatsApp Boolean @default(true)
+  notificationsSMS     Boolean @default(false)
+  notificationsEmail   Boolean @default(true)
+  notificationsPush    Boolean @default(false)
+  marketingConsent     Boolean @default(false)
+  language             String  @default("en")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  user                 User    @relation(fields: [userId], references: [id])
+}
+
+model Setting {
+  id          String    @id @default(cuid())
+  key         String    @unique
+  value       String    // JSON string for complex values
+  category    String    // branding, email, whatsapp, sms, security, general
+  description String?
+  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime  @default(now())
+
+  @@index([category])
+  @@index([key])
+}
+
+model MediaLibrary {
+  id          String    @id @default(cuid())
+  fileName    String
+  fileType    String    // image, video, document
+  mimeType    String
+  size        Int       // bytes
+  url         String
+  thumbnailUrl String?
+  alt         String?
+  folder      String?
+  uploadedBy  String?
+  createdAt   DateTime  @default(now())
+
+  @@index([fileType])
+  @@index([folder])
+  @@index([uploadedBy])
+}

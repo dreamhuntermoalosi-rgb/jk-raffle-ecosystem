@@ -3,69 +3,87 @@
 @plugin "tailwindcss-animate";
 
 /* ============================================
-   JK RAFFLE ECOSYSTEM - Theme System
-   Tailwind CSS v4 compatible
-   Luxurious Gold-Primary Palette
+   JK RAFFLE ECOSYSTEM — Royal Edition
+   Design System: Premium Luxury Financial Platform
+   Tailwind CSS v4
    ============================================ */
 
 @theme {
-  /* Brand Colors */
-  --color-forest-50: #f0fdf4;
-  --color-forest-100: #dcfce7;
-  --color-forest-200: #bbf7d0;
-  --color-forest-300: #86efac;
-  --color-forest-400: #4ade80;
-  --color-forest-500: #166534;
-  --color-forest-600: #14532d;
-  --color-forest-700: #0f3d21;
-  --color-forest-800: #0a2a16;
-  --color-forest-900: #061a0d;
+  /* === Brand Color Palette === */
+  /* Royal Maroon - Primary */
+  --color-maroon-50: #fdf2f4;
+  --color-maroon-100: #fce7eb;
+  --color-maroon-200: #f9d0d9;
+  --color-maroon-300: #f4a9b8;
+  --color-maroon-400: #ec7a94;
+  --color-maroon-500: #5B1322;
+  --color-maroon-600: #4A0F1B;
+  --color-maroon-700: #3D0C16;
+  --color-maroon-800: #2E0910;
+  --color-maroon-900: #1F060B;
+  --color-maroon-950: #130304;
 
-  --color-gold-50: #fffbeb;
-  --color-gold-100: #fef3c7;
-  --color-gold-200: #fde68a;
-  --color-gold-300: #fcd34d;
-  --color-gold-400: #d4a017;
-  --color-gold-500: #b8860b;
+  /* Royal Gold - Accent */
+  --color-gold-50: #fefbf0;
+  --color-gold-100: #fdf3d1;
+  --color-gold-200: #fbe5a0;
+  --color-gold-300: #f7d064;
+  --color-gold-400: #D4AF37;
+  --color-gold-500: #b8960b;
   --color-gold-600: #92400e;
+  --color-gold-700: #78350f;
 
-  /* shadcn/ui Semantic Colors - Light Mode (Gold Primary) */
-  --color-background: hsl(0 0% 100%);
-  --color-foreground: hsl(0 0% 5%);
-  --color-card: hsl(0 0% 100%);
-  --color-card-foreground: hsl(0 0% 5%);
-  --color-popover: hsl(0 0% 100%);
-  --color-popover-foreground: hsl(0 0% 5%);
-  --color-primary: hsl(43 76% 52%);
-  --color-primary-foreground: hsl(30 50% 10%);
-  --color-secondary: hsl(0 0% 96%);
-  --color-secondary-foreground: hsl(152 68% 20%);
-  --color-muted: hsl(0 0% 96%);
-  --color-muted-foreground: hsl(0 0% 45%);
-  --color-accent: hsl(152 68% 20%);
-  --color-accent-foreground: hsl(0 0% 98%);
-  --color-destructive: hsl(0 84% 60%);
-  --color-destructive-foreground: hsl(0 0% 98%);
-  --color-border: hsl(0 0% 90%);
-  --color-input: hsl(0 0% 90%);
-  --color-ring: hsl(43 76% 52%);
-  --color-chart-1: hsl(43 76% 52%);
-  --color-chart-2: hsl(152 68% 30%);
-  --color-chart-3: hsl(200 84% 50%);
-  --color-chart-4: hsl(280 65% 50%);
-  --color-chart-5: hsl(0 84% 60%);
+  /* Legacy forest alias → maps to maroon for backward compat */
+  --color-forest-50: #fdf2f4;
+  --color-forest-100: #fce7eb;
+  --color-forest-200: #f9d0d9;
+  --color-forest-300: #f4a9b8;
+  --color-forest-400: #ec7a94;
+  --color-forest-500: #5B1322;
+  --color-forest-600: #4A0F1B;
+  --color-forest-700: #3D0C16;
+  --color-forest-800: #2E0910;
+  --color-forest-900: #1F060B;
+  --color-forest-950: #130304;
 
-  /* Typography */
+  /* === shadcn/ui Semantic Colors — Light Mode === */
+  --color-background: #FAF9F7;
+  --color-foreground: #222222;
+  --color-card: #FFFFFF;
+  --color-card-foreground: #222222;
+  --color-popover: #FFFFFF;
+  --color-popover-foreground: #222222;
+  --color-primary: #5B1322;
+  --color-primary-foreground: #FFFFFF;
+  --color-secondary: #F4F4F2;
+  --color-secondary-foreground: #5B1322;
+  --color-muted: #F4F4F2;
+  --color-muted-foreground: #6B6B6B;
+  --color-accent: #5B1322;
+  --color-accent-foreground: #FFFFFF;
+  --color-destructive: #DC2626;
+  --color-destructive-foreground: #FFFFFF;
+  --color-border: #E8E6E1;
+  --color-input: #E8E6E1;
+  --color-ring: #5B1322;
+  --color-chart-1: #5B1322;
+  --color-chart-2: #D4AF37;
+  --color-chart-3: #8B4513;
+  --color-chart-4: #2D5016;
+  --color-chart-5: #DC2626;
+
+  /* === Typography === */
   --font-sans: "Inter", "Geist", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;
-  
-  /* Border Radius */
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
-  --radius-xl: 1.25rem;
 
-  /* Animations */
+  /* === Border Radius — Premium, Less Rounded === */
+  --radius-sm: 0.375rem;   /* 6px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-2xl: 1.25rem;   /* 20px */
+
+  /* === Animations === */
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
 }
@@ -79,34 +97,49 @@
   to { height: 0; }
 }
 
-/* Dark Mode Override */
+/* === Dark Mode Override — Charcoal + Maroon + Gold === */
 .dark {
-  --color-background: hsl(152 30% 5%);
-  --color-foreground: hsl(0 0% 98%);
-  --color-card: hsl(152 20% 8%);
-  --color-card-foreground: hsl(0 0% 98%);
-  --color-popover: hsl(152 20% 8%);
-  --color-popover-foreground: hsl(0 0% 98%);
-  --color-primary: hsl(43 76% 62%);
-  --color-primary-foreground: hsl(30 50% 10%);
-  --color-secondary: hsl(152 15% 14%);
-  --color-secondary-foreground: hsl(0 0% 98%);
-  --color-muted: hsl(152 15% 14%);
-  --color-muted-foreground: hsl(0 0% 64%);
-  --color-accent: hsl(152 68% 35%);
-  --color-accent-foreground: hsl(0 0% 98%);
-  --color-destructive: hsl(0 84% 50%);
-  --color-destructive-foreground: hsl(0 0% 98%);
-  --color-border: hsl(152 15% 18%);
-  --color-input: hsl(152 15% 18%);
-  --color-ring: hsl(43 76% 62%);
-  --color-chart-1: hsl(43 76% 62%);
-  --color-chart-2: hsl(152 68% 45%);
-  --color-chart-3: hsl(200 84% 60%);
-  --color-chart-4: hsl(280 65% 60%);
-  --color-chart-5: hsl(0 84% 60%);
+  --color-background: #111111;
+  --color-foreground: #F0EDE8;
+  --color-card: #1A1A1A;
+  --color-card-foreground: #F0EDE8;
+  --color-popover: #1A1A1A;
+  --color-popover-foreground: #F0EDE8;
+  --color-primary: #7A1D30;
+  --color-primary-foreground: #FFFFFF;
+  --color-secondary: #252525;
+  --color-secondary-foreground: #F0EDE8;
+  --color-muted: #252525;
+  --color-muted-foreground: #8A8A8A;
+  --color-accent: #7A1D30;
+  --color-accent-foreground: #FFFFFF;
+  --color-destructive: #EF4444;
+  --color-destructive-foreground: #FFFFFF;
+  --color-border: #2A2A2A;
+  --color-input: #2A2A2A;
+  --color-ring: #D4AF37;
+  --color-chart-1: #7A1D30;
+  --color-chart-2: #D4AF37;
+  --color-chart-3: #A0522D;
+  --color-chart-4: #4A7C3F;
+  --color-chart-5: #EF4444;
+
+  --color-maroon-50: #1F060B;
+  --color-maroon-100: #2E0910;
+  --color-maroon-200: #3D0C16;
+  --color-maroon-300: #4A0F1B;
+  --color-maroon-400: #5B1322;
+  --color-maroon-500: #7A1D30;
+  --color-maroon-600: #943244;
+  --color-maroon-700: #A84058;
+  --color-maroon-800: #C06078;
+  --color-maroon-900: #D48898;
+  --color-maroon-950: #F4A9B8;
 }
 
+/* ============================================
+   Base Layer
+   ============================================ */
 @layer base {
   * {
     @apply border-border;
@@ -120,16 +153,16 @@
 }
 
 /* ============================================
-   Custom Scrollbar
+   Custom Scrollbar — Refined
    ============================================ */
 @layer utilities {
   .scrollbar-thin {
     scrollbar-width: thin;
-    scrollbar-color: hsl(var(--border)) transparent;
+    scrollbar-color: var(--color-border) transparent;
   }
   .scrollbar-thin::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
   }
   .scrollbar-thin::-webkit-scrollbar-track {
     background: transparent;
@@ -142,44 +175,56 @@
     background-color: var(--color-muted-foreground);
   }
 
-  /* Glassmorphism */
+  /* ============================================
+     Glassmorphism — Refined for Royal Theme
+     ============================================ */
   .glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(250, 249, 247, 0.82);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(91, 19, 34, 0.06);
   }
   .dark .glass {
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(17, 17, 17, 0.85);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
   .glass-card {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04);
   }
   .dark .glass-card {
-    background: rgba(212, 175, 55, 0.1);
-    border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+    background: rgba(26, 26, 26, 0.85);
+    border: 1px solid color-mix(in srgb, var(--color-border) 60%, transparent);
   }
-  
-  /* Gradient text - Gold tones */
+
+  /* ============================================
+     Gradient Text — Royal Maroon + Gold
+     ============================================ */
   .gradient-text {
-    background: linear-gradient(to right, var(--color-gold-500), var(--color-gold-300));
+    background: linear-gradient(135deg, var(--color-maroon-500), var(--color-gold-400));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .gradient-gold {
-    background: linear-gradient(to right, var(--color-gold-500), var(--color-gold-300));
+    background: linear-gradient(135deg, var(--color-gold-500), var(--color-gold-300));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gradient-maroon {
+    background: linear-gradient(135deg, var(--color-maroon-700), var(--color-maroon-500));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Animated gradient border - Gold to green */
+  /* ============================================
+     Gradient Border — Maroon to Gold
+     ============================================ */
   .gradient-border {
     position: relative;
   }
@@ -189,49 +234,57 @@
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    background: linear-gradient(135deg, var(--color-maroon-500), var(--color-gold-400));
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     -webkit-mask-composite: xor;
     pointer-events: none;
   }
 
-  /* Premium card hover - Gold tinted */
+  /* ============================================
+     Premium Card Hover — Subtle Elevation
+     ============================================ */
   .card-hover {
-    transition: all 0.3s ease-out;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .card-hover:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px -8px rgba(91, 19, 34, 0.12), 0 4px 12px -2px rgba(91, 19, 34, 0.06);
   }
   .dark .card-hover:hover {
-    box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.25);
+    box-shadow: 0 12px 40px -8px rgba(212, 175, 55, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.3);
   }
 
-  /* Smooth page transitions */
+  /* ============================================
+     Page Transitions
+     ============================================ */
   .page-enter {
-    animation: pageEnter 0.3s ease-out;
+    animation: pageEnter 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
   @keyframes pageEnter {
-    from { opacity: 0; transform: translateY(8px); }
+    from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Pulse glow - Gold */
+  /* ============================================
+     Pulse Glow — Gold, Subtle
+     ============================================ */
   .pulse-glow {
-    animation: pulseGlow 2s ease-in-out infinite;
+    animation: pulseGlow 2.5s ease-in-out infinite;
   }
   @keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.25); }
-    50% { box-shadow: 0 0 20px 4px rgba(212, 175, 55, 0.15); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.2); }
+    50% { box-shadow: 0 0 24px 4px rgba(212, 175, 55, 0.1); }
   }
 
-  /* Shimmer effect */
+  /* ============================================
+     Shimmer Effect
+     ============================================ */
   .shimmer {
     background: linear-gradient(
       90deg,
       var(--color-muted) 25%,
-      color-mix(in srgb, var(--color-muted-foreground) 8%, transparent) 50%,
+      color-mix(in srgb, var(--color-muted-foreground) 6%, transparent) 50%,
       var(--color-muted) 75%
     );
     background-size: 200% 100%;
@@ -242,9 +295,11 @@
     100% { background-position: -200% 0; }
   }
 
-  /* Entrance animations */
+  /* ============================================
+     Entrance Animations — Refined Timing
+     ============================================ */
   .animate-fade-in {
-    animation: fadeIn 0.4s ease-out;
+    animation: fadeIn 0.5s ease-out;
   }
   @keyframes fadeIn {
     from { opacity: 0; }
@@ -252,75 +307,174 @@
   }
 
   .animate-slide-up {
-    animation: slideUp 0.5s ease-out;
+    animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
   @keyframes slideUp {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
   .animate-scale-in {
-    animation: scaleIn 0.3s ease-out;
+    animation: scaleIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
   @keyframes scaleIn {
-    from { opacity: 0; transform: scale(0.95); }
+    from { opacity: 0; transform: scale(0.97); }
     to { opacity: 1; transform: scale(1); }
   }
 
-  /* Green gradient border */
-  .gradient-border-green {
-    position: relative;
+  /* Float animation for hero card */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
   }
-  .gradient-border-green::before {
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* Parallax-ready subtle background shift */
+  .animate-parallax-slow {
+    animation: parallaxSlow 20s linear infinite;
+  }
+  @keyframes parallaxSlow {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 100%; }
+  }
+
+  /* ============================================
+     Hover Effects — Premium
+     ============================================ */
+  .hover-lift {
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px -6px rgba(91, 19, 34, 0.12);
+  }
+
+  .hover-glow {
+    transition: box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .hover-glow:hover {
+    box-shadow: 0 0 24px rgba(212, 175, 55, 0.15);
+  }
+
+  /* Button premium hover */
+  .btn-premium {
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-premium::after {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(135deg, var(--color-forest-500), var(--color-forest-300));
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    -webkit-mask-composite: xor;
-    pointer-events: none;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .btn-premium:hover::after {
+    opacity: 1;
   }
 
-  /* Text balance utility */
+  /* ============================================
+     Text Balance
+     ============================================ */
   .text-balance {
     text-wrap: balance;
   }
 
-  /* Hover lift effect - Gold tinted */
-  .hover-lift {
-    transition: transform 0.2s, box-shadow 0.2s;
+  /* ============================================
+     Shadow System — Elegant Elevation
+     ============================================ */
+  .shadow-royal-sm {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04);
   }
-  .hover-lift:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px -5px rgba(212, 175, 55, 0.2);
+  .shadow-royal-md {
+    box-shadow: 0 4px 16px -4px rgb(0 0 0 / 0.06), 0 2px 4px -2px rgb(0 0 0 / 0.04);
+  }
+  .shadow-royal-lg {
+    box-shadow: 0 8px 32px -8px rgb(0 0 0 / 0.08), 0 4px 8px -4px rgb(0 0 0 / 0.04);
+  }
+  .shadow-royal-xl {
+    box-shadow: 0 16px 48px -12px rgb(0 0 0 / 0.1), 0 4px 12px -4px rgb(0 0 0 / 0.04);
+  }
+  .dark .shadow-royal-sm {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.2), 0 1px 2px -1px rgb(0 0 0 / 0.15);
+  }
+  .dark .shadow-royal-md {
+    box-shadow: 0 4px 16px -4px rgb(0 0 0 / 0.25), 0 2px 4px -2px rgb(0 0 0 / 0.15);
+  }
+  .dark .shadow-royal-lg {
+    box-shadow: 0 8px 32px -8px rgb(0 0 0 / 0.3), 0 4px 8px -4px rgb(0 0 0 / 0.15);
+  }
+  .dark .shadow-royal-xl {
+    box-shadow: 0 16px 48px -12px rgb(0 0 0 / 0.35), 0 4px 12px -4px rgb(0 0 0 / 0.15);
   }
 
-  /* Hover glow effect - Gold */
-  .hover-glow {
-    transition: box-shadow 0.3s;
+  /* Gold accent shadow */
+  .shadow-gold-sm {
+    box-shadow: 0 1px 8px -2px rgba(212, 175, 55, 0.15);
   }
-  .hover-glow:hover {
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
+  .shadow-gold-md {
+    box-shadow: 0 4px 16px -4px rgba(212, 175, 55, 0.2);
+  }
+
+  /* ============================================
+     Premium Section Divider
+     ============================================ */
+  .divider-gold {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-gold-400), transparent);
+    opacity: 0.4;
+  }
+
+  /* ============================================
+     Premium Progress Bar Override
+     ============================================ */
+  .progress-royal {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--color-muted);
+    overflow: hidden;
+  }
+  .progress-royal > div {
+    background: linear-gradient(90deg, var(--color-maroon-500), var(--color-gold-400));
+    border-radius: 3px;
+    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
 }
 
 /* ============================================
-   Premium Typography
+   Premium Typography System
    ============================================ */
 h1, h2, h3, h4, h5, h6 {
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.15;
+  color: var(--color-foreground);
+}
+h1 { font-weight: 700; letter-spacing: -0.03em; }
+h2 { font-weight: 700; }
+
+/* ============================================
+   Focus Styles — Refined
+   ============================================ */
+:focus-visible {
+  outline: 2px solid var(--color-maroon-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.dark :focus-visible {
+  outline-color: var(--color-gold-400);
 }
 
 /* ============================================
-   Focus Styles
+   Selection Color
    ============================================ */
-:focus-visible {
-  outline: 2px solid var(--color-ring);
-  outline-offset: 2px;
-  border-radius: 4px;
+::selection {
+  background: rgba(91, 19, 34, 0.15);
+  color: inherit;
+}
+.dark ::selection {
+  background: rgba(212, 175, 55, 0.2);
 }

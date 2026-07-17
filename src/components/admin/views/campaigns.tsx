@@ -66,7 +66,6 @@ const statusFilters: { value: string; label: string }[] = [
   { value: 'draft', label: 'Draft' },
 ];
 
-// Extra campaigns to reach 20
 const extraCampaigns: Campaign[] = [
   {
     id: 'camp-19', title: 'Stellenbosch Wine Estate Raffle', description: 'Win a share in a luxury wine estate experience.', productId: 'prod-vac-3', product: mockProducts[13], branchId: 'branch-stl', branch: mockBranches[13], status: 'draft', ticketPrice: 150, maxTickets: 2000, soldTickets: 0, drawDate: '2025-10-15T18:00:00Z', createdAt: '2025-06-10T10:00:00Z', progress: 0,
@@ -120,12 +119,12 @@ export function AdminCampaigns() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Campaigns</h1>
-          <p className="text-sm text-slate-500 mt-1">{allCampaigns.length} total campaigns · {openCount} open</p>
+          <h1 className="text-2xl font-bold text-foreground tracking-tight">Campaigns</h1>
+          <p className="text-sm text-muted-foreground mt-1">{allCampaigns.length} total campaigns · {openCount} open</p>
         </div>
         <Dialog open={createOpen} onOpenChange={setCreateOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-[hsl(152,68%,35%)] hover:bg-[hsl(152,68%,30%)] text-white">
+            <Button className="bg-maroon-500 hover:bg-maroon-600 text-white rounded-[10px]">
               <Plus className="w-4 h-4 mr-2" />
               Create Campaign
             </Button>
@@ -137,13 +136,13 @@ export function AdminCampaigns() {
             <div className="space-y-4 py-2">
               <div className="space-y-2">
                 <Label htmlFor="camp-title">Campaign Title</Label>
-                <Input id="camp-title" placeholder="e.g. Luxury Villa Raffle" />
+                <Input id="camp-title" placeholder="e.g. Luxury Villa Raffle" className="rounded-lg" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Product</Label>
                   <Select>
-                    <SelectTrigger><SelectValue placeholder="Select product" /></SelectTrigger>
+                    <SelectTrigger className="rounded-lg"><SelectValue placeholder="Select product" /></SelectTrigger>
                     <SelectContent>
                       {mockProducts.map(p => (
                         <SelectItem key={p.id} value={p.id}>
@@ -156,7 +155,7 @@ export function AdminCampaigns() {
                 <div className="space-y-2">
                   <Label>Branch</Label>
                   <Select>
-                    <SelectTrigger><SelectValue placeholder="Select branch" /></SelectTrigger>
+                    <SelectTrigger className="rounded-lg"><SelectValue placeholder="Select branch" /></SelectTrigger>
                     <SelectContent>
                       {mockBranches.map(b => (
                         <SelectItem key={b.id} value={b.id}>{b.name}</SelectItem>
@@ -168,31 +167,31 @@ export function AdminCampaigns() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="camp-price">Ticket Price (ZAR)</Label>
-                  <Input id="camp-price" type="number" placeholder="100" />
+                  <Input id="camp-price" type="number" placeholder="100" className="rounded-lg" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="camp-max">Max Tickets</Label>
-                  <Input id="camp-max" type="number" placeholder="5000" />
+                  <Input id="camp-max" type="number" placeholder="5000" className="rounded-lg" />
                 </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="camp-date">Draw Date</Label>
-                <Input id="camp-date" type="date" />
+                <Input id="camp-date" type="date" className="rounded-lg" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="camp-desc">Description</Label>
-                <Textarea id="camp-desc" placeholder="Describe the campaign..." rows={3} />
+                <Textarea id="camp-desc" placeholder="Describe the campaign..." rows={3} className="rounded-lg" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="camp-terms">Terms & Conditions</Label>
-                <Textarea id="camp-terms" placeholder="Enter terms and conditions..." rows={3} />
+                <Textarea id="camp-terms" placeholder="Enter terms and conditions..." rows={3} className="rounded-lg" />
               </div>
             </div>
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline" className="rounded-[10px]">Cancel</Button>
               </DialogClose>
-              <Button className="bg-[hsl(152,68%,35%)] hover:bg-[hsl(152,68%,30%)] text-white" onClick={() => { toast.success('Campaign created successfully!'); setCreateOpen(false); }}>
+              <Button className="bg-maroon-500 hover:bg-maroon-600 text-white rounded-[10px]" onClick={() => { toast.success('Campaign created successfully!'); setCreateOpen(false); }}>
                 Create Campaign
               </Button>
             </DialogFooter>
@@ -204,17 +203,17 @@ export function AdminCampaigns() {
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
               placeholder="Search campaigns..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9"
+              className="pl-9 rounded-lg"
             />
           </div>
           <Select value={branchFilter} onValueChange={setBranchFilter}>
-            <SelectTrigger className="w-full sm:w-48">
-              <Filter className="w-4 h-4 mr-2 text-slate-400" />
+            <SelectTrigger className="w-full sm:w-48 rounded-lg">
+              <Filter className="w-4 h-4 mr-2 text-muted-foreground" />
               <SelectValue placeholder="All Branches" />
             </SelectTrigger>
             <SelectContent>
@@ -227,7 +226,7 @@ export function AdminCampaigns() {
         </div>
 
         <Tabs value={statusFilter} onValueChange={setStatusFilter}>
-          <TabsList className="bg-slate-100">
+          <TabsList className="bg-muted">
             {statusFilters.map((f) => (
               <TabsTrigger key={f.value} value={f.value} className="text-xs sm:text-sm">
                 {f.label}
@@ -238,51 +237,51 @@ export function AdminCampaigns() {
       </div>
 
       {/* Campaigns Table */}
-      <Card>
+      <Card className="shadow-royal-sm rounded-xl border-0 overflow-hidden">
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead className="text-xs">Campaign</TableHead>
-                  <TableHead className="text-xs">Product</TableHead>
-                  <TableHead className="text-xs">Branch</TableHead>
-                  <TableHead className="text-xs text-right">Price</TableHead>
-                  <TableHead className="text-xs">Progress</TableHead>
-                  <TableHead className="text-xs">Status</TableHead>
-                  <TableHead className="text-xs">Draw Date</TableHead>
-                  <TableHead className="text-xs text-right">Actions</TableHead>
+                <TableRow className="hover:bg-transparent bg-muted/50">
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Campaign</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Product</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Branch</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider text-right">Price</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Progress</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Draw Date</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filtered.map((c) => (
-                  <TableRow key={c.id} className="hover:bg-slate-50">
-                    <TableCell className="text-sm font-medium text-slate-900 max-w-[180px] truncate">
+                  <TableRow key={c.id} className="hover:bg-maroon-50/30 transition-colors">
+                    <TableCell className="text-sm font-medium text-foreground max-w-[180px] truncate py-3.5">
                       {c.title}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="py-3.5">
                       <div className="flex items-center gap-1.5">
                         <span className="text-sm">{getCategoryIcon(c.product.category)}</span>
-                        <span className="text-xs text-slate-600 max-w-[120px] truncate">{c.product.name}</span>
+                        <span className="text-xs text-muted-foreground max-w-[120px] truncate">{c.product.name}</span>
                       </div>
                     </TableCell>
-                    <TableCell className="text-xs text-slate-500">{c.branch.name}</TableCell>
-                    <TableCell className="text-sm text-right font-medium">{formatCurrency(c.ticketPrice)}</TableCell>
-                    <TableCell className="w-32">
+                    <TableCell className="text-xs text-muted-foreground py-3.5">{c.branch.name}</TableCell>
+                    <TableCell className="text-sm text-right font-medium py-3.5">{formatCurrency(c.ticketPrice)}</TableCell>
+                    <TableCell className="w-32 py-3.5">
                       <div className="flex items-center gap-2">
-                        <Progress value={c.progress || 0} className="h-1.5 flex-1" />
-                        <span className="text-[11px] text-slate-500 w-12 text-right">
+                        <Progress value={c.progress || 0} className="h-1.5 flex-1 [&>[data-slot=indicator]]:bg-maroon-500" />
+                        <span className="text-[11px] text-muted-foreground w-12 text-right">
                           {c.soldTickets}/{c.maxTickets}
                         </span>
                       </div>
                     </TableCell>
-                    <TableCell>
-                      <Badge variant="secondary" className={`text-[10px] ${getStatusColor(c.status)}`}>
+                    <TableCell className="py-3.5">
+                      <Badge variant="secondary" className={`text-[10px] rounded-md ${getStatusColor(c.status)}`}>
                         {c.status}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-xs text-slate-500">{formatDate(c.drawDate)}</TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-xs text-muted-foreground py-3.5">{formatDate(c.drawDate)}</TableCell>
+                    <TableCell className="text-right py-3.5">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -315,7 +314,7 @@ export function AdminCampaigns() {
                             </DropdownMenuItem>
                           )}
                           {c.status === 'open' && (
-                            <DropdownMenuItem onClick={() => handleAction('draw', c)} className="text-[hsl(43,96%,36%)]">
+                            <DropdownMenuItem onClick={() => handleAction('draw', c)} className="text-gold-600">
                               <Trophy className="w-4 h-4 mr-2" /> Draw Winner
                             </DropdownMenuItem>
                           )}
@@ -328,7 +327,7 @@ export function AdminCampaigns() {
             </Table>
           </div>
           {filtered.length === 0 && (
-            <div className="py-12 text-center text-sm text-slate-500">No campaigns match your filters.</div>
+            <div className="py-12 text-center text-sm text-muted-foreground">No campaigns match your filters.</div>
           )}
         </CardContent>
       </Card>
@@ -340,7 +339,7 @@ export function AdminCampaigns() {
             <>
               <DialogHeader>
                 <DialogTitle className="text-lg">{selectedCampaign.title}</DialogTitle>
-                <p className="text-sm text-slate-500">{selectedCampaign.branch.name}</p>
+                <p className="text-sm text-muted-foreground">{selectedCampaign.branch.name}</p>
               </DialogHeader>
               <Tabs defaultValue="overview">
                 <TabsList>
@@ -351,66 +350,66 @@ export function AdminCampaigns() {
                 </TabsList>
                 <TabsContent value="overview" className="space-y-4 mt-4">
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="p-3 rounded-lg bg-slate-50">
-                      <p className="text-xs text-slate-500">Product</p>
-                      <p className="text-sm font-medium">{selectedCampaign.product.name}</p>
+                    <div className="p-3 rounded-xl bg-muted/50">
+                      <p className="text-xs text-muted-foreground">Product</p>
+                      <p className="text-sm font-medium mt-0.5">{selectedCampaign.product.name}</p>
                     </div>
-                    <div className="p-3 rounded-lg bg-slate-50">
-                      <p className="text-xs text-slate-500">Value</p>
-                      <p className="text-sm font-medium">{formatCurrency(selectedCampaign.product.value)}</p>
+                    <div className="p-3 rounded-xl bg-muted/50">
+                      <p className="text-xs text-muted-foreground">Value</p>
+                      <p className="text-sm font-medium mt-0.5">{formatCurrency(selectedCampaign.product.value)}</p>
                     </div>
-                    <div className="p-3 rounded-lg bg-slate-50">
-                      <p className="text-xs text-slate-500">Ticket Price</p>
-                      <p className="text-sm font-medium">{formatCurrency(selectedCampaign.ticketPrice)}</p>
+                    <div className="p-3 rounded-xl bg-muted/50">
+                      <p className="text-xs text-muted-foreground">Ticket Price</p>
+                      <p className="text-sm font-medium mt-0.5">{formatCurrency(selectedCampaign.ticketPrice)}</p>
                     </div>
-                    <div className="p-3 rounded-lg bg-slate-50">
-                      <p className="text-xs text-slate-500">Draw Date</p>
-                      <p className="text-sm font-medium">{formatDate(selectedCampaign.drawDate, 'long')}</p>
+                    <div className="p-3 rounded-xl bg-muted/50">
+                      <p className="text-xs text-muted-foreground">Draw Date</p>
+                      <p className="text-sm font-medium mt-0.5">{formatDate(selectedCampaign.drawDate, 'long')}</p>
                     </div>
                   </div>
                   <div>
-                    <p className="text-xs text-slate-500 mb-2">Progress</p>
+                    <p className="text-xs text-muted-foreground mb-2">Progress</p>
                     <div className="flex items-center gap-3">
-                      <Progress value={selectedCampaign.progress || 0} className="h-2 flex-1" />
+                      <Progress value={selectedCampaign.progress || 0} className="h-2 flex-1 [&>[data-slot=indicator]]:bg-maroon-500" />
                       <span className="text-sm font-semibold">{selectedCampaign.progress}%</span>
                     </div>
-                    <p className="text-xs text-slate-400 mt-1">{selectedCampaign.soldTickets} of {selectedCampaign.maxTickets} tickets sold</p>
+                    <p className="text-xs text-muted-foreground mt-1">{selectedCampaign.soldTickets} of {selectedCampaign.maxTickets} tickets sold</p>
                   </div>
-                  <div className="p-3 rounded-lg bg-slate-50">
-                    <p className="text-xs text-slate-500 mb-1">Revenue</p>
-                    <p className="text-lg font-bold text-[hsl(152,68%,35%)]">{formatCurrency(selectedCampaign.soldTickets * selectedCampaign.ticketPrice)}</p>
+                  <div className="p-4 rounded-xl bg-maroon-50">
+                    <p className="text-xs text-muted-foreground mb-1">Revenue</p>
+                    <p className="text-lg font-bold text-maroon-700">{formatCurrency(selectedCampaign.soldTickets * selectedCampaign.ticketPrice)}</p>
                   </div>
                   {selectedCampaign.description && (
-                    <p className="text-sm text-slate-600">{selectedCampaign.description}</p>
+                    <p className="text-sm text-muted-foreground">{selectedCampaign.description}</p>
                   )}
                 </TabsContent>
                 <TabsContent value="tickets" className="mt-4">
-                  <div className="text-center py-8 text-sm text-slate-500">
+                  <div className="text-center py-8 text-sm text-muted-foreground">
                     Ticket management is handled through the campaign editor. {selectedCampaign.soldTickets} tickets have been sold.
                   </div>
                 </TabsContent>
                 <TabsContent value="orders" className="mt-4">
-                  <div className="text-center py-8 text-sm text-slate-500">
+                  <div className="text-center py-8 text-sm text-muted-foreground">
                     Orders linked to this campaign can be viewed in the Payments section. Revenue: {formatCurrency(selectedCampaign.soldTickets * selectedCampaign.ticketPrice)}.
                   </div>
                 </TabsContent>
                 <TabsContent value="analytics" className="mt-4">
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="p-4 rounded-lg bg-slate-50 text-center">
-                      <p className="text-2xl font-bold text-slate-900">{selectedCampaign.soldTickets}</p>
-                      <p className="text-xs text-slate-500">Tickets Sold</p>
+                    <div className="p-4 rounded-xl bg-muted/50 text-center">
+                      <p className="text-2xl font-bold text-foreground">{selectedCampaign.soldTickets}</p>
+                      <p className="text-xs text-muted-foreground">Tickets Sold</p>
                     </div>
-                    <div className="p-4 rounded-lg bg-slate-50 text-center">
-                      <p className="text-2xl font-bold text-slate-900">{selectedCampaign.maxTickets - selectedCampaign.soldTickets}</p>
-                      <p className="text-xs text-slate-500">Tickets Remaining</p>
+                    <div className="p-4 rounded-xl bg-muted/50 text-center">
+                      <p className="text-2xl font-bold text-foreground">{selectedCampaign.maxTickets - selectedCampaign.soldTickets}</p>
+                      <p className="text-xs text-muted-foreground">Tickets Remaining</p>
                     </div>
-                    <div className="p-4 rounded-lg bg-slate-50 text-center">
-                      <p className="text-2xl font-bold text-[hsl(152,68%,35%)]">{selectedCampaign.progress}%</p>
-                      <p className="text-xs text-slate-500">Sold Percentage</p>
+                    <div className="p-4 rounded-xl bg-muted/50 text-center">
+                      <p className="text-2xl font-bold text-maroon-700">{selectedCampaign.progress}%</p>
+                      <p className="text-xs text-muted-foreground">Sold Percentage</p>
                     </div>
-                    <div className="p-4 rounded-lg bg-slate-50 text-center">
-                      <p className="text-2xl font-bold text-slate-900">{formatCurrency(selectedCampaign.soldTickets * selectedCampaign.ticketPrice)}</p>
-                      <p className="text-xs text-slate-500">Total Revenue</p>
+                    <div className="p-4 rounded-xl bg-muted/50 text-center">
+                      <p className="text-2xl font-bold text-foreground">{formatCurrency(selectedCampaign.soldTickets * selectedCampaign.ticketPrice)}</p>
+                      <p className="text-xs text-muted-foreground">Total Revenue</p>
                     </div>
                   </div>
                 </TabsContent>

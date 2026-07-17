@@ -53,17 +53,32 @@ function getChannelLabel(channel: string) {
 function getChannelColor(channel: string) {
   switch (channel) {
     case 'in_app':
-      return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400';
+      return 'bg-maroon-50 text-maroon-500';
     case 'whatsapp':
-      return 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400';
+      return 'bg-emerald-50 text-emerald-600';
     case 'email':
-      return 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400';
+      return 'bg-gold-50 text-gold-700';
     case 'sms':
-      return 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400';
+      return 'bg-maroon-50 text-maroon-500';
     case 'push':
-      return 'bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-400';
+      return 'bg-maroon-50 text-maroon-500';
     default:
       return 'bg-muted text-muted-foreground';
+  }
+}
+
+function getChannelIconBg(channel: string) {
+  switch (channel) {
+    case 'in_app':
+    case 'push':
+    case 'sms':
+      return 'bg-maroon-50';
+    case 'whatsapp':
+      return 'bg-emerald-50';
+    case 'email':
+      return 'bg-gold-50';
+    default:
+      return 'bg-muted';
   }
 }
 
@@ -129,7 +144,7 @@ export function MemberNotifications() {
             <h1 className="text-2xl font-bold tracking-tight flex items-center gap-2">
               Notifications
               {currentUnreadCount > 0 && (
-                <Badge className="bg-rose-500 text-white text-xs px-2">
+                <Badge className="bg-maroon-500 text-white text-xs px-2 py-0.5 rounded-md">
                   {currentUnreadCount}
                 </Badge>
               )}
@@ -144,7 +159,7 @@ export function MemberNotifications() {
             variant="outline"
             size="sm"
             onClick={handleMarkAllRead}
-            className="text-xs"
+            className="text-xs rounded-[10px] border-border hover:bg-maroon-50"
           >
             <CheckCheck className="h-3.5 w-3.5 mr-1.5" />
             Mark All Read
@@ -166,10 +181,10 @@ export function MemberNotifications() {
 
       {/* Notification list */}
       {filteredNotifications.length === 0 ? (
-        <Card>
+        <Card className="border-0 shadow-royal-sm rounded-xl bg-white">
           <CardContent className="flex flex-col items-center justify-center py-16">
-            <div className="rounded-full bg-muted p-4 mb-4">
-              <Inbox className="h-8 w-8 text-muted-foreground" />
+            <div className="rounded-full bg-maroon-50 p-4 mb-4">
+              <Inbox className="h-8 w-8 text-maroon-500" />
             </div>
             <h3 className="font-semibold text-lg">No notifications</h3>
             <p className="text-muted-foreground text-sm mt-1">
@@ -180,7 +195,7 @@ export function MemberNotifications() {
           </CardContent>
         </Card>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-3">
           {filteredNotifications.map((notification) => (
             <NotificationItem
               key={notification.id}
@@ -208,8 +223,8 @@ function NotificationItem({ notification, isExpanded, onToggleExpand, onMarkRead
   return (
     <Card
       className={cn(
-        'transition-all cursor-pointer hover:shadow-sm',
-        isUnread && 'border-l-4 border-l-emerald-600 bg-emerald-50/30 dark:bg-emerald-950/10'
+        'transition-all duration-200 cursor-pointer hover:shadow-royal-md border-0 shadow-royal-sm rounded-xl bg-white',
+        isUnread && 'border-l-[3px] border-l-maroon-500'
       )}
       onClick={() => {
         if (isUnread) onMarkRead();
@@ -219,11 +234,11 @@ function NotificationItem({ notification, isExpanded, onToggleExpand, onMarkRead
       <CardContent className="p-4">
         <div className="flex items-start gap-3">
           {/* Channel icon */}
-          <div className={cn('p-2 rounded-lg shrink-0', getChannelColor(notification.channel))}>
-            {channelIconName === 'bell' && <Bell className="h-4 w-4" />}
-            {channelIconName === 'message-circle' && <MessageCircle className="h-4 w-4" />}
-            {channelIconName === 'mail' && <Mail className="h-4 w-4" />}
-            {channelIconName === 'smartphone' && <Smartphone className="h-4 w-4" />}
+          <div className={cn('w-9 h-9 rounded-full shrink-0 flex items-center justify-center', getChannelIconBg(notification.channel))}>
+            {channelIconName === 'bell' && <Bell className="h-4 w-4 text-maroon-500" />}
+            {channelIconName === 'message-circle' && <MessageCircle className="h-4 w-4 text-emerald-600" />}
+            {channelIconName === 'mail' && <Mail className="h-4 w-4 text-gold-700" />}
+            {channelIconName === 'smartphone' && <Smartphone className="h-4 w-4 text-maroon-500" />}
           </div>
 
           {/* Content */}
@@ -238,12 +253,12 @@ function NotificationItem({ notification, isExpanded, onToggleExpand, onMarkRead
                     {notification.title}
                   </h3>
                   {isUnread && (
-                    <span className="h-2 w-2 rounded-full bg-emerald-600 shrink-0" />
+                    <span className="h-2 w-2 rounded-full bg-maroon-500 shrink-0" />
                   )}
                 </div>
                 <p className={cn(
                   'text-xs leading-relaxed',
-                  isUnread ? 'text-foreground/80' : 'text-muted-foreground'
+                  isUnread ? 'text-foreground/70' : 'text-muted-foreground'
                 )}>
                   {notification.message}
                 </p>
@@ -256,7 +271,7 @@ function NotificationItem({ notification, isExpanded, onToggleExpand, onMarkRead
                 </span>
                 <Badge
                   variant="secondary"
-                  className={cn('text-[10px] px-1.5 py-0', getChannelColor(notification.channel))}
+                  className={cn('text-[10px] px-1.5 py-0 rounded-md', getChannelColor(notification.channel))}
                 >
                   {getChannelLabel(notification.channel)}
                 </Badge>
@@ -270,7 +285,7 @@ function NotificationItem({ notification, isExpanded, onToggleExpand, onMarkRead
                   e.stopPropagation();
                   onToggleExpand();
                 }}
-                className="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                className="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-maroon-500 transition-colors cursor-pointer"
               >
                 {isExpanded ? (
                   <>
@@ -287,7 +302,7 @@ function NotificationItem({ notification, isExpanded, onToggleExpand, onMarkRead
             </div>
 
             {isExpanded && (
-              <div className="mt-2 p-3 bg-muted/50 rounded-lg">
+              <div className="mt-2 p-3.5 bg-muted/30 rounded-xl">
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-2 text-xs">
                     <span className="text-muted-foreground w-24">Sent:</span>
@@ -299,7 +314,7 @@ function NotificationItem({ notification, isExpanded, onToggleExpand, onMarkRead
                   </div>
                   <div className="flex items-center gap-2 text-xs">
                     <span className="text-muted-foreground w-24">Status:</span>
-                    <Badge variant="secondary" className="text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                    <Badge variant="secondary" className="text-[10px] bg-maroon-50 text-maroon-600 rounded-md border-0">
                       <CheckCheck className="h-3 w-3 mr-1" />
                       Delivered successfully
                     </Badge>

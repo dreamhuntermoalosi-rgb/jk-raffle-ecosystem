@@ -49,46 +49,59 @@ export function PublicHeader() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
       className={cn(
-        'fixed top-14 left-0 right-0 z-40 transition-all duration-300',
+        'fixed top-14 left-0 right-0 z-40 transition-all duration-500',
         scrolled
-          ? 'glass border-b border-border/40 shadow-sm'
+          ? 'shadow-royal-sm'
           : 'bg-transparent'
       )}
+      style={
+        scrolled
+          ? {
+              background: 'rgba(250, 249, 247, 0.88)',
+              backdropFilter: 'blur(24px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+              borderBottom: '1px solid rgba(91, 19, 34, 0.08)',
+            }
+          : undefined
+      }
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-18">
+        <div className="flex items-center justify-between h-16 lg:h-[72px]">
           {/* Logo */}
           <button
             onClick={() => handleNav('home')}
-            className="flex items-center gap-2.5 group"
+            className="flex items-center gap-3 group"
           >
-            <div className="w-9 h-9 rounded-lg bg-forest-500 flex items-center justify-center shadow-md shadow-forest-500/20 group-hover:shadow-lg group-hover:shadow-forest-500/30 transition-shadow duration-300">
-              <span className="text-white font-bold text-sm tracking-tight">JK</span>
+            <div className="w-10 h-10 rounded-[10px] bg-maroon-800 flex items-center justify-center shadow-royal-sm group-hover:shadow-royal-md transition-shadow duration-300 border border-gold-400/20">
+              <span className="text-gold-400 font-bold text-[15px] tracking-tight">JK</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-base font-semibold leading-tight tracking-tight text-foreground">
+              <span className="text-[15px] font-semibold leading-tight tracking-tight text-foreground">
                 JK Raffle
               </span>
-              <span className="text-[10px] font-medium text-muted-foreground leading-none tracking-wider uppercase">
+              <span className="text-[9px] font-semibold text-muted-foreground/70 leading-none tracking-[0.15em] uppercase">
                 Ecosystem
               </span>
             </div>
           </button>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-0.5">
             {navLinks.map((link) => (
               <button
                 key={link.view}
                 onClick={() => handleNav(link.view)}
                 className={cn(
-                  'px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200',
+                  'relative px-3.5 py-2 rounded-[8px] text-[13px] font-medium transition-all duration-250',
                   currentView === link.view
-                    ? 'text-forest-500 bg-forest-50'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/60'
+                    ? 'text-maroon-700 dark:text-maroon-300'
+                    : 'text-muted-foreground hover:text-foreground'
                 )}
               >
                 {link.label}
+                {currentView === link.view && (
+                  <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-4 h-[2px] rounded-full bg-maroon-600 dark:bg-gold-400" />
+                )}
               </button>
             ))}
           </nav>
@@ -97,7 +110,7 @@ export function PublicHeader() {
           <div className="hidden lg:flex items-center gap-3">
             <Button
               onClick={handleLogin}
-              className="bg-forest-500 hover:bg-forest-600 text-white shadow-md shadow-forest-500/20 hover:shadow-lg hover:shadow-forest-500/30 transition-all duration-300"
+              className="bg-maroon-600 hover:bg-maroon-700 dark:bg-maroon-500 dark:hover:bg-maroon-600 text-white rounded-[10px] border border-gold-400/15 hover:border-gold-400/30 shadow-royal-sm hover:shadow-royal-md transition-all duration-300 text-[13px] font-medium px-5 h-9"
             >
               Member Login
             </Button>
@@ -106,45 +119,56 @@ export function PublicHeader() {
           {/* Mobile Menu */}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
             <SheetTrigger asChild className="lg:hidden">
-              <Button variant="ghost" size="icon" className="text-foreground">
+              <Button variant="ghost" size="icon" className="text-foreground/80 hover:text-foreground rounded-[8px]">
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-80 p-0">
+            <SheetContent side="right" className="w-[300px] p-0 bg-background border-l border-border/60">
               <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
               <div className="flex flex-col h-full">
                 {/* Mobile Header */}
-                <div className="flex items-center justify-between p-4 border-b border-border/50">
+                <div className="flex items-center justify-between px-5 py-4 border-b border-border/50">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-forest-500 flex items-center justify-center">
-                      <span className="text-white font-bold text-xs">JK</span>
+                    <div className="w-8 h-8 rounded-[8px] bg-maroon-800 flex items-center justify-center border border-gold-400/20">
+                      <span className="text-gold-400 font-bold text-xs">JK</span>
                     </div>
-                    <span className="font-semibold text-sm">JK Raffle</span>
+                    <div className="flex flex-col">
+                      <span className="font-semibold text-sm leading-tight">JK Raffle</span>
+                      <span className="text-[9px] font-semibold text-muted-foreground/60 leading-none tracking-[0.12em] uppercase">Ecosystem</span>
+                    </div>
                   </div>
                   <Button
                     variant="ghost"
                     size="icon"
                     onClick={() => setMobileOpen(false)}
+                    className="rounded-[8px] text-muted-foreground hover:text-foreground"
                   >
                     <X className="h-4 w-4" />
                   </Button>
                 </div>
 
                 {/* Mobile Nav Links */}
-                <nav className="flex-1 overflow-y-auto py-4">
-                  {navLinks.map((link, index) => (
+                <nav className="flex-1 overflow-y-auto py-3 scrollbar-thin">
+                  {navLinks.map((link) => (
                     <button
                       key={link.view}
                       onClick={() => handleNav(link.view)}
                       className={cn(
-                        'w-full text-left px-6 py-3 text-sm font-medium transition-colors duration-200',
+                        'w-full text-left px-5 py-3 text-[13px] font-medium transition-all duration-200 relative',
                         currentView === link.view
-                          ? 'text-forest-500 bg-forest-50 border-r-2 border-forest-500'
+                          ? 'text-maroon-700 dark:text-gold-400 bg-maroon-50/60 dark:bg-maroon-950/50'
                           : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'
                       )}
                     >
-                      {link.label}
+                      <span className="flex items-center gap-3">
+                        {currentView === link.view && (
+                          <span className="w-[3px] h-4 rounded-full bg-maroon-600 dark:bg-gold-400 flex-shrink-0" />
+                        )}
+                        <span className={currentView === link.view ? '' : 'ml-[15px]'}>
+                          {link.label}
+                        </span>
+                      </span>
                     </button>
                   ))}
                 </nav>
@@ -155,7 +179,7 @@ export function PublicHeader() {
                     onClick={() => {
                       handleLogin();
                     }}
-                    className="w-full bg-forest-500 hover:bg-forest-600 text-white"
+                    className="w-full bg-maroon-600 hover:bg-maroon-700 dark:bg-maroon-500 dark:hover:bg-maroon-600 text-white rounded-[10px] border border-gold-400/15 text-[13px] font-medium h-10"
                   >
                     Member Login
                   </Button>

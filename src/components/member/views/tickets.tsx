@@ -134,7 +134,10 @@ export function MemberTickets() {
             variant={viewMode === 'grid' ? 'default' : 'outline'}
             size="icon"
             onClick={() => setViewMode('grid')}
-            className="h-9 w-9"
+            className={cn(
+              'h-9 w-9 rounded-lg',
+              viewMode === 'grid' && 'bg-maroon-500 hover:bg-maroon-600'
+            )}
           >
             <Grid3X3 className="h-4 w-4" />
           </Button>
@@ -142,7 +145,10 @@ export function MemberTickets() {
             variant={viewMode === 'list' ? 'default' : 'outline'}
             size="icon"
             onClick={() => setViewMode('list')}
-            className="h-9 w-9"
+            className={cn(
+              'h-9 w-9 rounded-lg',
+              viewMode === 'list' && 'bg-maroon-500 hover:bg-maroon-600'
+            )}
           >
             <List className="h-4 w-4" />
           </Button>
@@ -157,7 +163,7 @@ export function MemberTickets() {
             placeholder="Search by reference or campaign..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9"
+            className="pl-9 rounded-lg"
           />
         </div>
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as TabFilter)}>
@@ -173,10 +179,10 @@ export function MemberTickets() {
 
       {/* Content */}
       {filteredTickets.length === 0 ? (
-        <Card>
+        <Card className="border-0 shadow-royal-sm rounded-xl">
           <CardContent className="flex flex-col items-center justify-center py-16">
-            <div className="rounded-full bg-muted p-4 mb-4">
-              <Ticket className="h-8 w-8 text-muted-foreground" />
+            <div className="rounded-full bg-maroon-50 p-4 mb-4">
+              <Ticket className="h-8 w-8 text-maroon-500" />
             </div>
             <h3 className="font-semibold text-lg">No tickets found</h3>
             <p className="text-muted-foreground text-sm mt-1">
@@ -185,23 +191,23 @@ export function MemberTickets() {
           </CardContent>
         </Card>
       ) : viewMode === 'grid' ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredTickets.map((ticket) => (
             <TicketCard key={ticket.id} ticket={ticket} onSelect={() => { setSelectedTicket(ticket); setDetailOpen(true); }} />
           ))}
         </div>
       ) : (
-        <Card>
+        <Card className="border-0 shadow-royal-sm rounded-xl overflow-hidden">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead className="text-xs">Reference</TableHead>
-                <TableHead className="text-xs">Campaign</TableHead>
-                <TableHead className="text-xs">Category</TableHead>
-                <TableHead className="text-xs">Price</TableHead>
-                <TableHead className="text-xs">Status</TableHead>
-                <TableHead className="text-xs">Purchased</TableHead>
-                <TableHead className="text-xs text-right">Actions</TableHead>
+              <TableRow className="hover:bg-transparent bg-muted/50 sticky top-0">
+                <TableHead className="text-xs font-medium text-muted-foreground">Reference</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground">Campaign</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground">Category</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground">Price</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground">Status</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground">Purchased</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -209,24 +215,27 @@ export function MemberTickets() {
                 const campaign = mockCampaigns.find((c) => c.id === ticket.campaignId);
                 const isWon = ticket.status === 'won';
                 return (
-                  <TableRow key={ticket.id} className={cn(isWon && 'bg-amber-50/50 dark:bg-amber-950/10')}>
-                    <TableCell className="font-mono text-xs font-semibold">
+                  <TableRow key={ticket.id} className={cn(
+                    'hover:bg-maroon-50/30 transition-colors',
+                    isWon && 'bg-gold-50/30'
+                  )}>
+                    <TableCell className="font-mono text-xs font-semibold text-foreground">
                       {ticket.reference}
                     </TableCell>
-                    <TableCell className="text-sm max-w-[200px] truncate">
+                    <TableCell className="text-sm max-w-[200px] truncate text-muted-foreground">
                       {campaign?.title || 'Unknown'}
                     </TableCell>
                     <TableCell className="text-sm">
                       <span className="mr-1">{getCategoryIcon(campaign?.product.category || 'other')}</span>
                       {campaign?.product.category || '—'}
                     </TableCell>
-                    <TableCell className="text-sm">
+                    <TableCell className="text-sm font-medium">
                       {formatCurrency(campaign?.ticketPrice || 0)}
                     </TableCell>
                     <TableCell>
                       <Badge
                         variant="secondary"
-                        className={cn('text-[10px] px-2 py-0.5', getStatusColor(ticket.status))}
+                        className={cn('text-[10px] px-2 py-0.5 rounded-md', getStatusColor(ticket.status))}
                       >
                         {ticket.status}
                       </Badge>
@@ -236,10 +245,10 @@ export function MemberTickets() {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">
-                        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => { setSelectedTicket(ticket); setDetailOpen(true); }}>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg hover:bg-maroon-50" onClick={() => { setSelectedTicket(ticket); setDetailOpen(true); }}>
                           <Eye className="h-3.5 w-3.5" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 rounded-lg hover:bg-maroon-50">
                           <Download className="h-3.5 w-3.5" />
                         </Button>
                       </div>
@@ -265,35 +274,35 @@ function TicketCard({ ticket, onSelect }: { ticket: TicketType; onSelect: () => 
   return (
     <Card
       className={cn(
-        'group relative overflow-hidden transition-all hover:shadow-lg hover:-translate-y-0.5 cursor-pointer',
-        isWon && 'border-2 border-amber-400 shadow-amber-100 dark:shadow-amber-950/20 shadow-lg'
+        'group relative overflow-hidden transition-all duration-200 hover:shadow-royal-md hover:-translate-y-0.5 cursor-pointer border-0 shadow-royal-sm rounded-xl bg-white',
+        isWon && 'shadow-gold-md'
       )}
       onClick={onSelect}
     >
       {/* Golden glow for won tickets */}
       {isWon && (
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-50/80 via-transparent to-amber-50/40 dark:from-amber-950/20 dark:via-transparent dark:to-amber-950/10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-gold-50/80 via-transparent to-gold-50/40 pointer-events-none" />
       )}
 
       <CardContent className="p-5 relative">
         <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <div className={cn(
-              'p-2 rounded-lg',
-              isWon ? 'bg-amber-100 dark:bg-amber-900/40' : 'bg-muted'
+              'w-10 h-10 rounded-full flex items-center justify-center',
+              isWon ? 'bg-gold-100' : 'bg-maroon-50'
             )}>
-              <CatIcon className={cn('h-4 w-4', isWon ? 'text-amber-600' : 'text-muted-foreground')} />
+              <CatIcon className={cn('h-5 w-5', isWon ? 'text-gold-600' : 'text-maroon-500')} />
             </div>
             <Badge
               variant="secondary"
-              className={cn('text-[10px] px-2 py-0.5', getStatusColor(ticket.status))}
+              className={cn('text-[10px] px-2 py-0.5 rounded-md', getStatusColor(ticket.status))}
             >
               {isWon && <TicketCheck className="h-3 w-3 mr-1" />}
               {ticket.status}
             </Badge>
           </div>
           {isWon && (
-            <div className="text-amber-500 animate-pulse">
+            <div className="text-gold-500">
               <TicketCheck className="h-5 w-5" />
             </div>
           )}
@@ -322,8 +331,8 @@ function TicketCard({ ticket, onSelect }: { ticket: TicketType; onSelect: () => 
 
         {/* QR code placeholder */}
         {ticket.qrCode && (
-          <div className="flex items-center justify-center bg-muted/50 rounded-lg py-3 mb-4 border border-dashed border-border">
-            <div className="flex flex-col items-center gap-1 text-muted-foreground">
+          <div className="flex items-center justify-center bg-maroon-50/50 rounded-lg py-3 mb-4 border border-dashed border-maroon-100">
+            <div className="flex flex-col items-center gap-1 text-maroon-400">
               <QrCode className="h-8 w-8" />
               <span className="text-[10px]">QR Code</span>
             </div>
@@ -332,12 +341,12 @@ function TicketCard({ ticket, onSelect }: { ticket: TicketType; onSelect: () => 
 
         {/* Actions */}
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="flex-1 h-8 text-xs" onClick={(e) => { e.stopPropagation(); onSelect(); }}>
+          <Button variant="outline" size="sm" className="flex-1 h-8 text-xs rounded-lg border-border hover:bg-maroon-50 hover:border-maroon-200" onClick={(e) => { e.stopPropagation(); onSelect(); }}>
             <Eye className="h-3.5 w-3.5 mr-1.5" />
             View Details
           </Button>
           {ticket.status === 'active' && (
-            <Button variant="outline" size="sm" className="h-8 text-xs">
+            <Button variant="outline" size="sm" className="h-8 text-xs rounded-lg border-border hover:bg-maroon-50 hover:border-maroon-200">
               <Download className="h-3.5 w-3.5 mr-1.5" />
               PDF
             </Button>

@@ -1,0 +1,731 @@
+     1→'use client';
+     2→
+     3→import { useState } from 'react';
+     4→import {
+     5→  Check,
+     6→  ChevronRight,
+     7→  ShoppingCart,
+     8→  Plus,
+     9→  Minus,
+    10→  CreditCard,
+    11→  Building2,
+    12→  Zap,
+    13→  ArrowLeft,
+    14→  Ticket,
+    15→  MapPin,
+    16→  Calendar,
+    17→} from 'lucide-react';
+    18→import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+    19→import { Badge } from '@/components/ui/badge';
+    20→import { Button } from '@/components/ui/button';
+    21→import { Input } from '@/components/ui/input';
+    22→import { Label } from '@/components/ui/label';
+    23→import { Separator } from '@/components/ui/separator';
+    24→import { cn, formatCurrency, formatDate, generateTicketReference, getCategoryIcon } from '@/lib/utils';
+    25→import { useAppStore } from '@/stores/app-store';
+    26→import { getActiveCampaigns } from '@/mock-data';
+    27→import { toast } from 'sonner';
+    28→import type { Campaign } from '@/types';
+    29→
+    30→const steps = [
+    31→  { id: 1, label: 'Select Campaign' },
+    32→  { id: 2, label: 'Choose Quantity' },
+    33→  { id: 3, label: 'Review Cart' },
+    34→  { id: 4, label: 'Payment' },
+    35→  { id: 5, label: 'Confirmation' },
+    36→];
+    37→
+    38→const paymentMethods = [
+    39→  { id: 'payfast', label: 'PayFast', description: 'Instant EFT via PayFast', icon: Zap },
+    40→  { id: 'card', label: 'Credit / Debit Card', description: 'Visa, Mastercard, Amex', icon: CreditCard },
+    41→  { id: 'eft', label: 'EFT / OZOW', description: 'Direct bank transfer or OZOW', icon: Building2 },
+    42→];
+    43→
+    44→export function MemberPurchase() {
+    45→  const { setView } = useAppStore();
+    46→  const [currentStep, setCurrentStep] = useState(1);
+    47→  const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null);
+    48→  const [quantity, setQuantity] = useState(1);
+    49→  const [paymentMethod, setPaymentMethod] = useState('card');
+    50→  const [cardNumber, setCardNumber] = useState('');
+    51→  const [cardExpiry, setCardExpiry] = useState('');
+    52→  const [cardCvv, setCardCvv] = useState('');
+    53→  const [generatedRefs, setGeneratedRefs] = useState<string[]>([]);
+    54→  const [isProcessing, setIsProcessing] = useState(false);
+    55→
+    56→  const campaigns = getActiveCampaigns();
+    57→
+    58→  const subtotal = selectedCampaign ? selectedCampaign.ticketPrice * quantity : 0;
+    59→  const serviceFee = Math.round(subtotal * 0.02);
+    60→  const total = subtotal + serviceFee;
+    61→
+    62→  function handleSelectCampaign(campaign: Campaign) {
+    63→    setSelectedCampaign(campaign);
+    64→    setQuantity(1);
+    65→    setCurrentStep(2);
+    66→  }
+    67→
+    68→  function handleProceedToCart() {
+    69→    if (quantity < 1 || quantity > 10) return;
+    70→    setCurrentStep(3);
+    71→  }
+    72→
+    73→  function handleProceedToPayment() {
+    74→    setCurrentStep(4);
+    75→  }
+    76→
+    77→  function handlePayNow() {
+    78→    setIsProcessing(true);
+    79→    // Simulate payment processing
+    80→    setTimeout(() => {
+    81→      const refs = Array.from({ length: quantity }, () => generateTicketReference());
+    82→      setGeneratedRefs(refs);
+    83→      setIsProcessing(false);
+    84→      setCurrentStep(5);
+    85→      toast.success('Payment successful! Your tickets have been generated.', {
+    86→        description: `${quantity} ticket${quantity > 1 ? 's' : ''} for "${selectedCampaign?.title}"`,
+    87→      });
+    88→    }, 2000);
+    89→  }
+    90→
+    91→  function handleReset() {
+    92→    setCurrentStep(1);
+    93→    setSelectedCampaign(null);
+    94→    setQuantity(1);
+    95→    setPaymentMethod('card');
+    96→    setCardNumber('');
+    97→    setCardExpiry('');
+    98→    setCardCvv('');
+    99→    setGeneratedRefs([]);
+   100→  }
+   101→
+   102→  return (
+   103→    <div className="max-w-4xl mx-auto space-y-6">
+   104→      {/* Header */}
+   105→      <div>
+   106→        <h1 className="text-2xl font-bold tracking-tight">Purchase Tickets</h1>
+   107→        <p className="text-muted-foreground text-sm mt-1">
+   108→          Choose a campaign, select your tickets, and complete your purchase
+   109→        </p>
+   110→      </div>
+   111→
+   112→      {/* Step Indicator */}
+   113→      <div className="flex items-center gap-1 overflow-x-auto pb-2">
+   114→        {steps.map((step, index) => {
+   115→          const isCompleted = currentStep > step.id;
+   116→          const isCurrent = currentStep === step.id;
+   117→          return (
+   118→            <div key={step.id} className="flex items-center">
+   119→              {index > 0 && (
+   120→                <ChevronRight className={cn(
+   121→                  'h-4 w-4 mx-1 shrink-0',
+   122→                  isCompleted ? 'text-maroon-600' : 'text-muted-foreground/40'
+   123→                )} />
+   124→              )}
+   125→              <button
+   126→                onClick={() => {
+   127→                  if (isCompleted) setCurrentStep(step.id);
+   128→                }}
+   129→                className={cn(
+   130→                  'flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-medium whitespace-nowrap transition-colors cursor-pointer',
+   131→                  isCompleted && 'bg-maroon-100 text-maroon-600 dark:bg-maroon-700/30 dark:text-maroon-400',
+   132→                  isCurrent && 'bg-maroon-500 text-white',
+   133→                  !isCompleted && !isCurrent && 'bg-muted text-muted-foreground'
+   134→                )}
+   135→              >
+   136→                {isCompleted ? (
+   137→                  <Check className="h-3.5 w-3.5" />
+   138→                ) : (
+   139→                  <span className={cn(
+   140→                    'flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold',
+   141→                    isCurrent ? 'bg-white/20 text-white' : 'bg-muted-foreground/20'
+   142→                  )}>
+   143→                    {step.id}
+   144→                  </span>
+   145→                )}
+   146→                <span className="hidden sm:inline">{step.label}</span>
+   147→              </button>
+   148→            </div>
+   149→          );
+   150→        })}
+   151→      </div>
+   152→
+   153→      {/* Step Content */}
+   154→      {currentStep === 1 && (
+   155→        <StepSelectCampaign campaigns={campaigns} onSelect={handleSelectCampaign} />
+   156→      )}
+   157→
+   158→      {currentStep === 2 && selectedCampaign && (
+   159→        <StepChooseQuantity
+   160→          campaign={selectedCampaign}
+   161→          quantity={quantity}
+   162→          setQuantity={setQuantity}
+   163→          onBack={() => setCurrentStep(1)}
+   164→          onNext={handleProceedToCart}
+   165→        />
+   166→      )}
+   167→
+   168→      {currentStep === 3 && selectedCampaign && (
+   169→        <StepCartReview
+   170→          campaign={selectedCampaign}
+   171→          quantity={quantity}
+   172→          subtotal={subtotal}
+   173→          serviceFee={serviceFee}
+   174→          total={total}
+   175→          onBack={() => setCurrentStep(2)}
+   176→          onNext={handleProceedToPayment}
+   177→        />
+   178→      )}
+   179→
+   180→      {currentStep === 4 && selectedCampaign && (
+   181→        <StepPayment
+   182→          total={total}
+   183→          paymentMethod={paymentMethod}
+   184→          setPaymentMethod={setPaymentMethod}
+   185→          cardNumber={cardNumber}
+   186→          setCardNumber={setCardNumber}
+   187→          cardExpiry={cardExpiry}
+   188→          setCardExpiry={setCardExpiry}
+   189→          cardCvv={cardCvv}
+   190→          setCardCvv={setCardCvv}
+   191→          isProcessing={isProcessing}
+   192→          onBack={() => setCurrentStep(3)}
+   193→          onPay={handlePayNow}
+   194→        />
+   195→      )}
+   196→
+   197→      {currentStep === 5 && selectedCampaign && (
+   198→        <StepConfirmation
+   199→          campaign={selectedCampaign}
+   200→          quantity={quantity}
+   201→          total={total}
+   202→          ticketRefs={generatedRefs}
+   203→          onViewTickets={() => setView('tickets')}
+   204→          onBuyMore={handleReset}
+   205→        />
+   206→      )}
+   207→    </div>
+   208→  );
+   209→}
+   210→
+   211→/* ==============================
+   212→   STEP 1: Select Campaign
+   213→   ============================== */
+   214→function StepSelectCampaign({ campaigns, onSelect }: {
+   215→  campaigns: Campaign[];
+   216→  onSelect: (c: Campaign) => void;
+   217→}) {
+   218→  return (
+   219→    <div className="space-y-4">
+   220→      <h2 className="text-lg font-semibold">Select a Campaign</h2>
+   221→      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+   222→        {campaigns.map((campaign) => (
+   223→          <Card
+   224→            key={campaign.id}
+   225→            className="group cursor-pointer hover:shadow-lg hover:border-maroon-300 dark:hover:border-maroon-500 transition-all hover:-translate-y-0.5"
+   226→            onClick={() => onSelect(campaign)}
+   227→          >
+   228→            <CardContent className="p-5">
+   229→              <div className="flex items-start gap-3 mb-3">
+   230→                <div className="p-2 rounded-lg bg-muted text-lg">
+   231→                  {getCategoryIcon(campaign.product.category)}
+   232→                </div>
+   233→                <div className="flex-1 min-w-0">
+   234→                  <h3 className="font-semibold text-sm truncate">{campaign.title}</h3>
+   235→                  <p className="text-xs text-muted-foreground mt-0.5">
+   236→                    {campaign.branch.name}
+   237→                  </p>
+   238→                </div>
+   239→              </div>
+   240→
+   241→              <div className="flex items-center justify-between mb-3">
+   242→                <Badge variant="secondary" className="bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400 text-xs">
+   243→                  {formatCurrency(campaign.product.value)} prize
+   244→                </Badge>
+   245→                <span className="text-sm font-bold text-maroon-500">
+   246→                  {formatCurrency(campaign.ticketPrice)}
+   247→                  <span className="text-xs font-normal text-muted-foreground">/ticket</span>
+   248→                </span>
+   249→              </div>
+   250→
+   251→              {/* Progress */}
+   252→              <div className="mb-3">
+   253→                <div className="flex justify-between text-xs text-muted-foreground mb-1">
+   254→                  <span>{campaign.soldTickets} sold</span>
+   255→                  <span>{campaign.maxTickets} total</span>
+   256→                </div>
+   257→                <div className="w-full bg-muted rounded-full h-1.5">
+   258→                  <div
+   259→                    className="bg-maroon-600 h-1.5 rounded-full"
+   260→                    style={{ width: `${campaign.progress}%` }}
+   261→                  />
+   262→                </div>
+   263→              </div>
+   264→
+   265→              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+   266→                <Calendar className="h-3.5 w-3.5" />
+   267→                <span>{formatDate(campaign.drawDate, 'long').split(',')[0]}</span>
+   268→              </div>
+   269→            </CardContent>
+   270→          </Card>
+   271→        ))}
+   272→      </div>
+   273→    </div>
+   274→  );
+   275→}
+   276→
+   277→/* ==============================
+   278→   STEP 2: Choose Quantity
+   279→   ============================== */
+   280→function StepChooseQuantity({ campaign, quantity, setQuantity, onBack, onNext }: {
+   281→  campaign: Campaign;
+   282→  quantity: number;
+   283→  setQuantity: (q: number) => void;
+   284→  onBack: () => void;
+   285→  onNext: () => void;
+   286→}) {
+   287→  const maxPurchase = Math.min(10, campaign.maxTickets - campaign.soldTickets);
+   288→  const total = campaign.ticketPrice * quantity;
+   289→
+   290→  return (
+   291→    <div className="space-y-6">
+   292→      <div className="flex items-center gap-2">
+   293→        <Button variant="ghost" size="icon" onClick={onBack} className="h-8 w-8">
+   294→          <ArrowLeft className="h-4 w-4" />
+   295→        </Button>
+   296→        <h2 className="text-lg font-semibold">Choose Quantity</h2>
+   297→      </div>
+   298→
+   299→      {/* Selected campaign details */}
+   300→      <Card>
+   301→        <CardContent className="p-5">
+   302→          <div className="flex items-start gap-4">
+   303→            <div className="p-3 rounded-xl bg-muted text-2xl">
+   304→              {getCategoryIcon(campaign.product.category)}
+   305→            </div>
+   306→            <div className="flex-1">
+   307→              <h3 className="font-semibold">{campaign.title}</h3>
+   308→              <p className="text-sm text-muted-foreground mt-0.5">
+   309→                {formatCurrency(campaign.product.value)} prize &middot; {campaign.branch.name}
+   310→              </p>
+   311→              <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
+   312→                <span className="flex items-center gap-1">
+   313→                  <Calendar className="h-3.5 w-3.5" />
+   314→                  {formatDate(campaign.drawDate)}
+   315→                </span>
+   316→                <span className="flex items-center gap-1">
+   317→                  <MapPin className="h-3.5 w-3.5" />
+   318→                  Draw at {campaign.drawLocation?.split(',')[0]}
+   319→                </span>
+   320→              </div>
+   321→            </div>
+   322→          </div>
+   323→        </CardContent>
+   324→      </Card>
+   325→
+   326→      {/* Quantity selector */}
+   327→      <Card>
+   328→        <CardHeader>
+   329→          <CardTitle className="text-base">Number of Tickets</CardTitle>
+   330→          <CardDescription className="text-xs">
+   331→            Maximum {maxPurchase} tickets available for this campaign (limit 10 per purchase)
+   332→          </CardDescription>
+   333→        </CardHeader>
+   334→        <CardContent>
+   335→          <div className="flex items-center justify-center gap-6 mb-6">
+   336→            <Button
+   337→              variant="outline"
+   338→              size="icon"
+   339→              className="h-12 w-12 rounded-xl"
+   340→              onClick={() => setQuantity(Math.max(1, quantity - 1))}
+   341→              disabled={quantity <= 1}
+   342→            >
+   343→              <Minus className="h-5 w-5" />
+   344→            </Button>
+   345→            <div className="text-center">
+   346→              <span className="text-4xl font-bold tabular-nums">{quantity}</span>
+   347→              <p className="text-xs text-muted-foreground mt-1">tickets</p>
+   348→            </div>
+   349→            <Button
+   350→              variant="outline"
+   351→              size="icon"
+   352→              className="h-12 w-12 rounded-xl"
+   353→              onClick={() => setQuantity(Math.min(maxPurchase, quantity + 1))}
+   354→              disabled={quantity >= maxPurchase}
+   355→            >
+   356→              <Plus className="h-5 w-5" />
+   357→            </Button>
+   358→          </div>
+   359→
+   360→          {/* Price breakdown */}
+   361→          <div className="bg-muted/50 rounded-xl p-4 space-y-3">
+   362→            <div className="flex justify-between text-sm">
+   363→              <span className="text-muted-foreground">Ticket price</span>
+   364→              <span>{formatCurrency(campaign.ticketPrice)} each</span>
+   365→            </div>
+   366→            <div className="flex justify-between text-sm">
+   367→              <span className="text-muted-foreground">Quantity</span>
+   368→              <span>× {quantity}</span>
+   369→            </div>
+   370→            <Separator />
+   371→            <div className="flex justify-between font-semibold text-lg">
+   372→              <span>Total</span>
+   373→              <span className="text-maroon-500">{formatCurrency(total)}</span>
+   374→            </div>
+   375→          </div>
+   376→        </CardContent>
+   377→      </Card>
+   378→
+   379→      <div className="flex justify-end">
+   380→        <Button
+   381→          onClick={onNext}
+   382→          className="bg-maroon-500 hover:bg-maroon-600"
+   383→          disabled={quantity < 1}
+   384→        >
+   385→          Continue to Review
+   386→          <ChevronRight className="h-4 w-4 ml-1" />
+   387→        </Button>
+   388→      </div>
+   389→    </div>
+   390→  );
+   391→}
+   392→
+   393→/* ==============================
+   394→   STEP 3: Cart Review
+   395→   ============================== */
+   396→function StepCartReview({ campaign, quantity, subtotal, serviceFee, total, onBack, onNext }: {
+   397→  campaign: Campaign;
+   398→  quantity: number;
+   399→  subtotal: number;
+   400→  serviceFee: number;
+   401→  total: number;
+   402→  onBack: () => void;
+   403→  onNext: () => void;
+   404→}) {
+   405→  return (
+   406→    <div className="space-y-6">
+   407→      <div className="flex items-center gap-2">
+   408→        <Button variant="ghost" size="icon" onClick={onBack} className="h-8 w-8">
+   409→          <ArrowLeft className="h-4 w-4" />
+   410→        </Button>
+   411→        <h2 className="text-lg font-semibold">Review Your Order</h2>
+   412→      </div>
+   413→
+   414→      <Card>
+   415→        <CardHeader>
+   416→          <CardTitle className="text-base flex items-center gap-2">
+   417→            <ShoppingCart className="h-4 w-4" />
+   418→            Order Summary
+   419→          </CardTitle>
+   420→        </CardHeader>
+   421→        <CardContent className="space-y-4">
+   422→          {/* Item */}
+   423→          <div className="flex items-center gap-4 p-3 bg-muted/50 rounded-xl">
+   424→            <div className="p-2 rounded-lg bg-background text-xl">
+   425→              {getCategoryIcon(campaign.product.category)}
+   426→            </div>
+   427→            <div className="flex-1 min-w-0">
+   428→              <p className="font-medium text-sm truncate">{campaign.title}</p>
+   429→              <p className="text-xs text-muted-foreground">{formatCurrency(campaign.ticketPrice)} × {quantity} ticket{quantity > 1 ? 's' : ''}</p>
+   430→            </div>
+   431→            <p className="font-semibold text-sm">{formatCurrency(subtotal)}</p>
+   432→          </div>
+   433→
+   434→          <Separator />
+   435→
+   436→          {/* Totals */}
+   437→          <div className="space-y-2">
+   438→            <div className="flex justify-between text-sm">
+   439→              <span className="text-muted-foreground">Subtotal</span>
+   440→              <span>{formatCurrency(subtotal)}</span>
+   441→            </div>
+   442→            <div className="flex justify-between text-sm">
+   443→              <span className="text-muted-foreground">Service fee (2%)</span>
+   444→              <span>{formatCurrency(serviceFee)}</span>
+   445→            </div>
+   446→            <Separator />
+   447→            <div className="flex justify-between font-bold text-lg">
+   448→              <span>Total</span>
+   449→              <span className="text-maroon-500">{formatCurrency(total)}</span>
+   450→            </div>
+   451→          </div>
+   452→        </CardContent>
+   453→      </Card>
+   454→
+   455→      <Card>
+   456→        <CardContent className="p-4">
+   457→          <p className="text-xs text-muted-foreground">
+   458→            By proceeding, you agree to the JK Raffle{' '}
+   459→            <span className="text-maroon-500 underline cursor-pointer">Terms &amp; Conditions</span>.
+   460→            All ticket sales are final. Draw results are independently verified.
+   461→          </p>
+   462→        </CardContent>
+   463→      </Card>
+   464→
+   465→      <div className="flex justify-between">
+   466→        <Button variant="outline" onClick={onBack}>
+   467→          <ArrowLeft className="h-4 w-4 mr-1" />
+   468→          Back
+   469→        </Button>
+   470→        <Button
+   471→          onClick={onNext}
+   472→          className="bg-maroon-500 hover:bg-maroon-600"
+   473→        >
+   474→          Proceed to Checkout
+   475→          <CreditCard className="h-4 w-4 ml-2" />
+   476→        </Button>
+   477→      </div>
+   478→    </div>
+   479→  );
+   480→}
+   481→
+   482→/* ==============================
+   483→   STEP 4: Payment
+   484→   ============================== */
+   485→function StepPayment({ total, paymentMethod, setPaymentMethod, cardNumber, setCardNumber, cardExpiry, setCardExpiry, cardCvv, setCardCvv, isProcessing, onBack, onPay }: {
+   486→  total: number;
+   487→  paymentMethod: string;
+   488→  setPaymentMethod: (m: string) => void;
+   489→  cardNumber: string;
+   490→  setCardNumber: (v: string) => void;
+   491→  cardExpiry: string;
+   492→  setCardExpiry: (v: string) => void;
+   493→  cardCvv: string;
+   494→  setCardCvv: (v: string) => void;
+   495→  isProcessing: boolean;
+   496→  onBack: () => void;
+   497→  onPay: () => void;
+   498→}) {
+   499→  return (
+   500→    <div className="space-y-6">
+   501→      <div className="flex items-center gap-2">
+   502→        <Button variant="ghost" size="icon" onClick={onBack} className="h-8 w-8">
+   503→          <ArrowLeft className="h-4 w-4" />
+   504→        </Button>
+   505→        <h2 className="text-lg font-semibold">Payment</h2>
+   506→        <Badge className="bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400 ml-2">
+   507→          {formatCurrency(total)}
+   508→        </Badge>
+   509→      </div>
+   510→
+   511→      {/* Payment method selector */}
+   512→      <div className="space-y-3">
+   513→        <Label className="text-sm font-medium">Payment Method</Label>
+   514→        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+   515→          {paymentMethods.map((method) => {
+   516→            const Icon = method.icon;
+   517→            const isSelected = paymentMethod === method.id;
+   518→            return (
+   519→              <button
+   520→                key={method.id}
+   521→                onClick={() => setPaymentMethod(method.id)}
+   522→                className={cn(
+   523→                  'flex items-center gap-3 rounded-xl border-2 p-4 text-left transition-all cursor-pointer',
+   524→                  isSelected
+   525→                    ? 'border-maroon-600 bg-maroon-50 dark:bg-maroon-950/20'
+   526→                    : 'border-border hover:border-maroon-300 dark:hover:border-maroon-500'
+   527→                )}
+   528→              >
+   529→                <div className={cn(
+   530→                  'p-2 rounded-lg',
+   531→                  isSelected ? 'bg-maroon-500 text-white' : 'bg-muted'
+   532→                )}>
+   533→                  <Icon className="h-5 w-5" />
+   534→                </div>
+   535→                <div>
+   536→                  <p className={cn('text-sm font-medium', isSelected && 'text-maroon-600 dark:text-maroon-300')}>
+   537→                    {method.label}
+   538→                  </p>
+   539→                  <p className="text-xs text-muted-foreground">{method.description}</p>
+   540→                </div>
+   541→              </button>
+   542→            );
+   543→          })}
+   544→        </div>
+   545→      </div>
+   546→
+   547→      {/* Card form (shown for card method) */}
+   548→      {paymentMethod === 'card' && (
+   549→        <Card>
+   550→          <CardHeader>
+   551→            <CardTitle className="text-base">Card Details</CardTitle>
+   552→            <CardDescription className="text-xs">
+   553→              Enter your card information below (demo — no real payment)
+   554→            </CardDescription>
+   555→          </CardHeader>
+   556→          <CardContent className="space-y-4">
+   557→            <div>
+   558→              <Label className="text-xs">Card Number</Label>
+   559→              <Input
+   560→                placeholder="4242 4242 4242 4242"
+   561→                value={cardNumber}
+   562→                onChange={(e) => setCardNumber(e.target.value.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim().slice(0, 19))}
+   563→                className="mt-1.5 font-mono"
+   564→                maxLength={19}
+   565→              />
+   566→            </div>
+   567→            <div className="grid grid-cols-2 gap-4">
+   568→              <div>
+   569→                <Label className="text-xs">Expiry Date</Label>
+   570→                <Input
+   571→                  placeholder="MM/YY"
+   572→                  value={cardExpiry}
+   573→                  onChange={(e) => {
+   574→                    let v = e.target.value.replace(/\D/g, '');
+   575→                    if (v.length >= 2) v = v.slice(0, 2) + '/' + v.slice(2);
+   576→                    setCardExpiry(v.slice(0, 5));
+   577→                  }}
+   578→                  className="mt-1.5 font-mono"
+   579→                  maxLength={5}
+   580→                />
+   581→              </div>
+   582→              <div>
+   583→                <Label className="text-xs">CVV</Label>
+   584→                <Input
+   585→                  placeholder="123"
+   586→                  value={cardCvv}
+   587→                  onChange={(e) => setCardCvv(e.target.value.replace(/\D/g, '').slice(0, 4))}
+   588→                  className="mt-1.5 font-mono"
+   589→                  maxLength={4}
+   590→                  type="password"
+   591→                />
+   592→              </div>
+   593→            </div>
+   594→          </CardContent>
+   595→        </Card>
+   596→      )}
+   597→
+   598→      {paymentMethod === 'payfast' && (
+   599→        <Card>
+   600→          <CardContent className="p-5 text-center">
+   601→            <Zap className="h-8 w-8 text-maroon-600 mx-auto mb-2" />
+   602→            <p className="font-medium text-sm">PayFast Checkout</p>
+   603→            <p className="text-xs text-muted-foreground mt-1">
+   604→              You will be redirected to PayFast to complete your payment via instant EFT.
+   605→            </p>
+   606→          </CardContent>
+   607→        </Card>
+   608→      )}
+   609→
+   610→      {paymentMethod === 'eft' && (
+   611→        <Card>
+   612→          <CardContent className="p-5 text-center">
+   613→            <Building2 className="h-8 w-8 text-maroon-600 mx-auto mb-2" />
+   614→            <p className="font-medium text-sm">EFT / OZOW Payment</p>
+   615→            <p className="text-xs text-muted-foreground mt-1">
+   616→              You will be redirected to complete your bank transfer or OZOW payment.
+   617→            </p>
+   618→          </CardContent>
+   619→        </Card>
+   620→      )}
+   621→
+   622→      <div className="flex justify-between">
+   623→        <Button variant="outline" onClick={onBack} disabled={isProcessing}>
+   624→          <ArrowLeft className="h-4 w-4 mr-1" />
+   625→          Back
+   626→        </Button>
+   627→        <Button
+   628→          onClick={onPay}
+   629→          className="bg-maroon-500 hover:bg-maroon-600 min-w-[160px]"
+   630→          disabled={isProcessing}
+   631→        >
+   632→          {isProcessing ? (
+   633→            <>
+   634→              <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
+   635→              Processing...
+   636→            </>
+   637→          ) : (
+   638→            <>
+   639→              Pay {formatCurrency(total)}
+   640→              <CreditCard className="h-4 w-4 ml-2" />
+   641→            </>
+   642→          )}
+   643→        </Button>
+   644→      </div>
+   645→    </div>
+   646→  );
+   647→}
+   648→
+   649→/* ==============================
+   650→   STEP 5: Confirmation
+   651→   ============================== */
+   652→function StepConfirmation({ campaign, quantity, total, ticketRefs, onViewTickets, onBuyMore }: {
+   653→  campaign: Campaign;
+   654→  quantity: number;
+   655→  total: number;
+   656→  ticketRefs: string[];
+   657→  onViewTickets: () => void;
+   658→  onBuyMore: () => void;
+   659→}) {
+   660→  return (
+   661→    <div className="space-y-6">
+   662→      <Card className="border-2 border-maroon-200 dark:border-maroon-600">
+   663→        <CardContent className="p-8 text-center">
+   664→          {/* Success checkmark */}
+   665→          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-maroon-100 dark:bg-maroon-700/40">
+   666→            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-maroon-600">
+   667→              <Check className="h-8 w-8 text-white" />
+   668→            </div>
+   669→          </div>
+   670→
+   671→          <h2 className="text-2xl font-bold text-maroon-600 dark:text-maroon-400">
+   672→            Payment Successful!
+   673→          </h2>
+   674→          <p className="text-muted-foreground mt-2 text-sm">
+   675→            Your purchase has been confirmed. Good luck!
+   676→          </p>
+   677→
+   678→          {/* Summary */}
+   679→          <div className="mt-6 bg-muted/50 rounded-xl p-4 max-w-md mx-auto text-left">
+   680→            <div className="space-y-2 text-sm">
+   681→              <div className="flex justify-between">
+   682→                <span className="text-muted-foreground">Campaign</span>
+   683→                <span className="font-medium text-right max-w-[200px] truncate">{campaign.title}</span>
+   684→              </div>
+   685→              <div className="flex justify-between">
+   686→                <span className="text-muted-foreground">Tickets</span>
+   687→                <span className="font-medium">{quantity}</span>
+   688→              </div>
+   689→              <div className="flex justify-between">
+   690→                <span className="text-muted-foreground">Amount Paid</span>
+   691→                <span className="font-bold text-maroon-500">{formatCurrency(total)}</span>
+   692→              </div>
+   693→            </div>
+   694→          </div>
+   695→
+   696→          {/* Generated ticket references */}
+   697→          {ticketRefs.length > 0 && (
+   698→            <div className="mt-6">
+   699→              <p className="text-xs text-muted-foreground mb-3">Your ticket reference(s):</p>
+   700→              <div className="flex flex-wrap justify-center gap-2">
+   701→                {ticketRefs.map((ref) => (
+   702→                  <div
+   703→                    key={ref}
+   704→                    className="bg-maroon-50 dark:bg-maroon-950/30 border border-maroon-200 dark:border-maroon-600 rounded-lg px-3 py-2"
+   705→                  >
+   706→                    <div className="flex items-center gap-2">
+   707→                      <Ticket className="h-4 w-4 text-maroon-600" />
+   708→                      <span className="font-mono text-sm font-bold text-maroon-600 dark:text-maroon-300">
+   709→                        {ref}
+   710→                      </span>
+   711→                    </div>
+   712→                  </div>
+   713→                ))}
+   714→              </div>
+   715→            </div>
+   716→          )}
+   717→
+   718→          {/* Actions */}
+   719→          <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
+   720→            <Button onClick={onViewTickets} className="bg-maroon-500 hover:bg-maroon-600">
+   721→              View My Tickets
+   722→            </Button>
+   723→            <Button variant="outline" onClick={onBuyMore}>
+   724→              Buy More Tickets
+   725→            </Button>
+   726→          </div>
+   727→        </CardContent>
+   728→      </Card>
+   729→    </div>
+   730→  );
+   731→}

@@ -39,18 +39,21 @@ export function PublicAbout() {
 
   return (
     <div className="pt-16 lg:pt-18">
-      {/* Hero */}
-      <section className="bg-gradient-to-b from-forest-50 to-transparent">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+      {/* Hero — dark maroon gradient with generous padding */}
+      <section className="relative bg-gradient-to-br from-maroon-900 via-maroon-800 to-maroon-950 overflow-hidden">
+        {/* Subtle decorative element */}
+        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gold-400/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-32 relative z-10">
           <motion.div {...fadeInUp} className="text-center max-w-3xl mx-auto">
-            <Badge variant="secondary" className="mb-4">
+            <Badge className="mb-5 bg-white/10 text-gold-400 border-gold-400/20 hover:bg-white/15">
               <Building2 className="h-3 w-3 mr-1" />
               Our Story
             </Badge>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-              About <span className="gradient-text">JK Raffle</span>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-white">
+              About <span className="gradient-gold">JK Raffle</span>
             </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-lg text-maroon-200/70 leading-relaxed">
               JK Raffle Ecosystem is South Africa&apos;s premier community-driven raffle platform,
               founded on principles of transparency, fairness, and the belief that
               extraordinary opportunities should be accessible to everyone.
@@ -65,14 +68,14 @@ export function PublicAbout() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <motion.div {...fadeInUp}>
               <div className="relative">
-                <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-forest-100 to-forest-200/50 flex items-center justify-center overflow-hidden">
+                <div className="aspect-[4/3] rounded-xl bg-gradient-to-br from-maroon-100 to-maroon-200/50 flex items-center justify-center overflow-hidden shadow-royal-md">
                   <div className="text-center p-8">
-                    <div className="w-20 h-20 rounded-2xl bg-forest-500 flex items-center justify-center mx-auto mb-6 shadow-xl shadow-forest-500/20">
+                    <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-maroon-500 to-maroon-600 flex items-center justify-center mx-auto mb-6 shadow-lg shadow-maroon-500/20">
                       <span className="text-white font-bold text-2xl">JK</span>
                     </div>
-                    <h3 className="text-2xl font-bold text-forest-600 mb-2">FLG Empire</h3>
-                    <p className="text-forest-600/70">In Partnership with IPHC</p>
-                    <div className="mt-4 flex items-center justify-center gap-2 text-sm text-forest-600/50">
+                    <h3 className="text-2xl font-bold text-maroon-600 mb-2">FLG Empire</h3>
+                    <p className="text-maroon-600/70">In Partnership with IPHC</p>
+                    <div className="mt-4 flex items-center justify-center gap-2 text-sm text-maroon-600/50">
                       <MapPin className="h-4 w-4" />
                       South Africa
                     </div>
@@ -113,9 +116,9 @@ export function PublicAbout() {
                   { icon: Heart, label: 'Community First' },
                   { icon: Globe, label: 'All 9 Provinces' },
                 ].map((item) => (
-                  <div key={item.label} className="flex items-center gap-2.5 text-sm">
-                    <div className="w-8 h-8 rounded-lg bg-forest-50 flex items-center justify-center shrink-0">
-                      <item.icon className="h-4 w-4 text-forest-500" />
+                  <div key={item.label} className="flex items-center gap-2.5 text-sm p-3 rounded-xl bg-white shadow-royal-sm border border-border/30">
+                    <div className="w-9 h-9 rounded-lg bg-maroon-50 flex items-center justify-center shrink-0">
+                      <item.icon className="h-4 w-4 text-maroon-500" />
                     </div>
                     <span className="font-medium text-foreground">{item.label}</span>
                   </div>
@@ -147,12 +150,12 @@ export function PublicAbout() {
               { icon: Target, label: 'Tickets Sold', value: formatNumber(stats.totalTicketsSold) },
             ].map((stat) => (
               <motion.div key={stat.label} {...fadeInUp}>
-                <Card className="text-center border-border/50 shadow-sm">
+                <Card className="text-center border-border/30 shadow-royal-sm rounded-xl bg-white">
                   <CardContent className="p-6">
-                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-forest-50 mb-4">
-                      <stat.icon className="h-6 w-6 text-forest-500" />
+                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-maroon-50 mb-4">
+                      <stat.icon className="h-6 w-6 text-maroon-500" />
                     </div>
-                    <p className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight">
+                    <p className="text-2xl sm:text-3xl font-bold text-maroon-500 tracking-tight">
                       {stat.value}
                     </p>
                     <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
@@ -169,7 +172,7 @@ export function PublicAbout() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <motion.div {...fadeInUp}>
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-forest-500 to-forest-600 mb-6 shadow-lg shadow-forest-500/20">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br from-maroon-500 to-maroon-600 mb-6 shadow-royal-md">
                 <TreePine className="h-8 w-8 text-white" />
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-6">
@@ -201,7 +204,7 @@ export function PublicAbout() {
         </div>
       </section>
 
-      {/* Team placeholder */}
+      {/* Team — premium avatars with maroon gradient rings */}
       <section className="py-16 lg:py-20 bg-muted/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeInUp} className="text-center">
@@ -225,10 +228,15 @@ export function PublicAbout() {
               { name: 'David Nkosi', role: 'Branch Network Director', initials: 'DN' },
             ].map((member) => (
               <motion.div key={member.name} {...fadeInUp}>
-                <Card className="card-hover border-border/50 shadow-sm text-center">
+                <Card className="card-hover border-border/30 shadow-royal-sm text-center rounded-xl bg-white">
                   <CardContent className="p-6">
-                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-forest-400 to-forest-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-forest-500/20">
-                      <span className="text-white font-bold text-xl">{member.initials}</span>
+                    {/* Premium avatar with maroon gradient ring */}
+                    <div className="relative inline-flex items-center justify-center mb-4">
+                      <div className="w-[88px] h-[88px] rounded-full bg-gradient-to-br from-maroon-400 to-maroon-600 p-[3px] shadow-md shadow-maroon-500/15">
+                        <div className="w-full h-full rounded-full bg-gradient-to-br from-maroon-500 to-maroon-700 flex items-center justify-center">
+                          <span className="text-white font-bold text-xl">{member.initials}</span>
+                        </div>
+                      </div>
                     </div>
                     <h3 className="font-semibold text-base">{member.name}</h3>
                     <p className="text-sm text-muted-foreground mt-1">{member.role}</p>

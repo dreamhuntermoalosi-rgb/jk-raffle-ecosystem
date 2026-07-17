@@ -96,14 +96,14 @@ export function AdminEvents() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Events & Calendar</h1>
+          <h1 className="text-2xl font-bold text-foreground tracking-tight">Events & Calendar</h1>
           <p className="text-muted-foreground text-sm mt-1">
             Manage draws, branch events, and community activities
           </p>
         </div>
         <div className="flex items-center gap-3">
           {/* View Toggle */}
-          <div className="flex items-center border rounded-lg p-0.5">
+          <div className="flex items-center border border-border rounded-lg p-0.5 bg-muted">
             <Button
               variant={viewMode === 'list' ? 'secondary' : 'ghost'}
               size="sm"
@@ -125,7 +125,7 @@ export function AdminEvents() {
           </div>
           <Dialog open={createOpen} onOpenChange={setCreateOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-forest-500 hover:bg-forest-600 text-white">
+              <Button className="bg-maroon-500 hover:bg-maroon-600 text-white rounded-[10px]">
                 <Plus className="w-4 h-4 mr-2" />
                 Create Event
               </Button>
@@ -140,7 +140,7 @@ export function AdminEvents() {
               <div className="grid gap-4 py-4">
                 <div className="grid gap-2">
                   <Label htmlFor="event-title">Title</Label>
-                  <Input id="event-title" placeholder="e.g. Live Draw - Sandton Campaign" />
+                  <Input id="event-title" placeholder="e.g. Live Draw - Sandton Campaign" className="rounded-lg" />
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="event-desc">Description</Label>
@@ -148,13 +148,14 @@ export function AdminEvents() {
                     id="event-desc"
                     placeholder="Describe the event details..."
                     rows={3}
+                    className="rounded-lg"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="event-type">Type</Label>
                     <Select>
-                      <SelectTrigger id="event-type">
+                      <SelectTrigger id="event-type" className="rounded-lg">
                         <SelectValue placeholder="Select type" />
                       </SelectTrigger>
                       <SelectContent>
@@ -168,7 +169,7 @@ export function AdminEvents() {
                   <div className="grid gap-2">
                     <Label htmlFor="event-branch">Branch</Label>
                     <Select>
-                      <SelectTrigger id="event-branch">
+                      <SelectTrigger id="event-branch" className="rounded-lg">
                         <SelectValue placeholder="Select branch" />
                       </SelectTrigger>
                       <SelectContent>
@@ -184,21 +185,21 @@ export function AdminEvents() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="grid gap-2">
                     <Label htmlFor="event-date">Start Date & Time</Label>
-                    <Input id="event-date" type="datetime-local" />
+                    <Input id="event-date" type="datetime-local" className="rounded-lg" />
                   </div>
                   <div className="grid gap-2">
                     <Label htmlFor="event-end-date">End Date & Time</Label>
-                    <Input id="event-end-date" type="datetime-local" />
+                    <Input id="event-end-date" type="datetime-local" className="rounded-lg" />
                   </div>
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="event-location">Location</Label>
-                  <Input id="event-location" placeholder="e.g. Sandton City Mall, Centre Court" />
+                  <Input id="event-location" placeholder="e.g. Sandton City Mall, Centre Court" className="rounded-lg" />
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="event-campaign">Campaign (Optional)</Label>
                   <Select>
-                    <SelectTrigger id="event-campaign">
+                    <SelectTrigger id="event-campaign" className="rounded-lg">
                       <SelectValue placeholder="Select campaign (optional)" />
                     </SelectTrigger>
                     <SelectContent>
@@ -212,10 +213,10 @@ export function AdminEvents() {
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline" onClick={() => setCreateOpen(false)}>
+                <Button variant="outline" onClick={() => setCreateOpen(false)} className="rounded-[10px]">
                   Cancel
                 </Button>
-                <Button className="bg-forest-500 hover:bg-forest-600 text-white" onClick={() => setCreateOpen(false)}>
+                <Button className="bg-maroon-500 hover:bg-maroon-600 text-white rounded-[10px]" onClick={() => setCreateOpen(false)}>
                   Create Event
                 </Button>
               </DialogFooter>
@@ -226,7 +227,7 @@ export function AdminEvents() {
 
       {/* Calendar Placeholder View */}
       {viewMode === 'calendar' && (
-        <Card className="border-dashed">
+        <Card className="shadow-royal-sm rounded-xl border-0 border-dashed">
           <CardContent className="flex flex-col items-center justify-center py-20">
             <CalendarDays className="w-12 h-12 text-muted-foreground/40 mb-4" />
             <h3 className="text-lg font-semibold text-muted-foreground">Calendar View</h3>
@@ -242,7 +243,7 @@ export function AdminEvents() {
         <>
           {/* Upcoming Events */}
           <div>
-            <h2 className="text-lg font-semibold mb-4">Upcoming Events</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-4">Upcoming Events</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {upcomingEvents.map((event) => {
                 const Icon = getEventIcon(event.type);
@@ -252,18 +253,18 @@ export function AdminEvents() {
                 return (
                   <Card
                     key={event.id}
-                    className="cursor-pointer hover:shadow-md transition-shadow"
+                    className="cursor-pointer shadow-royal-sm rounded-xl border-0 hover:shadow-royal-md transition-shadow"
                     onClick={() => setDetailEvent(event)}
                   >
                     <CardContent className="p-5">
                       <div className="flex items-start gap-4">
-                        <div className="w-11 h-11 rounded-lg bg-forest-50 dark:bg-forest-900/30 flex items-center justify-center flex-shrink-0">
-                          <Icon className="w-5 h-5 text-forest-500" />
+                        <div className="w-11 h-11 rounded-lg bg-maroon-50 flex items-center justify-center flex-shrink-0">
+                          <Icon className="w-5 h-5 text-maroon-500" />
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center gap-2 mb-1 flex-wrap">
-                            <h3 className="font-semibold text-sm line-clamp-1">{event.title}</h3>
-                            <Badge variant="secondary" className={cn('text-[11px] px-1.5 py-0', getStatusColor(event.status))}>
+                            <h3 className="font-semibold text-sm text-foreground line-clamp-1">{event.title}</h3>
+                            <Badge variant="secondary" className={cn('text-[10px] rounded-md', getStatusColor(event.status))}>
                               {event.status.replace('_', ' ')}
                             </Badge>
                           </div>
@@ -289,7 +290,7 @@ export function AdminEvents() {
                             </span>
                           </div>
                           {campaignTitle && (
-                            <p className="text-[11px] text-gold-600 dark:text-gold-400 mt-2 font-medium truncate">
+                            <p className="text-[11px] text-gold-600 mt-2 font-medium truncate">
                               Campaign: {campaignTitle}
                             </p>
                           )}
@@ -321,18 +322,18 @@ export function AdminEvents() {
                     return (
                       <Card
                         key={event.id}
-                        className="cursor-pointer hover:shadow-md transition-shadow opacity-80"
+                        className="cursor-pointer shadow-royal-sm rounded-xl border-0 hover:shadow-royal-md transition-shadow opacity-80"
                         onClick={() => setDetailEvent(event)}
                       >
                         <CardContent className="p-5">
                           <div className="flex items-start gap-4">
-                            <div className="w-11 h-11 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
-                              <Icon className="w-5 h-5 text-muted-foreground" />
+                            <div className="w-11 h-11 rounded-lg bg-maroon-50/60 flex items-center justify-center flex-shrink-0">
+                              <Icon className="w-5 h-5 text-maroon-400" />
                             </div>
                             <div className="min-w-0 flex-1">
                               <div className="flex items-center gap-2 mb-1 flex-wrap">
-                                <h3 className="font-semibold text-sm line-clamp-1">{event.title}</h3>
-                                <Badge variant="secondary" className={cn('text-[11px] px-1.5 py-0', getStatusColor(event.status))}>
+                                <h3 className="font-semibold text-sm text-foreground line-clamp-1">{event.title}</h3>
+                                <Badge variant="secondary" className={cn('text-[10px] rounded-md', getStatusColor(event.status))}>
                                   {event.status}
                                 </Badge>
                               </div>
@@ -377,19 +378,19 @@ export function AdminEvents() {
             <>
               <DialogHeader>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-forest-50 dark:bg-forest-900/30 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-lg bg-maroon-50 flex items-center justify-center">
                     {(() => {
                       const Icon = getEventIcon(detailEvent.type);
-                      return <Icon className="w-5 h-5 text-forest-500" />;
+                      return <Icon className="w-5 h-5 text-maroon-500" />;
                     })()}
                   </div>
                   <div className="min-w-0">
                     <DialogTitle className="text-lg">{detailEvent.title}</DialogTitle>
                     <div className="flex items-center gap-2 mt-1">
-                      <Badge variant="secondary" className={cn('text-[11px] px-1.5 py-0', getStatusColor(detailEvent.status))}>
+                      <Badge variant="secondary" className={cn('text-[10px] rounded-md', getStatusColor(detailEvent.status))}>
                         {detailEvent.status.replace('_', ' ')}
                       </Badge>
-                      <Badge variant="outline" className="text-[11px]">
+                      <Badge variant="outline" className="text-[10px] rounded-md">
                         {eventTypeLabels[detailEvent.type] || detailEvent.type}
                       </Badge>
                     </div>
@@ -403,7 +404,7 @@ export function AdminEvents() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Date & Time</p>
-                    <p className="text-sm font-medium flex items-center gap-1.5">
+                    <p className="text-sm font-medium text-foreground flex items-center gap-1.5">
                       <Clock className="w-3.5 h-3.5 text-muted-foreground" />
                       {formatDate(detailEvent.date, 'long')}
                     </p>
@@ -415,30 +416,30 @@ export function AdminEvents() {
                   </div>
                   <div className="space-y-1">
                     <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Location</p>
-                    <p className="text-sm font-medium flex items-center gap-1.5">
+                    <p className="text-sm font-medium text-foreground flex items-center gap-1.5">
                       <MapPin className="w-3.5 h-3.5 text-muted-foreground" />
                       {detailEvent.location || 'N/A'}
                     </p>
                   </div>
                   <div className="space-y-1">
                     <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Branch</p>
-                    <p className="text-sm font-medium flex items-center gap-1.5">
+                    <p className="text-sm font-medium text-foreground flex items-center gap-1.5">
                       <Building2 className="w-3.5 h-3.5 text-muted-foreground" />
                       {getBranchName(detailEvent.branchId)}
                     </p>
                   </div>
                   <div className="space-y-1">
                     <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Attendees</p>
-                    <p className="text-sm font-medium flex items-center gap-1.5">
+                    <p className="text-sm font-medium text-foreground flex items-center gap-1.5">
                       <Users className="w-3.5 h-3.5 text-muted-foreground" />
                       {mockAttendees[detailEvent.id] ?? 0} {detailEvent.status === 'completed' ? 'attended' : 'registered'}
                     </p>
                   </div>
                 </div>
                 {getCampaignTitle(detailEvent.campaignId) && (
-                  <div className="bg-gold-50 dark:bg-gold-500/10 rounded-lg p-3">
-                    <p className="text-xs font-medium text-gold-600 dark:text-gold-400 uppercase tracking-wider mb-1">Linked Campaign</p>
-                    <p className="text-sm font-medium text-gold-700 dark:text-gold-300">
+                  <div className="bg-gold-50 rounded-lg p-3">
+                    <p className="text-xs font-medium text-gold-600 uppercase tracking-wider mb-1">Linked Campaign</p>
+                    <p className="text-sm font-medium text-gold-700">
                       {getCampaignTitle(detailEvent.campaignId)}
                     </p>
                   </div>
@@ -448,7 +449,7 @@ export function AdminEvents() {
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline" onClick={() => setDetailEvent(null)}>
+                <Button variant="outline" onClick={() => setDetailEvent(null)} className="rounded-[10px]">
                   Close
                 </Button>
               </DialogFooter>

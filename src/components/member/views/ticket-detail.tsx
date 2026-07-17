@@ -63,21 +63,21 @@ export function TicketDetailDialog({ ticket, open, onOpenChange }: TicketDetailD
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-xl max-h-[90vh] overflow-y-auto p-0 gap-0">
-        {/* Ticket Header with gradient */}
-        <div className="relative bg-gradient-to-br from-[hsl(152,68%,32%)] via-[hsl(152,68%,38%)] to-[hsl(140,60%,28%)] px-6 pt-6 pb-5 rounded-t-lg">
+      <DialogContent className="sm:max-w-xl max-h-[90vh] overflow-y-auto p-0 gap-0 rounded-xl border-0">
+        {/* Ticket Header with maroon gradient */}
+        <div className="relative bg-gradient-to-br from-maroon-600 via-maroon-500 to-maroon-700 px-6 pt-6 pb-5 rounded-t-xl">
           <div className="flex items-center justify-between mb-4">
             <Badge
               variant="secondary"
               className={cn(
-                'text-xs px-3 py-1 font-medium border-0',
+                'text-xs px-3 py-1 font-medium rounded-md border-0',
                 getStatusColor(ticket.status)
               )}
             >
               {ticket.status.charAt(0).toUpperCase() + ticket.status.slice(1)}
             </Badge>
             {isWon && (
-              <Badge className="bg-amber-400 text-amber-900 border-0 text-xs px-3 py-1 font-bold">
+              <Badge className="bg-gold-400 text-maroon-900 border-0 text-xs px-3 py-1 font-bold rounded-md">
                 🏆 Winner!
               </Badge>
             )}
@@ -86,12 +86,12 @@ export function TicketDetailDialog({ ticket, open, onOpenChange }: TicketDetailD
             <DialogTitle className="text-white text-left font-mono text-2xl md:text-3xl tracking-widest font-bold">
               {ticket.reference}
             </DialogTitle>
-            <DialogDescription className="text-emerald-100/80 text-left text-sm">
+            <DialogDescription className="text-white/50 text-left text-sm">
               {campaign?.title || 'Unknown Campaign'}
             </DialogDescription>
           </DialogHeader>
           {/* Decorative dots */}
-          <div className="absolute top-3 right-3 flex gap-1.5 opacity-30">
+          <div className="absolute top-3 right-3 flex gap-1.5 opacity-20">
             <span className="w-2 h-2 rounded-full bg-white" />
             <span className="w-2 h-2 rounded-full bg-white" />
             <span className="w-2 h-2 rounded-full bg-white" />
@@ -101,14 +101,14 @@ export function TicketDetailDialog({ ticket, open, onOpenChange }: TicketDetailD
         <div className="p-6 space-y-6">
           {/* QR Code Section */}
           <div className="flex flex-col items-center">
-            <div className="relative w-[200px] h-[200px] rounded-xl border-2 border-dashed border-[hsl(152,68%,35%)] bg-[hsl(152,68%,97%)] dark:bg-[hsl(152,68%,8%)] flex flex-col items-center justify-center gap-2">
+            <div className="relative w-[200px] h-[200px] rounded-xl border-2 border-dashed border-maroon-200 bg-maroon-50/30 flex flex-col items-center justify-center gap-2">
               {/* Corner decorations */}
-              <span className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-[hsl(152,68%,45%)] rounded-tl-md" />
-              <span className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-[hsl(152,68%,45%)] rounded-tr-md" />
-              <span className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-[hsl(152,68%,45%)] rounded-bl-md" />
-              <span className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-[hsl(152,68%,45%)] rounded-br-md" />
-              <QrCode className="h-16 w-16 text-[hsl(152,68%,35%)]" />
-              <span className="text-xs font-medium text-[hsl(152,68%,40%)]">Scan to Verify</span>
+              <span className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-maroon-300 rounded-tl-md" />
+              <span className="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-maroon-300 rounded-tr-md" />
+              <span className="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-maroon-300 rounded-bl-md" />
+              <span className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-maroon-300 rounded-br-md" />
+              <QrCode className="h-16 w-16 text-maroon-500" />
+              <span className="text-xs font-medium text-maroon-400">Scan to Verify</span>
             </div>
             <p className="text-xs text-muted-foreground mt-2">
               Barcode: {ticket.barcode || 'N/A'}
@@ -145,7 +145,7 @@ export function TicketDetailDialog({ ticket, open, onOpenChange }: TicketDetailD
               <p className="text-[11px] uppercase tracking-wider text-muted-foreground font-medium">Payment Status</p>
               <Badge
                 variant="secondary"
-                className="text-xs px-3 py-1 bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 border-0 font-medium"
+                className="text-xs px-3 py-1 bg-maroon-50 text-maroon-600 rounded-md border-0 font-medium"
               >
                 <ShieldCheck className="h-3 w-3 mr-1.5" />
                 Paid
@@ -157,19 +157,19 @@ export function TicketDetailDialog({ ticket, open, onOpenChange }: TicketDetailD
 
           {/* Verification History */}
           <div>
-            <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
-              <ShieldCheck className="h-4 w-4 text-[hsl(152,68%,35%)]" />
+            <h3 className="text-sm font-semibold mb-3 flex items-center gap-2 tracking-tight">
+              <ShieldCheck className="h-4 w-4 text-maroon-500" />
               Verification History
             </h3>
             <div className="space-y-2">
               {mockVerificationHistory.map((entry) => (
                 <div
                   key={entry.id}
-                  className="flex items-center justify-between p-3 rounded-lg bg-muted/50 border border-border"
+                  className="flex items-center justify-between p-3.5 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-900/30">
-                      <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    <div className="flex items-center justify-center w-9 h-9 rounded-full bg-maroon-50">
+                      <ShieldCheck className="h-4 w-4 text-maroon-500" />
                     </div>
                     <div>
                       <p className="text-sm font-medium">{entry.method}</p>
@@ -183,7 +183,7 @@ export function TicketDetailDialog({ ticket, open, onOpenChange }: TicketDetailD
                     </p>
                     <Badge
                       variant="secondary"
-                      className="mt-1 text-[10px] px-1.5 py-0 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 border-0"
+                      className="mt-1 text-[10px] px-1.5 py-0 bg-maroon-50 text-maroon-500 rounded-md border-0"
                     >
                       Verified
                     </Badge>
@@ -199,7 +199,7 @@ export function TicketDetailDialog({ ticket, open, onOpenChange }: TicketDetailD
           <div className="flex gap-3">
             <Button
               variant="outline"
-              className="flex-1"
+              className="flex-1 rounded-[10px] border-border hover:bg-maroon-50 hover:border-maroon-200"
               onClick={() => handleAction('Download PDF')}
             >
               <Download className="h-4 w-4 mr-2" />
@@ -207,7 +207,7 @@ export function TicketDetailDialog({ ticket, open, onOpenChange }: TicketDetailD
             </Button>
             <Button
               variant="outline"
-              className="flex-1"
+              className="flex-1 rounded-[10px] border-border hover:bg-maroon-50 hover:border-maroon-200"
               onClick={() => handleAction('Print')}
             >
               <Printer className="h-4 w-4 mr-2" />
@@ -215,7 +215,7 @@ export function TicketDetailDialog({ ticket, open, onOpenChange }: TicketDetailD
             </Button>
             <Button
               variant="outline"
-              className="flex-1"
+              className="flex-1 rounded-[10px] border-border hover:bg-maroon-50 hover:border-maroon-200"
               onClick={() => handleAction('Share')}
             >
               <Share2 className="h-4 w-4 mr-2" />
@@ -248,7 +248,7 @@ function DetailItem({
         className={cn(
           'text-sm',
           highlight
-            ? 'text-lg font-bold text-[hsl(152,68%,35%)]'
+            ? 'text-lg font-bold text-maroon-500'
             : 'font-medium text-foreground'
         )}
       >

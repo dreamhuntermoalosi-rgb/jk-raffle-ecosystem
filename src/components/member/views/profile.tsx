@@ -112,23 +112,27 @@ export function MemberProfile() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Profile Header */}
-      <Card>
+      <Card className="border-0 shadow-royal-sm rounded-xl bg-white overflow-hidden">
         <CardContent className="p-6">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
-            <Avatar className="h-20 w-20 bg-emerald-700 text-white text-2xl">
-              <AvatarFallback className="text-2xl font-bold">{initials}</AvatarFallback>
-            </Avatar>
+            <div className="relative">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-maroon-500 to-maroon-700 p-[3px]">
+                <Avatar className="h-full w-full bg-maroon-500 text-white text-2xl rounded-full">
+                  <AvatarFallback className="text-2xl font-bold bg-white text-maroon-600 rounded-full">{initials}</AvatarFallback>
+                </Avatar>
+              </div>
+            </div>
             <div className="text-center sm:text-left flex-1">
-              <h1 className="text-2xl font-bold">
+              <h1 className="text-2xl font-bold tracking-tight">
                 {user.firstName} {user.lastName}
               </h1>
               <p className="text-muted-foreground text-sm mt-0.5">{user.email}</p>
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mt-2">
-                <Badge className="bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 capitalize">
+                <Badge className="bg-maroon-50 text-maroon-600 capitalize rounded-md border-0">
                   {user.role.replace('_', ' ')}
                 </Badge>
                 {branch && (
-                  <Badge variant="outline" className="text-xs">
+                  <Badge variant="outline" className="text-xs rounded-md">
                     {branch.name}
                   </Badge>
                 )}
@@ -142,10 +146,10 @@ export function MemberProfile() {
       </Card>
 
       {/* Edit Profile */}
-      <Card>
+      <Card className="border-0 shadow-royal-sm rounded-xl bg-white">
         <CardHeader>
-          <CardTitle className="text-base flex items-center gap-2">
-            <User className="h-5 w-5 text-muted-foreground" />
+          <CardTitle className="text-base font-semibold tracking-tight flex items-center gap-2">
+            <User className="h-4 w-4 text-maroon-500" />
             Edit Profile
           </CardTitle>
           <CardDescription className="text-xs">Update your personal information</CardDescription>
@@ -158,7 +162,7 @@ export function MemberProfile() {
                 <Input
                   id="firstName"
                   {...profileForm.register('firstName')}
-                  className="mt-1.5"
+                  className="mt-1.5 rounded-lg"
                 />
                 {profileForm.formState.errors.firstName && (
                   <p className="text-xs text-red-500 mt-1">{profileForm.formState.errors.firstName.message}</p>
@@ -169,7 +173,7 @@ export function MemberProfile() {
                 <Input
                   id="lastName"
                   {...profileForm.register('lastName')}
-                  className="mt-1.5"
+                  className="mt-1.5 rounded-lg"
                 />
                 {profileForm.formState.errors.lastName && (
                   <p className="text-xs text-red-500 mt-1">{profileForm.formState.errors.lastName.message}</p>
@@ -182,7 +186,7 @@ export function MemberProfile() {
                 <Input
                   id="phone"
                   {...profileForm.register('phone')}
-                  className="mt-1.5"
+                  className="mt-1.5 rounded-lg"
                 />
                 {profileForm.formState.errors.phone && (
                   <p className="text-xs text-red-500 mt-1">{profileForm.formState.errors.phone.message}</p>
@@ -193,7 +197,7 @@ export function MemberProfile() {
                 <Input
                   id="occupation"
                   {...profileForm.register('occupation')}
-                  className="mt-1.5"
+                  className="mt-1.5 rounded-lg"
                 />
                 {profileForm.formState.errors.occupation && (
                   <p className="text-xs text-red-500 mt-1">{profileForm.formState.errors.occupation.message}</p>
@@ -206,7 +210,7 @@ export function MemberProfile() {
                 id="biography"
                 {...profileForm.register('biography')}
                 rows={3}
-                className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1.5 resize-none"
+                className="flex w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mt-1.5 resize-none"
                 placeholder="Tell us about yourself..."
               />
               {profileForm.formState.errors.biography && (
@@ -216,7 +220,7 @@ export function MemberProfile() {
             <div className="flex justify-end">
               <Button
                 type="submit"
-                className="bg-emerald-700 hover:bg-emerald-800"
+                className="bg-maroon-500 hover:bg-maroon-600 rounded-[10px]"
               >
                 <Check className="h-4 w-4 mr-1.5" />
                 Save Changes
@@ -227,10 +231,10 @@ export function MemberProfile() {
       </Card>
 
       {/* Security Section */}
-      <Card>
+      <Card className="border-0 shadow-royal-sm rounded-xl bg-white">
         <CardHeader>
-          <CardTitle className="text-base flex items-center gap-2">
-            <Shield className="h-5 w-5 text-muted-foreground" />
+          <CardTitle className="text-base font-semibold tracking-tight flex items-center gap-2">
+            <Shield className="h-4 w-4 text-maroon-500" />
             Security
           </CardTitle>
           <CardDescription className="text-xs">Manage your password and account security</CardDescription>
@@ -248,6 +252,7 @@ export function MemberProfile() {
                     type={showCurrentPw ? 'text' : 'password'}
                     {...passwordForm.register('currentPassword')}
                     placeholder="Enter current password"
+                    className="rounded-lg"
                   />
                   <button
                     type="button"
@@ -270,6 +275,7 @@ export function MemberProfile() {
                       type={showNewPw ? 'text' : 'password'}
                       {...passwordForm.register('newPassword')}
                       placeholder="Enter new password"
+                      className="rounded-lg"
                     />
                     <button
                       type="button"
@@ -291,6 +297,7 @@ export function MemberProfile() {
                       type={showConfirmPw ? 'text' : 'password'}
                       {...passwordForm.register('confirmPassword')}
                       placeholder="Confirm new password"
+                      className="rounded-lg"
                     />
                     <button
                       type="button"
@@ -306,7 +313,7 @@ export function MemberProfile() {
                 </div>
               </div>
               <div className="flex justify-end">
-                <Button type="submit" variant="outline" className="text-xs">
+                <Button type="submit" variant="outline" className="text-xs rounded-[10px] border-border hover:bg-maroon-50">
                   <Lock className="h-3.5 w-3.5 mr-1.5" />
                   Update Password
                 </Button>
@@ -320,7 +327,7 @@ export function MemberProfile() {
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
               <h3 className="text-sm font-semibold flex items-center gap-2">
-                <Smartphone className="h-4 w-4" />
+                <Smartphone className="h-4 w-4 text-maroon-500" />
                 Two-Factor Authentication
               </h3>
               <p className="text-xs text-muted-foreground">
@@ -345,17 +352,17 @@ export function MemberProfile() {
               {mockSessions.map((session) => (
                 <div
                   key={session.id}
-                  className="flex items-center justify-between p-3 bg-muted/50 rounded-lg"
+                  className="flex items-center justify-between p-3.5 bg-muted/30 rounded-xl hover:bg-muted/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-background">
-                      <Monitor className="h-4 w-4 text-muted-foreground" />
+                    <div className="w-9 h-9 rounded-full bg-maroon-50 flex items-center justify-center">
+                      <Monitor className="h-4 w-4 text-maroon-500" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
                         <p className="text-sm font-medium">{session.device}</p>
                         {session.current && (
-                          <Badge className="bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 text-[10px] px-1.5">
+                          <Badge className="bg-maroon-50 text-maroon-600 text-[10px] px-1.5 py-0 rounded-md border-0">
                             Current
                           </Badge>
                         )}
@@ -366,7 +373,7 @@ export function MemberProfile() {
                     </div>
                   </div>
                   {!session.current && (
-                    <Button variant="ghost" size="sm" className="text-xs text-red-500 hover:text-red-600">
+                    <Button variant="ghost" size="sm" className="text-xs text-red-500 hover:text-red-600 hover:bg-red-50 rounded-lg">
                       Revoke
                     </Button>
                   )}
@@ -378,10 +385,10 @@ export function MemberProfile() {
       </Card>
 
       {/* Notification Preferences */}
-      <Card>
+      <Card className="border-0 shadow-royal-sm rounded-xl bg-white">
         <CardHeader>
-          <CardTitle className="text-base flex items-center gap-2">
-            <Bell className="h-5 w-5 text-muted-foreground" />
+          <CardTitle className="text-base font-semibold tracking-tight flex items-center gap-2">
+            <Bell className="h-4 w-4 text-maroon-500" />
             Notification Preferences
           </CardTitle>
           <CardDescription className="text-xs">Choose how you want to be notified</CardDescription>
@@ -400,11 +407,11 @@ export function MemberProfile() {
               return (
                 <div
                   key={pref.key}
-                  className="flex items-center justify-between p-3 bg-muted/50 rounded-lg"
+                  className="flex items-center justify-between p-3.5 bg-muted/30 rounded-xl hover:bg-muted/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-1.5 rounded-md bg-background">
-                      <Icon className="h-4 w-4 text-muted-foreground" />
+                    <div className="w-8 h-8 rounded-full bg-maroon-50 flex items-center justify-center">
+                      <Icon className="h-4 w-4 text-maroon-500" />
                     </div>
                     <div>
                       <p className="text-sm font-medium">{pref.label}</p>

@@ -60,7 +60,6 @@ const dateRanges: { id: DateRange; label: string }[] = [
   { id: 'this-year', label: 'This Year' },
 ];
 
-// Branch-specific data for reports
 const revenueByMonth = [
   { month: 'Jul 24', revenue: 98000 },
   { month: 'Aug 24', revenue: 115000 },
@@ -92,11 +91,11 @@ const memberGrowth = [
 ];
 
 const ticketsByCategory = [
-  { name: 'Houses', value: 234, color: '#15803d' },
-  { name: 'Vehicles', value: 186, color: '#d97706' },
-  { name: 'Cash', value: 145, color: '#059669' },
-  { name: 'Electronics', value: 98, color: '#ca8a04' },
-  { name: 'Vacations', value: 67, color: '#166534' },
+  { name: 'Houses', value: 234, color: '#5B1322' },
+  { name: 'Vehicles', value: 186, color: '#D4AF37' },
+  { name: 'Cash', value: 145, color: '#7A1D30' },
+  { name: 'Electronics', value: 98, color: '#B8860B' },
+  { name: 'Vacations', value: 67, color: '#3D0C16' },
 ];
 
 const topCampaigns = branchCampaigns
@@ -111,7 +110,6 @@ const topCampaigns = branchCampaigns
     status: c.status,
   }));
 
-// Summary data based on date range
 const rangeSummary: Record<DateRange, { revenue: number; tickets: number; avgOrder: number; conversion: number }> = {
   'this-month': { revenue: 142000, tickets: 58, avgOrder: 2448, conversion: 4.2 },
   'last-month': { revenue: 195000, tickets: 70, avgOrder: 2786, conversion: 5.1 },
@@ -128,8 +126,13 @@ function formatZAR(amount: number) {
   }).format(amount);
 }
 
-const forestColors = ['#15803d', '#166534', '#14532d', '#059669', '#047857'];
-const goldColors = ['#d97706', '#ca8a04', '#b45309', '#a16207', '#854d0e'];
+const chartTooltipStyle = {
+  backgroundColor: '#fff',
+  border: '1px solid #e5e7eb',
+  borderRadius: '8px',
+  boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.08)',
+  fontSize: '13px',
+};
 
 export function ManagerReports() {
   const [activeRange, setActiveRange] = useState<DateRange>('this-month');
@@ -143,8 +146,8 @@ export function ManagerReports() {
       change: '+12.3%',
       positive: true,
       icon: TrendingUp,
-      color: 'text-forest-600',
-      bg: 'bg-forest-50',
+      color: 'text-maroon-500',
+      bg: 'bg-maroon-50',
     },
     {
       label: 'Total Tickets',
@@ -152,8 +155,8 @@ export function ManagerReports() {
       change: '+8.7%',
       positive: true,
       icon: Ticket,
-      color: 'text-gold-600',
-      bg: 'bg-gold-50',
+      color: 'text-maroon-500',
+      bg: 'bg-maroon-50',
     },
     {
       label: 'Avg Order Value',
@@ -161,8 +164,8 @@ export function ManagerReports() {
       change: '-2.1%',
       positive: false,
       icon: Receipt,
-      color: 'text-forest-600',
-      bg: 'bg-forest-50',
+      color: 'text-maroon-500',
+      bg: 'bg-maroon-50',
     },
     {
       label: 'Conversion Rate',
@@ -170,8 +173,8 @@ export function ManagerReports() {
       change: '+0.4%',
       positive: true,
       icon: Target,
-      color: 'text-gold-600',
-      bg: 'bg-gold-50',
+      color: 'text-maroon-500',
+      bg: 'bg-maroon-50',
     },
   ];
 
@@ -186,7 +189,7 @@ export function ManagerReports() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-forest-900">Reports & Analytics</h1>
+          <h1 className="text-2xl font-bold text-foreground tracking-tight">Reports & Analytics</h1>
           <p className="text-sm text-muted-foreground mt-1">
             Performance insights for your branch
           </p>
@@ -195,16 +198,15 @@ export function ManagerReports() {
           <Button
             variant="outline"
             size="sm"
-            className="gap-2 text-xs"
+            className="gap-2 text-xs rounded-[10px] border-maroon-200 text-maroon-600 hover:bg-maroon-50 hover:text-maroon-700"
             onClick={() => handleExport('csv')}
           >
             <Download className="w-3.5 h-3.5" />
             Export CSV
           </Button>
           <Button
-            variant="outline"
             size="sm"
-            className="gap-2 text-xs"
+            className="gap-2 text-xs bg-maroon-500 hover:bg-maroon-600 text-white rounded-[10px]"
             onClick={() => handleExport('pdf')}
           >
             <FileText className="w-3.5 h-3.5" />
@@ -222,10 +224,10 @@ export function ManagerReports() {
             size="sm"
             onClick={() => setActiveRange(r.id)}
             className={cn(
-              'text-xs font-medium transition-all',
+              'text-xs font-medium transition-all rounded-[10px]',
               activeRange === r.id
-                ? 'bg-forest-600 hover:bg-forest-700 text-white shadow-sm'
-                : 'text-muted-foreground hover:text-forest-700 hover:border-forest-300'
+                ? 'bg-maroon-500 hover:bg-maroon-600 text-white shadow-sm'
+                : 'text-muted-foreground hover:text-maroon-700 hover:border-maroon-300'
             )}
           >
             {r.label}
@@ -238,17 +240,17 @@ export function ManagerReports() {
         {summaryCards.map((stat) => {
           const Icon = stat.icon;
           return (
-            <Card key={stat.label} className="hover:shadow-md transition-shadow duration-200">
-              <CardContent className="p-5">
+            <Card key={stat.label} className="bg-white shadow-royal-sm rounded-xl border-0">
+              <CardContent className="p-6">
                 <div className="flex items-center justify-between">
-                  <div className={cn('w-10 h-10 rounded-lg flex items-center justify-center', stat.bg)}>
+                  <div className={cn('w-10 h-10 rounded-full flex items-center justify-center', stat.bg)}>
                     <Icon className={cn('w-5 h-5', stat.color)} />
                   </div>
                   <div
                     className={cn(
-                      'flex items-center gap-0.5 text-xs font-medium rounded-full px-2 py-0.5',
+                      'flex items-center gap-0.5 text-xs font-medium rounded-md px-2 py-0.5',
                       stat.positive
-                        ? 'text-forest-600 bg-forest-50'
+                        ? 'text-maroon-500 bg-maroon-50'
                         : 'text-red-600 bg-red-50'
                     )}
                   >
@@ -261,7 +263,7 @@ export function ManagerReports() {
                   </div>
                 </div>
                 <div className="mt-3">
-                  <p className="text-2xl font-bold text-neutral-900">{stat.value}</p>
+                  <p className="text-2xl font-bold tracking-tight text-maroon-500">{stat.value}</p>
                   <p className="text-xs text-muted-foreground mt-0.5">{stat.label}</p>
                 </div>
               </CardContent>
@@ -273,7 +275,7 @@ export function ManagerReports() {
       {/* Charts Row 1 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Revenue by Month — Bar Chart */}
-        <Card>
+        <Card className="bg-white shadow-royal-sm rounded-xl border-0">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold">Revenue by Month</CardTitle>
             <CardDescription>Monthly branch revenue (ZAR)</CardDescription>
@@ -282,32 +284,26 @@ export function ManagerReports() {
             <div className="h-72">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={revenueByMonth} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} opacity={0.4} />
                   <XAxis
                     dataKey="month"
-                    tick={{ fontSize: 11, fill: '#737373' }}
+                    tick={{ fontSize: 11, fill: '#a3a3a3' }}
                     axisLine={false}
                     tickLine={false}
                   />
                   <YAxis
-                    tick={{ fontSize: 11, fill: '#737373' }}
+                    tick={{ fontSize: 11, fill: '#a3a3a3' }}
                     axisLine={false}
                     tickLine={false}
                     tickFormatter={(v) => `R${(v / 1000).toFixed(0)}K`}
                   />
                   <Tooltip
-                    contentStyle={{
-                      backgroundColor: '#fff',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '8px',
-                      boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
-                      fontSize: '13px',
-                    }}
+                    contentStyle={chartTooltipStyle}
                     formatter={(value: number) => [formatZAR(value), 'Revenue']}
                   />
                   <Bar
                     dataKey="revenue"
-                    fill="#15803d"
+                    fill="#5B1322"
                     radius={[4, 4, 0, 0]}
                     maxBarSize={36}
                   />
@@ -318,7 +314,7 @@ export function ManagerReports() {
         </Card>
 
         {/* Tickets by Category — Pie Chart */}
-        <Card>
+        <Card className="bg-white shadow-royal-sm rounded-xl border-0">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold">Tickets by Category</CardTitle>
             <CardDescription>Distribution across product categories</CardDescription>
@@ -342,20 +338,14 @@ export function ManagerReports() {
                     ))}
                   </Pie>
                   <Tooltip
-                    contentStyle={{
-                      backgroundColor: '#fff',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '8px',
-                      boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
-                      fontSize: '13px',
-                    }}
+                    contentStyle={chartTooltipStyle}
                     formatter={(value: number, name: string) => [`${value} tickets`, name]}
                   />
                   <Legend
                     verticalAlign="bottom"
                     iconType="circle"
                     iconSize={8}
-                    formatter={(value) => <span className="text-xs text-neutral-600">{value}</span>}
+                    formatter={(value) => <span className="text-xs text-muted-foreground">{value}</span>}
                   />
                 </PieChart>
               </ResponsiveContainer>
@@ -365,7 +355,7 @@ export function ManagerReports() {
       </div>
 
       {/* Member Growth — Line Chart */}
-      <Card>
+      <Card className="bg-white shadow-royal-sm rounded-xl border-0">
         <CardHeader className="pb-2">
           <CardTitle className="text-base font-semibold">Member Growth</CardTitle>
           <CardDescription>New member registrations over time</CardDescription>
@@ -374,35 +364,29 @@ export function ManagerReports() {
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={memberGrowth} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} opacity={0.4} />
                 <XAxis
                   dataKey="month"
-                  tick={{ fontSize: 11, fill: '#737373' }}
+                  tick={{ fontSize: 11, fill: '#a3a3a3' }}
                   axisLine={false}
                   tickLine={false}
                 />
                 <YAxis
-                  tick={{ fontSize: 11, fill: '#737373' }}
+                  tick={{ fontSize: 11, fill: '#a3a3a3' }}
                   axisLine={false}
                   tickLine={false}
                 />
                 <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#fff',
-                    border: '1px solid #e5e7eb',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
-                    fontSize: '13px',
-                  }}
+                  contentStyle={chartTooltipStyle}
                   formatter={(value: number) => [value, 'Members']}
                 />
                 <Line
                   type="monotone"
                   dataKey="members"
-                  stroke="#15803d"
+                  stroke="#5B1322"
                   strokeWidth={2.5}
-                  dot={{ fill: '#15803d', r: 4, strokeWidth: 2, stroke: '#fff' }}
-                  activeDot={{ r: 6, stroke: '#15803d', strokeWidth: 2, fill: '#fff' }}
+                  dot={{ fill: '#5B1322', r: 4, strokeWidth: 2, stroke: '#fff' }}
+                  activeDot={{ r: 6, stroke: '#D4AF37', strokeWidth: 2, fill: '#fff' }}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -411,62 +395,64 @@ export function ManagerReports() {
       </Card>
 
       {/* Top Campaigns Table */}
-      <Card>
+      <Card className="bg-white shadow-royal-sm rounded-xl border-0 overflow-hidden">
         <CardHeader className="pb-2">
           <CardTitle className="text-base font-semibold">Top Campaigns</CardTitle>
           <CardDescription>Performance ranking by tickets sold</CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow className="hover:bg-transparent">
-                <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                  Campaign
-                </TableHead>
-                <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden sm:table-cell text-right">
-                  Tickets Sold
-                </TableHead>
-                <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden md:table-cell text-right">
-                  Revenue
-                </TableHead>
-                <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider w-40">
-                  Progress
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {topCampaigns.map((campaign) => (
-                <TableRow key={campaign.id} className="group hover:bg-forest-50/30 transition-colors">
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-medium text-neutral-900 truncate max-w-[240px]">
-                        {campaign.title}
-                      </p>
-                      {campaign.status === 'completed' && (
-                        <Badge className="shrink-0 bg-forest-100 text-forest-700 border-0 text-[10px] font-medium">
-                          Done
-                        </Badge>
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell className="hidden sm:table-cell text-right text-sm font-medium text-neutral-700">
-                    {campaign.soldTickets.toLocaleString()}
-                  </TableCell>
-                  <TableCell className="hidden md:table-cell text-right text-sm font-medium text-neutral-700">
-                    {formatZAR(campaign.revenue)}
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <Progress value={campaign.completion} className="h-2 flex-1 bg-neutral-100 [&>[data-slot=indicator]]:bg-forest-500" />
-                      <span className="text-xs font-medium text-muted-foreground w-10 text-right">
-                        {campaign.completion}%
-                      </span>
-                    </div>
-                  </TableCell>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent bg-muted/50">
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                    Campaign
+                  </TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider hidden sm:table-cell text-right">
+                    Tickets Sold
+                  </TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider hidden md:table-cell text-right">
+                    Revenue
+                  </TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider w-40">
+                    Progress
+                  </TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {topCampaigns.map((campaign) => (
+                  <TableRow key={campaign.id} className="group hover:bg-maroon-50/30 transition-colors">
+                    <TableCell className="py-3.5">
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm font-medium text-foreground truncate max-w-[240px]">
+                          {campaign.title}
+                        </p>
+                        {campaign.status === 'completed' && (
+                          <Badge className="shrink-0 bg-maroon-100 text-maroon-700 border-0 text-[10px] font-medium rounded-md">
+                            Done
+                          </Badge>
+                        )}
+                      </div>
+                    </TableCell>
+                    <TableCell className="hidden sm:table-cell text-right text-sm font-medium text-foreground py-3.5">
+                      {campaign.soldTickets.toLocaleString()}
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell text-right text-sm font-medium text-foreground py-3.5">
+                      {formatZAR(campaign.revenue)}
+                    </TableCell>
+                    <TableCell className="py-3.5">
+                      <div className="flex items-center gap-3">
+                        <Progress value={campaign.completion} className="h-1.5 flex-1 bg-muted [&>[data-slot=indicator]]:bg-maroon-500" />
+                        <span className="text-xs font-medium text-muted-foreground w-10 text-right">
+                          {campaign.completion}%
+                        </span>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

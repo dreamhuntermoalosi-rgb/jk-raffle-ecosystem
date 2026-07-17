@@ -64,20 +64,20 @@ export function AdminSidebar() {
       <aside
         id="admin-sidebar"
         className={cn(
-          'fixed top-0 left-0 z-50 h-full bg-white border-r border-slate-200 flex flex-col transition-all duration-300',
+          'fixed top-0 left-0 z-50 h-full bg-[#130304] border-r border-[#2E0910]/50 flex flex-col transition-all duration-300 ease-in-out',
           sidebarOpen ? 'w-72 translate-x-0' : 'w-20 -translate-x-0 lg:translate-x-0'
         )}
       >
         {/* Header */}
-        <div className={cn('p-4 border-b border-slate-200', !sidebarOpen && 'px-3')}>
+        <div className={cn('p-4 border-b border-[#2E0910]', !sidebarOpen && 'px-3')}>
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[hsl(152,68%,35%)] flex items-center justify-center flex-shrink-0">
-              <Shield className="w-5 h-5 text-white" />
+            <div className="w-9 h-9 rounded-lg bg-[#3D0C16] flex items-center justify-center flex-shrink-0">
+              <Shield className="w-5 h-5 text-[#D4AF37]" />
             </div>
             {sidebarOpen && (
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold text-slate-900 truncate">JK Raffle</p>
-                <p className="text-xs text-slate-500 truncate">Admin Portal</p>
+                <p className="text-sm font-bold text-white truncate tracking-tight">JK Raffle</p>
+                <p className="text-xs text-[#f4a9b8]/50 truncate">Admin Portal</p>
               </div>
             )}
           </div>
@@ -85,18 +85,18 @@ export function AdminSidebar() {
 
         {/* Admin Profile */}
         {sidebarOpen && (
-          <div className="px-4 py-3 border-b border-slate-100">
+          <div className="px-4 py-3 border-b border-[#2E0910]/50">
             <div className="flex items-center gap-3">
-              <Avatar className="w-9 h-9 h-9 flex-shrink-0">
-                <AvatarFallback className="bg-[hsl(152,68%,35%)] text-white text-xs font-semibold">
+              <Avatar className="w-9 h-9 flex-shrink-0">
+                <AvatarFallback className="bg-[#3D0C16] text-white text-xs font-semibold">
                   {getInitials(mockAdmin.firstName, mockAdmin.lastName)}
                 </AvatarFallback>
               </Avatar>
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-slate-900 truncate">
+                <p className="text-sm font-semibold text-white truncate tracking-tight">
                   {mockAdmin.firstName} {mockAdmin.lastName}
                 </p>
-                <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[hsl(43,96%,56%)]/15 text-[hsl(43,96%,36%)]">
+                <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-[#D4AF37]/15 text-[#D4AF37]">
                   Super Admin
                 </span>
               </div>
@@ -105,16 +105,16 @@ export function AdminSidebar() {
         )}
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto py-3 px-2">
+        <nav className="flex-1 overflow-y-auto py-3 px-2 scrollbar-thin">
           {sections.map((section) => (
             <div key={section} className="mb-2">
               {sidebarOpen && (
-                <p className="px-3 mb-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                <p className="px-3 mb-1 text-[11px] font-semibold uppercase tracking-wider text-[#f4a9b8]/30">
                   {section}
                 </p>
               )}
               {!sidebarOpen && section !== 'Main' && (
-                <Separator className="my-2 mx-2 bg-slate-200" />
+                <Separator className="my-2 mx-2 bg-[#2E0910]/50" />
               )}
               {navItems
                 .filter((item) => item.section === section)
@@ -127,11 +127,11 @@ export function AdminSidebar() {
                       key={item.id}
                       onClick={() => setView(item.id)}
                       className={cn(
-                        'w-full flex items-center gap-3 rounded-lg text-sm font-medium transition-all duration-150',
-                        sidebarOpen ? 'px-3 py-2.5' : 'px-2 py-2.5 justify-center',
+                        'w-full flex items-center gap-3 rounded-lg text-sm font-medium transition-all duration-200 border-l-2',
+                        sidebarOpen ? 'px-3 py-2.5' : 'px-2 py-2.5 justify-center border-l-0',
                         isActive
-                          ? 'bg-[hsl(152,68%,35%)] text-white shadow-sm'
-                          : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                          ? 'border-[#D4AF37] bg-[#5B1322]/15 text-white'
+                          : 'border-transparent text-[#f4a9b8]/70 hover:bg-[#2E0910]/60 hover:text-[#fce7eb]'
                       )}
                     >
                       <Icon className={cn('w-5 h-5 flex-shrink-0', !sidebarOpen && 'mx-auto')} />
@@ -157,12 +157,15 @@ export function AdminSidebar() {
         </nav>
 
         {/* Collapse Button */}
-        <div className="p-3 border-t border-slate-200">
+        <div className="p-3 border-t border-[#2E0910]/50">
           <Button
             variant="ghost"
             size="sm"
             onClick={toggleSidebar}
-            className="w-full justify-center text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+            className={cn(
+              'w-full rounded-lg text-[#f4a9b8]/40 hover:text-[#f4a9b8]/70 hover:bg-[#2E0910]/40 transition-colors',
+              sidebarOpen ? 'justify-start' : 'justify-center'
+            )}
           >
             {sidebarOpen ? (
               <ChevronLeft className="w-4 h-4" />

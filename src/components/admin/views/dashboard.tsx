@@ -51,10 +51,8 @@ import {
 import { formatCurrency, formatNumber, formatDate, getInitials, getStatusColor } from '@/lib/utils';
 import type { Campaign } from '@/types';
 
-const FOREST = 'hsl(152, 68%, 35%)';
-const FOREST_LIGHT = 'hsl(152, 68%, 93%)';
-const GOLD = 'hsl(43, 96%, 56%)';
-const GOLD_LIGHT = 'hsl(43, 96%, 93%)';
+const MAROON = '#5B1322';
+const GOLD = '#D4AF37';
 
 const openTickets = mockSupportTickets.filter(t => t.status === 'open' || t.status === 'in_progress').length;
 
@@ -66,8 +64,8 @@ const kpiCards = [
     trend: '+18.2%',
     trendUp: true,
     icon: DollarSign,
-    color: 'text-[hsl(152,68%,35%)]',
-    bg: 'bg-[hsl(152,68%,35%)]/10',
+    color: 'text-maroon-500',
+    bg: 'bg-maroon-50',
   },
   {
     label: 'Active Campaigns',
@@ -76,8 +74,8 @@ const kpiCards = [
     trend: '+3 this month',
     trendUp: true,
     icon: Trophy,
-    color: 'text-[hsl(43,96%,36%)]',
-    bg: 'bg-[hsl(43,96%,56%)]/10',
+    color: 'text-maroon-500',
+    bg: 'bg-maroon-50',
   },
   {
     label: 'Total Members',
@@ -86,8 +84,8 @@ const kpiCards = [
     trend: '+12.5%',
     trendUp: true,
     icon: Users,
-    color: 'text-[hsl(152,68%,35%)]',
-    bg: 'bg-[hsl(152,68%,35%)]/10',
+    color: 'text-maroon-500',
+    bg: 'bg-maroon-50',
   },
   {
     label: 'Tickets Sold',
@@ -96,8 +94,8 @@ const kpiCards = [
     trend: '+24.3%',
     trendUp: true,
     icon: Ticket,
-    color: 'text-[hsl(43,96%,36%)]',
-    bg: 'bg-[hsl(43,96%,56%)]/10',
+    color: 'text-maroon-500',
+    bg: 'bg-maroon-50',
   },
   {
     label: 'Monthly Growth',
@@ -106,8 +104,8 @@ const kpiCards = [
     trend: '+2.1% vs last',
     trendUp: true,
     icon: TrendingUp,
-    color: 'text-[hsl(152,68%,35%)]',
-    bg: 'bg-[hsl(152,68%,35%)]/10',
+    color: 'text-maroon-500',
+    bg: 'bg-maroon-50',
   },
   {
     label: 'Pending Payments',
@@ -116,8 +114,8 @@ const kpiCards = [
     trend: '-5 vs last week',
     trendUp: true,
     icon: Clock,
-    color: 'text-amber-600',
-    bg: 'bg-amber-50',
+    color: 'text-maroon-500',
+    bg: 'bg-maroon-50',
   },
   {
     label: 'Open Support Tickets',
@@ -126,8 +124,8 @@ const kpiCards = [
     trend: `${mockSupportTickets.filter(t => t.status === 'open').length} new`,
     trendUp: false,
     icon: AlertCircle,
-    color: 'text-orange-600',
-    bg: 'bg-orange-50',
+    color: 'text-maroon-500',
+    bg: 'bg-maroon-50',
   },
   {
     label: 'Total Winners',
@@ -136,8 +134,8 @@ const kpiCards = [
     trend: '+6 this month',
     trendUp: true,
     icon: CheckCircle2,
-    color: 'text-[hsl(43,96%,36%)]',
-    bg: 'bg-[hsl(43,96%,56%)]/10',
+    color: 'text-maroon-500',
+    bg: 'bg-maroon-50',
   },
 ];
 
@@ -177,7 +175,7 @@ export function AdminDashboard() {
   return (
     <div className="space-y-6">
       {/* Welcome Banner */}
-      <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-[hsl(152,68%,25%)] to-[hsl(152,68%,40%)] p-6 sm:p-8 text-white">
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-maroon-900 to-maroon-700 p-6 sm:p-8 text-white">
         <div className="relative z-10">
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
             Welcome back, {mockAdmin.firstName}
@@ -187,8 +185,8 @@ export function AdminDashboard() {
           </p>
           <div className="mt-4 flex items-center gap-2">
             <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-gold-400" />
             </span>
             <span className="text-sm font-medium text-white/90">All Systems Operational</span>
           </div>
@@ -205,24 +203,24 @@ export function AdminDashboard() {
         {kpiCards.map((kpi) => {
           const Icon = kpi.icon;
           return (
-            <Card key={kpi.label} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-4 sm:p-5">
+            <Card key={kpi.label} className="shadow-royal-sm rounded-xl border-0 hover:shadow-royal-md transition-shadow">
+              <CardContent className="p-5 sm:p-6">
                 <div className="flex items-start justify-between">
-                  <div className="space-y-1">
-                    <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">{kpi.label}</p>
-                    <p className="text-2xl font-bold text-slate-900">{kpi.value}</p>
+                  <div className="space-y-2">
+                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">{kpi.label}</p>
+                    <p className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">{kpi.value}</p>
                   </div>
-                  <div className={`p-2.5 rounded-lg ${kpi.bg}`}>
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${kpi.bg}`}>
                     <Icon className={`w-5 h-5 ${kpi.color}`} />
                   </div>
                 </div>
                 <div className="mt-3 flex items-center gap-1.5">
                   {kpi.trendUp ? (
-                    <TrendingUp className="w-3.5 h-3.5 text-emerald-500" />
+                    <TrendingUp className="w-3.5 h-3.5 text-maroon-600" />
                   ) : (
                     <TrendingDown className="w-3.5 h-3.5 text-orange-500" />
                   )}
-                  <span className={`text-xs font-medium ${kpi.trendUp ? 'text-emerald-600' : 'text-orange-600'}`}>
+                  <span className={`text-xs font-medium ${kpi.trendUp ? 'text-maroon-600' : 'text-orange-600'}`}>
                     {kpi.trend}
                   </span>
                 </div>
@@ -233,11 +231,11 @@ export function AdminDashboard() {
       </div>
 
       {/* Revenue Chart */}
-      <Card id="admin-revenue-chart">
+      <Card id="admin-revenue-chart" className="shadow-royal-sm rounded-xl border-0">
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between">
             <CardTitle className="text-base font-semibold">Revenue Trend</CardTitle>
-            <Badge variant="secondary" className="text-xs font-normal">
+            <Badge variant="secondary" className="text-xs font-normal rounded-md bg-muted">
               Last 12 Months
             </Badge>
           </div>
@@ -247,33 +245,33 @@ export function AdminDashboard() {
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={revenueData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
                 <defs>
-                  <linearGradient id="forestGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={FOREST} stopOpacity={0.3} />
-                    <stop offset="95%" stopColor={FOREST} stopOpacity={0.02} />
+                  <linearGradient id="royalGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor={MAROON} stopOpacity={0.15} />
+                    <stop offset="95%" stopColor={MAROON} stopOpacity={0.01} />
                   </linearGradient>
                   <linearGradient id="goldGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={GOLD} stopOpacity={0.2} />
-                    <stop offset="95%" stopColor={GOLD} stopOpacity={0.02} />
+                    <stop offset="5%" stopColor={GOLD} stopOpacity={0.12} />
+                    <stop offset="95%" stopColor={GOLD} stopOpacity={0.01} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} opacity={0.4} />
                 <XAxis
                   dataKey="monthShort"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 12, fill: '#94a3b8' }}
+                  tick={{ fontSize: 12, fill: '#a3a3a3' }}
                 />
                 <YAxis
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fontSize: 12, fill: '#94a3b8' }}
+                  tick={{ fontSize: 12, fill: '#a3a3a3' }}
                   tickFormatter={(v) => `${(v / 1000000).toFixed(1)}M`}
                 />
                 <RechartsTooltip
                   contentStyle={{
                     borderRadius: '8px',
-                    border: '1px solid #e2e8f0',
-                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+                    border: '1px solid #e5e7eb',
+                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.08)',
                     fontSize: '12px',
                   }}
                   formatter={(value: number) => [formatCurrency(value), '']}
@@ -282,9 +280,9 @@ export function AdminDashboard() {
                   type="monotone"
                   dataKey="revenue"
                   name="Revenue"
-                  stroke={FOREST}
+                  stroke={MAROON}
                   strokeWidth={2.5}
-                  fill="url(#forestGradient)"
+                  fill="url(#royalGradient)"
                 />
                 <Area
                   type="monotone"
@@ -305,7 +303,7 @@ export function AdminDashboard() {
       {/* Two Column: Campaigns + Branch Performance */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Campaigns Overview */}
-        <Card id="admin-campaigns-table">
+        <Card id="admin-campaigns-table" className="shadow-royal-sm rounded-xl border-0 overflow-hidden">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold">Top Campaigns</CardTitle>
           </CardHeader>
@@ -313,32 +311,32 @@ export function AdminDashboard() {
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead className="text-xs">Campaign</TableHead>
-                    <TableHead className="text-xs">Branch</TableHead>
-                    <TableHead className="text-xs">Progress</TableHead>
-                    <TableHead className="text-xs text-right">Revenue</TableHead>
-                    <TableHead className="text-xs">Status</TableHead>
+                  <TableRow className="hover:bg-transparent bg-muted/50">
+                    <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Campaign</TableHead>
+                    <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Branch</TableHead>
+                    <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Progress</TableHead>
+                    <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider text-right">Revenue</TableHead>
+                    <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {topCampaigns.map((c) => (
-                    <TableRow key={c.id} className="hover:bg-slate-50">
-                      <TableCell className="text-sm font-medium text-slate-900 max-w-[140px] truncate">
+                    <TableRow key={c.id} className="hover:bg-maroon-50/30 transition-colors">
+                      <TableCell className="text-sm font-medium text-foreground max-w-[140px] truncate py-3">
                         {c.title}
                       </TableCell>
-                      <TableCell className="text-xs text-slate-500">{c.branch.name}</TableCell>
-                      <TableCell className="w-28">
+                      <TableCell className="text-xs text-muted-foreground py-3">{c.branch.name}</TableCell>
+                      <TableCell className="w-28 py-3">
                         <div className="flex items-center gap-2">
-                          <Progress value={c.progress || 0} className="h-1.5 flex-1" />
-                          <span className="text-xs text-slate-500 w-8 text-right">{c.progress}%</span>
+                          <Progress value={c.progress || 0} className="h-1.5 flex-1 [&>[data-slot=indicator]]:bg-maroon-500" />
+                          <span className="text-xs text-muted-foreground w-8 text-right">{c.progress}%</span>
                         </div>
                       </TableCell>
-                      <TableCell className="text-sm font-medium text-right">
+                      <TableCell className="text-sm font-medium text-right py-3">
                         {formatCurrency(c.soldTickets * c.ticketPrice)}
                       </TableCell>
-                      <TableCell>
-                        <Badge variant="secondary" className={`text-[10px] ${getStatusColor(c.status)}`}>
+                      <TableCell className="py-3">
+                        <Badge variant="secondary" className={`text-[10px] rounded-md ${getStatusColor(c.status)}`}>
                           {c.status}
                         </Badge>
                       </TableCell>
@@ -351,7 +349,7 @@ export function AdminDashboard() {
         </Card>
 
         {/* Branch Performance */}
-        <Card id="admin-branch-chart">
+        <Card id="admin-branch-chart" className="shadow-royal-sm rounded-xl border-0">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold">Branch Revenue (Top 5)</CardTitle>
           </CardHeader>
@@ -359,12 +357,12 @@ export function AdminDashboard() {
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={branchBarData} layout="vertical" margin={{ top: 5, right: 30, left: 10, bottom: 5 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" horizontal={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" horizontal={false} opacity={0.4} />
                   <XAxis
                     type="number"
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fontSize: 11, fill: '#94a3b8' }}
+                    tick={{ fontSize: 11, fill: '#a3a3a3' }}
                     tickFormatter={(v) => `${(v / 1000000).toFixed(1)}M`}
                   />
                   <YAxis
@@ -372,18 +370,18 @@ export function AdminDashboard() {
                     dataKey="name"
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fontSize: 11, fill: '#64748b' }}
+                    tick={{ fontSize: 11, fill: '#737373' }}
                     width={100}
                   />
                   <RechartsTooltip
                     contentStyle={{
                       borderRadius: '8px',
-                      border: '1px solid #e2e8f0',
+                      border: '1px solid #e5e7eb',
                       fontSize: '12px',
                     }}
                     formatter={(value: number) => [formatCurrency(value), 'Revenue']}
                   />
-                  <Bar dataKey="revenue" fill={FOREST} radius={[0, 4, 4, 0]} barSize={20} />
+                  <Bar dataKey="revenue" fill={MAROON} radius={[0, 4, 4, 0]} barSize={20} />
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -394,7 +392,7 @@ export function AdminDashboard() {
       {/* Bottom Row: Activity + System Health */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Activity */}
-        <Card className="lg:col-span-2" id="admin-activity">
+        <Card className="lg:col-span-2 shadow-royal-sm rounded-xl border-0" id="admin-activity">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold">Recent Activity</CardTitle>
           </CardHeader>
@@ -403,22 +401,22 @@ export function AdminDashboard() {
               {allActivities.map((activity) => {
                 const user = getUserForActivity(activity.userId);
                 return (
-                  <div key={activity.id} className="flex items-start gap-3 py-2 border-b border-slate-100 last:border-0">
+                  <div key={activity.id} className="flex items-start gap-3 py-2 border-b border-border/50 last:border-0">
                     <Avatar className="w-8 h-8 flex-shrink-0 mt-0.5">
-                      <AvatarFallback className="bg-slate-100 text-slate-600 text-[11px] font-semibold">
+                      <AvatarFallback className="bg-maroon-100 text-maroon-700 text-[11px] font-semibold">
                         {getInitials(user.firstName, user.lastName)}
                       </AvatarFallback>
                     </Avatar>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm text-slate-700">
-                        <span className="font-medium text-slate-900">{user.firstName} {user.lastName}</span>{' '}
+                      <p className="text-sm text-foreground/80">
+                        <span className="font-medium text-foreground">{user.firstName} {user.lastName}</span>{' '}
                         {activity.action.toLowerCase()}
                       </p>
                       {activity.entity && (
-                        <p className="text-xs text-slate-500 truncate mt-0.5">{activity.entity}</p>
+                        <p className="text-xs text-muted-foreground truncate mt-0.5">{activity.entity}</p>
                       )}
                     </div>
-                    <span className="text-xs text-slate-400 flex-shrink-0 whitespace-nowrap">
+                    <span className="text-xs text-muted-foreground flex-shrink-0 whitespace-nowrap">
                       {formatDate(activity.createdAt, 'relative')}
                     </span>
                   </div>
@@ -429,7 +427,7 @@ export function AdminDashboard() {
         </Card>
 
         {/* System Health */}
-        <Card id="admin-system-health">
+        <Card id="admin-system-health" className="shadow-royal-sm rounded-xl border-0">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold">System Health</CardTitle>
           </CardHeader>
@@ -439,27 +437,27 @@ export function AdminDashboard() {
               return (
                 <div
                   key={item.name}
-                  className="flex items-center gap-3 p-3 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors"
+                  className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
                 >
-                  <div className="p-2 rounded-lg bg-emerald-100">
-                    <Icon className="w-4 h-4 text-emerald-600" />
+                  <div className="p-2 rounded-lg bg-maroon-100">
+                    <Icon className="w-4 h-4 text-maroon-600" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-slate-900">{item.name}</p>
-                    <p className="text-xs text-emerald-600">{item.status}</p>
+                    <p className="text-sm font-medium text-foreground">{item.name}</p>
+                    <p className="text-xs text-maroon-600">{item.status}</p>
                   </div>
-                  <Wifi className="w-4 h-4 text-emerald-500" />
+                  <Wifi className="w-4 h-4 text-maroon-500" />
                 </div>
               );
             })}
 
-            <div className="mt-4 p-3 rounded-lg border border-slate-200">
+            <div className="mt-4 p-4 rounded-xl bg-muted/50">
               <div className="flex items-center gap-2 mb-2">
-                <Activity className="w-4 h-4 text-slate-500" />
-                <span className="text-xs font-medium text-slate-500">Uptime</span>
+                <Activity className="w-4 h-4 text-muted-foreground" />
+                <span className="text-xs font-medium text-muted-foreground">Uptime</span>
               </div>
-              <p className="text-xl font-bold text-slate-900">99.97%</p>
-              <p className="text-xs text-slate-400 mt-0.5">Last 30 days</p>
+              <p className="text-xl font-bold text-foreground">99.97%</p>
+              <p className="text-xs text-muted-foreground mt-0.5">Last 30 days</p>
             </div>
           </CardContent>
         </Card>

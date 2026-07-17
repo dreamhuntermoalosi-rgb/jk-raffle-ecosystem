@@ -41,10 +41,10 @@ const roles: RoleCard[] = [
     accentClass: 'text-gold-400',
     iconBgClass: 'bg-gold-500/15',
     iconTextClass: 'text-gold-400',
-    glowColor: 'rgba(212, 160, 23, 0.25)',
+    glowColor: 'rgba(212, 160, 23, 0.2)',
     buttonBgClass: 'bg-gold-500 hover:bg-gold-400',
     buttonHoverClass: 'hover:shadow-gold-500/30',
-    buttonTextClass: 'text-forest-900',
+    buttonTextClass: 'text-maroon-900',
     borderAccentClass: 'border-gold-500/30',
   },
   {
@@ -53,14 +53,14 @@ const roles: RoleCard[] = [
     title: 'Branch Manager',
     description:
       'Manage branch members, view reports, track campaign performance for your branch.',
-    accentClass: 'text-forest-400',
-    iconBgClass: 'bg-forest-400/15',
-    iconTextClass: 'text-forest-400',
-    glowColor: 'rgba(74, 222, 128, 0.2)',
-    buttonBgClass: 'bg-forest-500 hover:bg-forest-600',
-    buttonHoverClass: 'hover:shadow-forest-500/30',
+    accentClass: 'text-maroon-400',
+    iconBgClass: 'bg-maroon-400/15',
+    iconTextClass: 'text-maroon-400',
+    glowColor: 'rgba(91, 19, 34, 0.2)',
+    buttonBgClass: 'bg-maroon-500 hover:bg-maroon-600',
+    buttonHoverClass: 'hover:shadow-maroon-500/30',
     buttonTextClass: 'text-white',
-    borderAccentClass: 'border-forest-400/30',
+    borderAccentClass: 'border-maroon-400/30',
   },
   {
     id: 'admin',
@@ -161,15 +161,15 @@ export function DemoRoleSelector({ open, onClose }: DemoRoleSelectorProps) {
           className="fixed inset-0 z-[100] flex items-center justify-center"
           onKeyDown={handleKeyDown}
         >
-          {/* Backdrop */}
+          {/* Backdrop — dark maroon gradient (maroon-950 → maroon-900) */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-br from-forest-950 via-forest-900 to-forest-950"
+            className="absolute inset-0 bg-gradient-to-br from-maroon-950 via-maroon-900 to-maroon-950"
             aria-hidden="true"
             onClick={onClose}
           >
-            {/* Subtle radial gradient accents */}
+            {/* Subtle radial gradient accents — NO green */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_center,rgba(212,160,23,0.08)_0%,transparent_60%)]" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(22,101,52,0.15)_0%,transparent_50%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(91,19,34,0.2)_0%,transparent_50%)]" />
             {/* Fine dot pattern */}
             <div
               className="absolute inset-0 opacity-[0.03]"
@@ -186,11 +186,11 @@ export function DemoRoleSelector({ open, onClose }: DemoRoleSelectorProps) {
             variants={contentVariants}
             className="relative z-10 w-full max-w-5xl mx-4 sm:mx-6"
           >
-            {/* Close button */}
+            {/* Close button — subtle, top-right */}
             <div className="flex justify-end mb-4">
               <button
                 onClick={onClose}
-                className="p-2.5 rounded-xl text-forest-300/60 hover:text-white hover:bg-white/10 transition-all duration-200"
+                className="p-2.5 rounded-xl text-white/30 hover:text-white/70 hover:bg-white/10 transition-all duration-200"
                 aria-label="Close role selector"
               >
                 <X className="h-5 w-5" />
@@ -208,12 +208,12 @@ export function DemoRoleSelector({ open, onClose }: DemoRoleSelectorProps) {
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-4">
                 Experience the Dashboard
               </h2>
-              <p className="text-base sm:text-lg text-forest-200/60 max-w-xl mx-auto leading-relaxed">
+              <p className="text-base sm:text-lg text-white/40 max-w-xl mx-auto leading-relaxed">
                 Choose a role to explore their dedicated portal
               </p>
             </motion.div>
 
-            {/* Role Cards Grid */}
+            {/* Role Cards Grid — glass-card style, rounded-xl */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
               {roles.map((role, index) => (
                 <motion.div
@@ -223,17 +223,17 @@ export function DemoRoleSelector({ open, onClose }: DemoRoleSelectorProps) {
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  whileHover={{ scale: 1.03, y: -4 }}
+                  whileHover={{ scale: 1.02, y: -4 }}
                   transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 >
                   <button
                     type="button"
                     onClick={() => handleSelectRole(role)}
                     className={cn(
-                      'group relative w-full text-left rounded-2xl border',
-                      'bg-white/[0.04] backdrop-blur-sm',
+                      'group relative w-full text-left rounded-xl border overflow-hidden',
+                      'bg-white/[0.05] backdrop-blur-sm',
                       'p-6 sm:p-7 transition-all duration-300',
-                      'hover:bg-white/[0.08] hover:border-opacity-60',
+                      'hover:bg-white/[0.09] hover:border-opacity-60',
                       'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-400',
                       role.borderAccentClass
                     )}
@@ -244,9 +244,9 @@ export function DemoRoleSelector({ open, onClose }: DemoRoleSelectorProps) {
                     }
                     aria-label={`Enter ${role.title}`}
                   >
-                    {/* Hover glow effect */}
+                    {/* Subtle gold glow on hover (NOT green) */}
                     <div
-                      className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                      className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                       style={{
                         boxShadow: `0 0 40px 4px ${role.glowColor}, inset 0 0 40px 0 ${role.glowColor}`,
                       }}
@@ -273,11 +273,11 @@ export function DemoRoleSelector({ open, onClose }: DemoRoleSelectorProps) {
                     </h3>
 
                     {/* Description */}
-                    <p className="relative text-sm text-forest-200/50 leading-relaxed mb-6 group-hover:text-forest-200/70 transition-colors duration-300">
+                    <p className="relative text-sm text-white/35 leading-relaxed mb-6 group-hover:text-white/55 transition-colors duration-300">
                       {role.description}
                     </p>
 
-                    {/* CTA */}
+                    {/* CTA — respective accent colors */}
                     <div className="relative flex items-center gap-2 text-sm font-medium">
                       <span
                         className={cn(
@@ -285,7 +285,7 @@ export function DemoRoleSelector({ open, onClose }: DemoRoleSelectorProps) {
                           role.accentClass
                         )}
                       >
-                        Enter Dashboard
+                        Explore
                       </span>
                       <ArrowRight
                         className={cn(
@@ -302,9 +302,9 @@ export function DemoRoleSelector({ open, onClose }: DemoRoleSelectorProps) {
             {/* Footer hint */}
             <motion.p
               variants={headerVariants}
-              className="text-center text-xs text-forest-200/30 mt-8 sm:mt-10"
+              className="text-center text-xs text-white/20 mt-8 sm:mt-10"
             >
-              Press <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-forest-200/50 font-mono text-[10px]">Esc</kbd> to close
+              Press <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-white/40 font-mono text-[10px]">Esc</kbd> to close
             </motion.p>
           </motion.div>
         </motion.div>

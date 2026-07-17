@@ -8,7 +8,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
-import { Separator } from '@/components/ui/separator';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
@@ -46,12 +45,13 @@ interface NotificationTemplate {
   subject: string;
   description: string;
   lastModified: string;
+  unread?: boolean;
 }
 
 const templates: NotificationTemplate[] = [
-  { id: 'tpl-1', name: 'Welcome Email', type: 'email', subject: 'Welcome to JK Raffle, {{firstName}}!', description: 'Sent when a new member registers', lastModified: '2025-05-15T10:00:00Z' },
+  { id: 'tpl-1', name: 'Welcome Email', type: 'email', subject: 'Welcome to JK Raffle, {{firstName}}!', description: 'Sent when a new member registers', lastModified: '2025-05-15T10:00:00Z', unread: true },
   { id: 'tpl-2', name: 'Payment Confirmation', type: 'email', subject: 'Payment Confirmed — Order #{{orderId}}', description: 'Sent after successful payment', lastModified: '2025-05-20T14:00:00Z' },
-  { id: 'tpl-3', name: 'Draw Reminder', type: 'email', subject: 'Draw Tomorrow: {{campaignTitle}}', description: 'Sent 24 hours before a draw', lastModified: '2025-06-01T09:00:00Z' },
+  { id: 'tpl-3', name: 'Draw Reminder', type: 'email', subject: 'Draw Tomorrow: {{campaignTitle}}', description: 'Sent 24 hours before a draw', lastModified: '2025-06-01T09:00:00Z', unread: true },
   { id: 'tpl-4', name: 'Winner Announcement', type: 'email', subject: 'Congratulations, {{firstName}}! You Won!', description: 'Sent to the winner after a draw', lastModified: '2025-06-05T11:00:00Z' },
   { id: 'tpl-5', name: 'WhatsApp Welcome', type: 'whatsapp', subject: 'Welcome to JK Raffle!', description: 'WhatsApp welcome message for new members', lastModified: '2025-05-15T10:00:00Z' },
   { id: 'tpl-6', name: 'WhatsApp Payment', type: 'whatsapp', subject: 'Payment Received', description: 'WhatsApp payment confirmation', lastModified: '2025-05-20T14:00:00Z' },
@@ -118,15 +118,15 @@ export function AdminNotifications() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Notifications</h1>
-        <p className="text-sm text-slate-500 mt-1">Manage broadcasts, templates, and delivery</p>
+        <h1 className="text-2xl font-bold text-foreground tracking-tight">Notifications</h1>
+        <p className="text-sm text-muted-foreground mt-1">Manage broadcasts, templates, and delivery</p>
       </div>
 
       {/* Broadcast Section */}
-      <Card>
+      <Card className="shadow-royal-sm rounded-xl border-0">
         <CardHeader>
           <CardTitle className="text-base font-semibold flex items-center gap-2">
-            <Send className="w-5 h-5 text-[hsl(152,68%,35%)]" />
+            <Send className="w-5 h-5 text-maroon-500" />
             Broadcast Notification
           </CardTitle>
         </CardHeader>
@@ -139,12 +139,13 @@ export function AdminNotifications() {
                 placeholder="e.g. New Campaign Launch"
                 value={broadcastTitle}
                 onChange={(e) => setBroadcastTitle(e.target.value)}
+                className="rounded-lg"
               />
             </div>
             <div className="space-y-2">
               <Label>Target Audience</Label>
               <Select value={targetType} onValueChange={setTargetType}>
-                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectTrigger className="rounded-lg"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Members</SelectItem>
                   <SelectItem value="branch">Specific Branch</SelectItem>
@@ -159,7 +160,7 @@ export function AdminNotifications() {
             <div className="space-y-2">
               <Label>Branch</Label>
               <Select>
-                <SelectTrigger className="w-full sm:w-80"><SelectValue placeholder="Select branch" /></SelectTrigger>
+                <SelectTrigger className="w-full sm:w-80 rounded-lg"><SelectValue placeholder="Select branch" /></SelectTrigger>
                 <SelectContent>
                   {mockBranches.map(b => (
                     <SelectItem key={b.id} value={b.id}>{b.name}</SelectItem>
@@ -177,6 +178,7 @@ export function AdminNotifications() {
               rows={4}
               value={broadcastMessage}
               onChange={(e) => setBroadcastMessage(e.target.value)}
+              className="rounded-lg"
             />
           </div>
 
@@ -191,16 +193,16 @@ export function AdminNotifications() {
                     key={ch.id}
                     className={`flex items-center gap-2 px-4 py-2.5 rounded-lg border cursor-pointer transition-colors ${
                       checked
-                        ? 'border-[hsl(152,68%,35%)] bg-[hsl(152,68%,35%)]/5'
-                        : 'border-slate-200 hover:border-slate-300'
+                        ? 'border-maroon-500/30 bg-maroon-50'
+                        : 'border-border hover:border-muted-foreground/30'
                     }`}
                   >
                     <Checkbox
                       checked={checked}
                       onCheckedChange={() => toggleChannel(ch.id)}
                     />
-                    <Icon className={`w-4 h-4 ${checked ? 'text-[hsl(152,68%,35%)]' : 'text-slate-400'}`} />
-                    <span className={`text-sm ${checked ? 'text-slate-900 font-medium' : 'text-slate-600'}`}>
+                    <Icon className={`w-4 h-4 ${checked ? 'text-maroon-500' : 'text-muted-foreground'}`} />
+                    <span className={`text-sm ${checked ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
                       {ch.label}
                     </span>
                   </label>
@@ -214,11 +216,11 @@ export function AdminNotifications() {
               <Switch checked={scheduled} onCheckedChange={setScheduled} />
               <Label className="text-sm">Schedule for later</Label>
               {scheduled && (
-                <Input type="datetime-local" className="w-48" />
+                <Input type="datetime-local" className="w-48 rounded-lg" />
               )}
             </div>
             <Button
-              className="bg-[hsl(152,68%,35%)] hover:bg-[hsl(152,68%,30%)] text-white"
+              className="bg-maroon-500 hover:bg-maroon-600 text-white rounded-[10px]"
               onClick={handleSend}
             >
               <Send className="w-4 h-4 mr-2" />
@@ -229,10 +231,10 @@ export function AdminNotifications() {
       </Card>
 
       {/* Notification Templates */}
-      <Card>
+      <Card className="shadow-royal-sm rounded-xl border-0">
         <CardHeader>
           <CardTitle className="text-base font-semibold flex items-center gap-2">
-            <FileText className="w-5 h-5 text-slate-500" />
+            <FileText className="w-5 h-5 text-muted-foreground" />
             Notification Templates
           </CardTitle>
         </CardHeader>
@@ -241,19 +243,22 @@ export function AdminNotifications() {
             {templates.map(tpl => (
               <div
                 key={tpl.id}
-                className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors group"
+                className="flex items-center justify-between p-3 rounded-lg hover:bg-muted/50 transition-colors group"
               >
                 <div className="flex items-center gap-3 min-w-0 flex-1">
-                  <Badge variant="outline" className="text-[10px] capitalize flex-shrink-0">
+                  {tpl.unread && (
+                    <span className="w-2 h-2 rounded-full bg-maroon-500 shrink-0" />
+                  )}
+                  <Badge variant="outline" className="text-[10px] capitalize flex-shrink-0 rounded-md">
                     {tpl.type}
                   </Badge>
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-slate-900">{tpl.name}</p>
-                    <p className="text-xs text-slate-500 truncate">{tpl.subject}</p>
+                    <p className="text-sm font-medium text-foreground">{tpl.name}</p>
+                    <p className="text-xs text-muted-foreground truncate">{tpl.subject}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0 ml-4">
-                  <span className="text-xs text-slate-400 hidden sm:inline">
+                  <span className="text-xs text-muted-foreground hidden sm:inline">
                     Updated {formatDate(tpl.lastModified, 'relative')}
                   </span>
                   <Button
@@ -272,67 +277,69 @@ export function AdminNotifications() {
       </Card>
 
       {/* Recent Broadcasts */}
-      <Card>
+      <Card className="shadow-royal-sm rounded-xl border-0 overflow-hidden">
         <CardHeader>
           <CardTitle className="text-base font-semibold">Recent Broadcasts</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-xs">Title</TableHead>
-                <TableHead className="text-xs">Channels</TableHead>
-                <TableHead className="text-xs">Target</TableHead>
-                <TableHead className="text-xs">Status</TableHead>
-                <TableHead className="text-xs">Sent</TableHead>
-                <TableHead className="text-xs text-right">Delivery</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {broadcasts.map(bc => (
-                <TableRow key={bc.id} className="hover:bg-slate-50">
-                  <TableCell className="text-sm font-medium text-slate-900">{bc.title}</TableCell>
-                  <TableCell>
-                    <div className="flex gap-1">
-                      {bc.channels.map(ch => (
-                        <Badge key={ch} variant="outline" className="text-[9px]">{ch}</Badge>
-                      ))}
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-xs text-slate-600">{bc.target}</TableCell>
-                  <TableCell>
-                    <Badge
-                      variant="secondary"
-                      className={`text-[10px] ${
-                        bc.status === 'delivered'
-                          ? 'bg-emerald-100 text-emerald-700'
-                          : bc.status === 'scheduled'
-                            ? 'bg-amber-100 text-amber-700'
-                            : 'bg-slate-100 text-slate-600'
-                      }`}
-                    >
-                      {bc.status === 'scheduled' && <Clock className="w-3 h-3 mr-1" />}
-                      {bc.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-xs text-slate-500">{formatDate(bc.sentAt)}</TableCell>
-                  <TableCell className="text-right">
-                    {bc.status === 'delivered' ? (
-                      <div className="text-xs">
-                        <span className="text-emerald-600 font-medium">{bc.delivered}</span>
-                        <span className="text-slate-400">/{bc.total}</span>
-                        {bc.failed > 0 && (
-                          <span className="text-red-400 ml-1">({bc.failed} failed)</span>
-                        )}
-                      </div>
-                    ) : (
-                      <span className="text-xs text-slate-400">Pending</span>
-                    )}
-                  </TableCell>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="hover:bg-transparent bg-muted/50">
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Title</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Channels</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Target</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Sent</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider text-right">Delivery</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {broadcasts.map(bc => (
+                  <TableRow key={bc.id} className="hover:bg-maroon-50/30 transition-colors">
+                    <TableCell className="text-sm font-medium text-foreground py-3.5">{bc.title}</TableCell>
+                    <TableCell className="py-3.5">
+                      <div className="flex gap-1">
+                        {bc.channels.map(ch => (
+                          <Badge key={ch} variant="outline" className="text-[9px] rounded-md">{ch}</Badge>
+                        ))}
+                      </div>
+                    </TableCell>
+                    <TableCell className="text-xs text-muted-foreground py-3.5">{bc.target}</TableCell>
+                    <TableCell className="py-3.5">
+                      <Badge
+                        variant="secondary"
+                        className={`text-[10px] rounded-md ${
+                          bc.status === 'delivered'
+                            ? 'bg-maroon-100 text-maroon-700'
+                            : bc.status === 'scheduled'
+                              ? 'bg-amber-100 text-amber-700'
+                              : 'bg-muted text-muted-foreground'
+                        }`}
+                      >
+                        {bc.status === 'scheduled' && <Clock className="w-3 h-3 mr-1" />}
+                        {bc.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-xs text-muted-foreground py-3.5">{formatDate(bc.sentAt)}</TableCell>
+                    <TableCell className="text-right py-3.5">
+                      {bc.status === 'delivered' ? (
+                        <div className="text-xs">
+                          <span className="text-foreground font-medium">{bc.delivered}</span>
+                          <span className="text-muted-foreground">/{bc.total}</span>
+                          {bc.failed > 0 && (
+                            <span className="text-red-500 ml-1">({bc.failed} failed)</span>
+                          )}
+                        </div>
+                      ) : (
+                        <span className="text-xs text-muted-foreground">Pending</span>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>

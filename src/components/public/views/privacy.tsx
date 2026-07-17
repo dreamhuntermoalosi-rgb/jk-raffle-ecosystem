@@ -63,32 +63,33 @@ const sections = [
 export function PublicPrivacy() {
   return (
     <div className="pt-16 lg:pt-18">
-      {/* Header */}
-      <section className="bg-gradient-to-b from-forest-50 to-transparent">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+      {/* Header — dark maroon gradient */}
+      <section className="relative bg-gradient-to-br from-maroon-900 via-maroon-800 to-maroon-950 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 relative z-10">
           <motion.div {...fadeInUp} className="text-center max-w-3xl mx-auto">
-            <Badge variant="secondary" className="mb-4">
+            <Badge className="mb-5 bg-white/10 text-gold-400 border-gold-400/20 hover:bg-white/15">
               <Shield className="h-3 w-3 mr-1" />
               Legal
             </Badge>
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-              Privacy <span className="gradient-text">Policy</span>
+            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4 text-white">
+              Privacy <span className="gradient-gold">Policy</span>
             </h1>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-maroon-200/60">
               Last updated: 1 June 2025 &bull; Effective: 1 June 2025
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Content */}
+      {/* Content — clean document layout, good line-height, maroon headings */}
       <section className="py-12 lg:py-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
           <motion.div {...fadeInUp} className="space-y-8">
             {sections.map((section) => (
               <div key={section.title}>
-                <h2 className="text-lg font-semibold mb-3">{section.title}</h2>
-                <div className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+                <h2 className="text-lg font-semibold mb-3 text-maroon-600">{section.title}</h2>
+                <div className="text-sm text-muted-foreground leading-[1.8] whitespace-pre-line">
                   {section.content}
                 </div>
               </div>

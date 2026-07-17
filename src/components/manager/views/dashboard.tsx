@@ -75,15 +75,15 @@ const recentMembers = [
 
 // Activity feed for this branch
 const branchActivities = [
-  { icon: UserPlus, text: 'Aiden Mabena joined Johannesburg North', time: '2 hours ago', color: 'text-forest-600 bg-forest-50' },
-  { icon: CreditCard, text: 'R3,500 in ticket purchases from Zanele Khumalo', time: '4 hours ago', color: 'text-gold-600 bg-gold-50' },
-  { icon: Ticket, text: 'Penthouse Suite campaign reached 78% sold', time: '6 hours ago', color: 'text-forest-600 bg-forest-50' },
-  { icon: Trophy, text: 'R500K Cash Jackpot campaign launched', time: '1 day ago', color: 'text-gold-600 bg-gold-50' },
-  { icon: Activity, text: 'Monthly branch report generated', time: '2 days ago', color: 'text-neutral-600 bg-neutral-100' },
+  { icon: UserPlus, text: 'Aiden Mabena joined Johannesburg North', time: '2 hours ago', color: 'text-maroon-500 bg-maroon-50' },
+  { icon: CreditCard, text: 'R3,500 in ticket purchases from Zanele Khumalo', time: '4 hours ago', color: 'text-maroon-500 bg-maroon-50' },
+  { icon: Ticket, text: 'Penthouse Suite campaign reached 78% sold', time: '6 hours ago', color: 'text-maroon-500 bg-maroon-50' },
+  { icon: Trophy, text: 'R500K Cash Jackpot campaign launched', time: '1 day ago', color: 'text-maroon-500 bg-maroon-50' },
+  { icon: Activity, text: 'Monthly branch report generated', time: '2 days ago', color: 'text-maroon-500 bg-maroon-50' },
 ];
 
 const statusColor: Record<string, string> = {
-  active: 'bg-forest-100 text-forest-700',
+  active: 'bg-maroon-100 text-maroon-700',
   pending: 'bg-gold-100 text-gold-700',
   suspended: 'bg-red-100 text-red-700',
   deactivated: 'bg-neutral-100 text-neutral-500',
@@ -106,8 +106,8 @@ export function ManagerDashboard() {
       change: '+12.5%',
       positive: true,
       icon: Users,
-      color: 'text-forest-600',
-      bg: 'bg-forest-50',
+      color: 'text-maroon-500',
+      bg: 'bg-maroon-50',
     },
     {
       label: 'Revenue This Month',
@@ -115,8 +115,8 @@ export function ManagerDashboard() {
       change: '+8.2%',
       positive: true,
       icon: TrendingUp,
-      color: 'text-gold-600',
-      bg: 'bg-gold-50',
+      color: 'text-maroon-500',
+      bg: 'bg-maroon-50',
     },
     {
       label: 'Active Campaigns',
@@ -124,8 +124,8 @@ export function ManagerDashboard() {
       change: '+2',
       positive: true,
       icon: Trophy,
-      color: 'text-forest-600',
-      bg: 'bg-forest-50',
+      color: 'text-maroon-500',
+      bg: 'bg-maroon-50',
     },
     {
       label: 'Tickets Sold',
@@ -133,8 +133,8 @@ export function ManagerDashboard() {
       change: '+15.3%',
       positive: true,
       icon: Ticket,
-      color: 'text-gold-600',
-      bg: 'bg-gold-50',
+      color: 'text-maroon-500',
+      bg: 'bg-maroon-50',
     },
   ], []);
 
@@ -142,26 +142,26 @@ export function ManagerDashboard() {
     <div className="space-y-6">
       {/* Page Title */}
       <div>
-        <h1 className="text-2xl font-bold text-forest-900">Dashboard</h1>
+        <h1 className="text-2xl font-bold text-maroon-900">Dashboard</h1>
         <p className="text-sm text-muted-foreground mt-1">
           Overview of your branch performance and activity
         </p>
       </div>
 
       {/* Branch Info Card */}
-      <Card id="manager-branch-info" className="border-l-4 border-l-forest-500 bg-gradient-to-r from-forest-50/50 to-white">
-        <CardContent className="p-5">
+      <Card id="manager-branch-info" className="bg-white shadow-royal-sm rounded-xl border-0 overflow-hidden">
+        <CardContent className="p-6 bg-gradient-to-r from-maroon-50/60 to-white rounded-xl">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-start gap-4">
-              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-forest-100 text-forest-700">
+              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-maroon-100 text-maroon-700">
                 <MapPin className="w-6 h-6" />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-forest-900">
+                <h2 className="text-lg font-semibold text-maroon-900">
                   {branch?.name ?? 'Johannesburg North'}
                 </h2>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1 text-sm text-muted-foreground">
-                  <span className="font-mono text-xs bg-forest-100 text-forest-700 px-2 py-0.5 rounded">
+                  <span className="font-mono text-xs bg-maroon-100 text-maroon-700 px-2 py-0.5 rounded">
                     {branch?.code ?? 'JHB-N'}
                   </span>
                   <span>{branch?.memberCount ?? 342} members</span>
@@ -169,7 +169,7 @@ export function ManagerDashboard() {
                 </div>
               </div>
             </div>
-            <Badge className="bg-forest-100 text-forest-700 hover:bg-forest-200 border-0 text-xs font-medium gap-1.5 px-3 py-1">
+            <Badge className="bg-maroon-100 text-maroon-700 hover:bg-maroon-200 border-0 text-xs font-medium gap-1.5 px-3 py-1">
               <ShieldCheck className="w-3.5 h-3.5" />
               Active
             </Badge>
@@ -178,24 +178,24 @@ export function ManagerDashboard() {
       </Card>
 
       {/* Stats Grid */}
-      <div id="manager-stats" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div id="manager-stats" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
             <Card
               key={stat.label}
-              className="hover:shadow-md transition-shadow duration-200"
+              className="bg-white shadow-royal-sm rounded-xl hover:shadow-royal-md transition-shadow duration-200 border-0"
             >
-              <CardContent className="p-5">
+              <CardContent className="p-6">
                 <div className="flex items-center justify-between">
-                  <div className={cn('w-10 h-10 rounded-lg flex items-center justify-center', stat.bg)}>
+                  <div className={cn('w-10 h-10 rounded-full flex items-center justify-center', stat.bg)}>
                     <Icon className={cn('w-5 h-5', stat.color)} />
                   </div>
                   <div
                     className={cn(
-                      'flex items-center gap-0.5 text-xs font-medium rounded-full px-2 py-0.5',
+                      'flex items-center gap-0.5 text-xs font-medium rounded-md px-2 py-0.5',
                       stat.positive
-                        ? 'text-forest-600 bg-forest-50'
+                        ? 'text-maroon-500 bg-maroon-50'
                         : 'text-red-600 bg-red-50'
                     )}
                   >
@@ -208,7 +208,7 @@ export function ManagerDashboard() {
                   </div>
                 </div>
                 <div className="mt-3">
-                  <p className="text-2xl font-bold text-neutral-900">{stat.value}</p>
+                  <p className="text-2xl font-bold tracking-tight">{stat.value}</p>
                   <p className="text-xs text-muted-foreground mt-0.5">{stat.label}</p>
                 </div>
               </CardContent>
@@ -220,7 +220,7 @@ export function ManagerDashboard() {
       {/* Revenue Chart + Activity Feed */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Revenue Chart */}
-        <Card id="manager-chart" className="lg:col-span-2">
+        <Card id="manager-chart" className="bg-white lg:col-span-2 shadow-royal-sm rounded-xl border-0">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold">Revenue Overview</CardTitle>
             <CardDescription>Monthly revenue for your branch (last 6 months)</CardDescription>
@@ -231,19 +231,19 @@ export function ManagerDashboard() {
                 <AreaChart data={branchRevenueData} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
                   <defs>
                     <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#15803d" stopOpacity={0.2} />
-                      <stop offset="100%" stopColor="#15803d" stopOpacity={0.02} />
+                      <stop offset="0%" stopColor="#5B1322" stopOpacity={0.15} />
+                      <stop offset="100%" stopColor="#5B1322" stopOpacity={0.01} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} opacity={0.4} />
                   <XAxis
                     dataKey="month"
-                    tick={{ fontSize: 12, fill: '#737373' }}
+                    tick={{ fontSize: 12, fill: '#a3a3a3' }}
                     axisLine={false}
                     tickLine={false}
                   />
                   <YAxis
-                    tick={{ fontSize: 12, fill: '#737373' }}
+                    tick={{ fontSize: 12, fill: '#a3a3a3' }}
                     axisLine={false}
                     tickLine={false}
                     tickFormatter={(v) => `R${(v / 1000).toFixed(0)}K`}
@@ -253,7 +253,7 @@ export function ManagerDashboard() {
                       backgroundColor: '#fff',
                       border: '1px solid #e5e7eb',
                       borderRadius: '8px',
-                      boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+                      boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.08)',
                       fontSize: '13px',
                     }}
                     formatter={(value: number) => [formatZAR(value), 'Revenue']}
@@ -261,11 +261,11 @@ export function ManagerDashboard() {
                   <Area
                     type="monotone"
                     dataKey="revenue"
-                    stroke="#15803d"
+                    stroke="#5B1322"
                     strokeWidth={2.5}
                     fill="url(#revenueGradient)"
-                    dot={{ fill: '#15803d', r: 4, strokeWidth: 2, stroke: '#fff' }}
-                    activeDot={{ r: 6, stroke: '#15803d', strokeWidth: 2, fill: '#fff' }}
+                    dot={{ fill: '#5B1322', r: 4, strokeWidth: 2, stroke: '#fff' }}
+                    activeDot={{ r: 6, stroke: '#D4AF37', strokeWidth: 2, fill: '#fff' }}
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -274,7 +274,7 @@ export function ManagerDashboard() {
         </Card>
 
         {/* Activity Feed */}
-        <Card id="manager-activity">
+        <Card id="manager-activity" className="bg-white shadow-royal-sm rounded-xl border-0">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold">Recent Activity</CardTitle>
             <CardDescription>Latest events in your branch</CardDescription>
@@ -286,13 +286,13 @@ export function ManagerDashboard() {
                 return (
                   <div
                     key={i}
-                    className="flex items-start gap-3 px-6 py-3.5 hover:bg-muted/30 transition-colors"
+                    className="flex items-start gap-3 px-6 py-3.5 hover:bg-maroon-50/30 transition-colors"
                   >
-                    <div className={cn('w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5', activity.color)}>
+                    <div className={cn('w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5', activity.color)}>
                       <Icon className="w-4 h-4" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm text-neutral-700 leading-snug">
+                      <p className="text-sm text-foreground/80 leading-snug">
                         {activity.text}
                       </p>
                       <div className="flex items-center gap-1 mt-1 text-xs text-muted-foreground">
@@ -309,49 +309,50 @@ export function ManagerDashboard() {
       </div>
 
       {/* Recent Members Table */}
-      <Card id="manager-members-table">
+      <Card id="manager-members-table" className="bg-white shadow-royal-sm rounded-xl border-0 overflow-hidden">
         <CardHeader className="pb-2">
           <CardTitle className="text-base font-semibold">Recent Members</CardTitle>
           <CardDescription>Newest members in your branch</CardDescription>
         </CardHeader>
         <CardContent>
+          <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow className="hover:bg-transparent">
-                <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Name</TableHead>
-                <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden sm:table-cell">Status</TableHead>
-                <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden md:table-cell">Join Date</TableHead>
-                <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider text-right">Actions</TableHead>
+              <TableRow className="hover:bg-transparent bg-muted/50">
+                <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Name</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider hidden sm:table-cell">Status</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider hidden md:table-cell">Join Date</TableHead>
+                <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {recentMembers.map((member, i) => (
-                <TableRow key={i} className="group">
-                  <TableCell>
+                <TableRow key={i} className="group hover:bg-maroon-50/30 transition-colors">
+                  <TableCell className="py-3">
                     <div>
-                      <p className="text-sm font-medium text-neutral-900">{member.name}</p>
+                      <p className="text-sm font-medium text-foreground">{member.name}</p>
                       <p className="text-xs text-muted-foreground">{member.email}</p>
                     </div>
                   </TableCell>
-                  <TableCell className="hidden sm:table-cell">
+                  <TableCell className="hidden sm:table-cell py-3">
                     <Badge
                       className={cn(
-                        'border-0 text-xs font-medium capitalize',
+                        'border-0 text-xs font-medium capitalize rounded-md',
                         statusColor[member.status]
                       )}
                     >
                       {member.status}
                     </Badge>
                   </TableCell>
-                  <TableCell className="hidden md:table-cell text-sm text-muted-foreground">
+                  <TableCell className="hidden md:table-cell text-sm text-muted-foreground py-3">
                     {new Date(member.joinDate).toLocaleDateString('en-ZA', {
                       day: 'numeric',
                       month: 'short',
                       year: 'numeric',
                     })}
                   </TableCell>
-                  <TableCell className="text-right">
-                    <button className="text-xs text-forest-600 hover:text-forest-800 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                  <TableCell className="text-right py-3">
+                    <button className="text-xs text-maroon-500 hover:text-maroon-700 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
                       View
                     </button>
                   </TableCell>
@@ -359,29 +360,30 @@ export function ManagerDashboard() {
               ))}
             </TableBody>
           </Table>
+          </div>
         </CardContent>
       </Card>
 
       {/* Campaign Performance */}
       <div>
-        <h2 className="text-base font-semibold text-forest-900 mb-3">Active Campaigns</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <h2 className="text-base font-semibold text-foreground mb-3">Active Campaigns</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {branchCampaigns.map((campaign) => {
             const pct = campaign.progress ?? Math.round((campaign.soldTickets / campaign.maxTickets) * 100);
             const revenue = campaign.soldTickets * campaign.ticketPrice;
             return (
-              <Card key={campaign.id} className="hover:shadow-md transition-shadow duration-200">
+              <Card key={campaign.id} className="bg-white shadow-royal-sm rounded-xl hover:shadow-royal-md transition-shadow duration-200 border-0">
                 <CardContent className="p-5">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
-                      <h3 className="text-sm font-semibold text-neutral-900 truncate">
+                      <h3 className="text-sm font-semibold text-foreground truncate">
                         {campaign.title}
                       </h3>
                       <p className="text-xs text-muted-foreground mt-0.5">
                         Draw: {new Date(campaign.drawDate).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short' })}
                       </p>
                     </div>
-                    <Badge className="shrink-0 bg-forest-100 text-forest-700 border-0 text-xs">
+                    <Badge className="shrink-0 bg-maroon-100 text-maroon-700 border-0 text-xs rounded-md">
                       {pct}%
                     </Badge>
                   </div>
@@ -389,9 +391,9 @@ export function ManagerDashboard() {
                   <div className="mt-4">
                     <div className="flex justify-between text-xs text-muted-foreground mb-1.5">
                       <span>{campaign.soldTickets} / {campaign.maxTickets} tickets</span>
-                      <span className="font-medium text-forest-700">{formatZAR(revenue)}</span>
+                      <span className="font-semibold text-foreground">{formatZAR(revenue)}</span>
                     </div>
-                    <Progress value={pct} className="h-2 bg-neutral-100 [&>[data-slot=indicator]]:bg-forest-500" />
+                    <Progress value={pct} className="h-1.5 bg-muted [&>[data-slot=indicator]]:bg-maroon-500" />
                   </div>
                 </CardContent>
               </Card>

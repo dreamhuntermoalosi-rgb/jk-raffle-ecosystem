@@ -41,13 +41,13 @@ export function MemberSidebar() {
   return (
     <aside
       className={cn(
-        'fixed left-0 top-0 z-40 flex h-screen flex-col border-r border-border bg-card transition-all duration-300 ease-in-out',
+        'fixed left-0 top-0 z-40 flex h-screen flex-col border-r border-[#2E0910]/50 bg-[#130304] transition-all duration-300 ease-in-out',
         sidebarOpen ? 'w-72' : 'w-20'
       )}
     >
       {/* User section */}
-      <div className="flex h-16 items-center gap-3 px-4 border-b border-border">
-        <Avatar className="h-9 w-9 shrink-0 bg-emerald-700 text-white">
+      <div className="flex h-16 items-center gap-3 border-b border-[#2E0910] px-4">
+        <Avatar className="h-9 w-9 shrink-0 bg-[#3D0C16] text-white">
           <AvatarFallback className="text-sm font-semibold">
             {initials}
           </AvatarFallback>
@@ -58,17 +58,17 @@ export function MemberSidebar() {
             sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'
           )}
         >
-          <span className="text-sm font-semibold truncate text-foreground">
+          <span className="truncate text-sm font-semibold text-white tracking-tight">
             {user.firstName} {user.lastName}
           </span>
-          <span className="text-xs text-muted-foreground truncate">
+          <span className="truncate text-xs text-[#f4a9b8]/60">
             {user.email}
           </span>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 overflow-y-auto py-4 px-3">
+      <nav className="flex-1 overflow-y-auto px-3 py-4 scrollbar-thin">
         <ul className="space-y-1">
           {navItems.map((item) => {
             const isActive = currentView === item.id;
@@ -81,11 +81,11 @@ export function MemberSidebar() {
                 onMouseEnter={() => setHoveredItem(item.id)}
                 onMouseLeave={() => setHoveredItem(null)}
                 className={cn(
-                  'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 cursor-pointer',
+                  'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 cursor-pointer border-l-2',
                   isActive
-                    ? 'bg-emerald-700 text-white shadow-sm'
-                    : 'text-muted-foreground hover:bg-emerald-50 hover:text-emerald-800 dark:hover:bg-emerald-950/40 dark:hover:text-emerald-300',
-                  !sidebarOpen && 'justify-center px-2'
+                    ? 'border-[#D4AF37] bg-[#5B1322]/15 text-white'
+                    : 'border-transparent text-[#f4a9b8]/70 hover:bg-[#2E0910]/60 hover:text-[#fce7eb]',
+                  !sidebarOpen && 'justify-center px-2 border-l-0'
                 )}
               >
                 <Icon className="h-5 w-5 shrink-0" />
@@ -119,14 +119,14 @@ export function MemberSidebar() {
       </nav>
 
       {/* Bottom section */}
-      <div className="border-t border-border p-3">
+      <div className="border-t border-[#2E0910]/50 p-3">
         <Separator className="mb-3 hidden" />
 
         {/* Collapse toggle */}
         <button
           onClick={toggleSidebar}
           className={cn(
-            'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground transition-colors mb-1 cursor-pointer',
+            'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-[#f4a9b8]/40 hover:bg-[#2E0910]/40 hover:text-[#f4a9b8]/70 transition-colors mb-1 cursor-pointer',
             !sidebarOpen && 'justify-center px-2'
           )}
         >
@@ -154,7 +154,7 @@ export function MemberSidebar() {
               useAppStore.getState().logout();
               useAppStore.getState().setPortal('public');
             }}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-red-400/80 hover:bg-[#2E0910]/60 hover:text-red-400 transition-colors cursor-pointer"
           >
             <LogOut className="h-5 w-5 shrink-0" />
             <span>Log Out</span>
@@ -167,7 +167,7 @@ export function MemberSidebar() {
                   useAppStore.getState().logout();
                   useAppStore.getState().setPortal('public');
                 }}
-                className="flex w-full justify-center items-center rounded-lg px-2 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer"
+                className="flex w-full justify-center items-center rounded-lg px-2 py-2 text-sm text-red-400/80 hover:bg-[#2E0910]/60 hover:text-red-400 transition-colors cursor-pointer"
               >
                 <LogOut className="h-5 w-5 shrink-0" />
               </button>

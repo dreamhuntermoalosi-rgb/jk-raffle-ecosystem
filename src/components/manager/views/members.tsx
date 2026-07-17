@@ -94,7 +94,7 @@ const branchMembers = [
 const ITEMS_PER_PAGE = 8;
 
 const statusColor: Record<string, string> = {
-  active: 'bg-forest-100 text-forest-700',
+  active: 'bg-maroon-100 text-maroon-700',
   pending: 'bg-gold-100 text-gold-700',
   suspended: 'bg-red-100 text-red-700',
   deactivated: 'bg-neutral-100 text-neutral-500',
@@ -126,12 +126,10 @@ export function ManagerMembers() {
   const filtered = useMemo(() => {
     let list = [...branchMembers];
 
-    // Filter by status
     if (statusFilter !== 'all') {
       list = list.filter(m => m.status === statusFilter);
     }
 
-    // Filter by search
     if (search.trim()) {
       const q = search.toLowerCase();
       list = list.filter(
@@ -141,7 +139,6 @@ export function ManagerMembers() {
       );
     }
 
-    // Sort
     list.sort((a, b) => {
       if (sortBy === 'name') return `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`);
       if (sortBy === 'date') return new Date(b.joinDate).getTime() - new Date(a.joinDate).getTime();
@@ -170,9 +167,9 @@ export function ManagerMembers() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-forest-900 flex items-center gap-3">
+          <h1 className="text-2xl font-bold text-foreground tracking-tight">
             Members
-            <Badge className="bg-forest-100 text-forest-700 hover:bg-forest-200 border-0 text-xs font-medium">
+            <Badge className="bg-maroon-100 text-maroon-700 hover:bg-maroon-200 border-0 text-xs font-medium ml-2 rounded-md">
               {branchMembers.length}
             </Badge>
           </h1>
@@ -182,7 +179,7 @@ export function ManagerMembers() {
         </div>
         <Dialog open={createOpen} onOpenChange={setCreateOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-forest-600 hover:bg-forest-700 text-white gap-2">
+            <Button className="bg-maroon-500 hover:bg-maroon-600 text-white gap-2 rounded-[10px]">
               <UserPlus className="w-4 h-4" />
               Create Member
             </Button>
@@ -203,6 +200,7 @@ export function ManagerMembers() {
                     placeholder="e.g. Sipho"
                     value={formFirst}
                     onChange={(e) => setFormFirst(e.target.value)}
+                    className="rounded-lg"
                   />
                 </div>
                 <div className="space-y-2">
@@ -212,6 +210,7 @@ export function ManagerMembers() {
                     placeholder="e.g. Ndlovu"
                     value={formLast}
                     onChange={(e) => setFormLast(e.target.value)}
+                    className="rounded-lg"
                   />
                 </div>
               </div>
@@ -223,6 +222,7 @@ export function ManagerMembers() {
                   placeholder="sipho@example.co.za"
                   value={formEmail}
                   onChange={(e) => setFormEmail(e.target.value)}
+                  className="rounded-lg"
                 />
               </div>
               <div className="space-y-2">
@@ -232,18 +232,19 @@ export function ManagerMembers() {
                   placeholder="+27 82 555 0000"
                   value={formPhone}
                   onChange={(e) => setFormPhone(e.target.value)}
+                  className="rounded-lg"
                 />
               </div>
               <div className="space-y-2">
                 <Label>Branch</Label>
-                <Input value={branch?.name ?? 'Johannesburg North'} disabled className="bg-muted" />
+                <Input value={branch?.name ?? 'Johannesburg North'} disabled className="bg-muted rounded-lg" />
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setCreateOpen(false)}>
+              <Button variant="outline" onClick={() => setCreateOpen(false)} className="rounded-[10px]">
                 Cancel
               </Button>
-              <Button className="bg-forest-600 hover:bg-forest-700 text-white" onClick={handleCreateSubmit}>
+              <Button className="bg-maroon-500 hover:bg-maroon-600 text-white rounded-[10px]" onClick={handleCreateSubmit}>
                 Create Member
               </Button>
             </DialogFooter>
@@ -252,7 +253,7 @@ export function ManagerMembers() {
       </div>
 
       {/* Filters Row */}
-      <Card>
+      <Card className="bg-white shadow-royal-sm rounded-xl border-0">
         <CardContent className="p-4">
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
@@ -261,11 +262,11 @@ export function ManagerMembers() {
                 placeholder="Search by name or email..."
                 value={search}
                 onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-                className="pl-9"
+                className="pl-9 rounded-lg"
               />
             </div>
             <Select value={statusFilter} onValueChange={(v) => { setStatusFilter(v); setPage(1); }}>
-              <SelectTrigger className="w-full sm:w-44">
+              <SelectTrigger className="w-full sm:w-44 rounded-lg">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
@@ -277,7 +278,7 @@ export function ManagerMembers() {
               </SelectContent>
             </Select>
             <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-full sm:w-40">
+              <SelectTrigger className="w-full sm:w-40 rounded-lg">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
@@ -291,80 +292,80 @@ export function ManagerMembers() {
       </Card>
 
       {/* Members Table */}
-      <Card>
+      <Card className="bg-white shadow-royal-sm rounded-xl border-0 overflow-hidden">
         <CardContent className="p-0">
           <ScrollArea className="max-h-[520px] overflow-y-auto">
             <Table>
               <TableHeader>
-                <TableRow className="hover:bg-transparent border-b">
-                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider sticky top-0 bg-card z-10">
+                <TableRow className="hover:bg-transparent bg-muted/50">
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider sticky top-0 bg-muted/50 z-10">
                     Member
                   </TableHead>
-                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden md:table-cell sticky top-0 bg-card z-10">
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider hidden md:table-cell sticky top-0 bg-muted/50 z-10">
                     Phone
                   </TableHead>
-                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider sticky top-0 bg-card z-10">
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider sticky top-0 bg-muted/50 z-10">
                     Status
                   </TableHead>
-                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden lg:table-cell sticky top-0 bg-card z-10">
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider hidden lg:table-cell sticky top-0 bg-muted/50 z-10">
                     Join Date
                   </TableHead>
-                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden xl:table-cell text-right sticky top-0 bg-card z-10">
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider hidden xl:table-cell text-right sticky top-0 bg-muted/50 z-10">
                     Tickets
                   </TableHead>
-                  <TableHead className="text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden xl:table-cell text-right sticky top-0 bg-card z-10">
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider hidden xl:table-cell text-right sticky top-0 bg-muted/50 z-10">
                     Total Spent
                   </TableHead>
-                  <TableHead className="w-12 sticky top-0 bg-card z-10" />
+                  <TableHead className="w-12 sticky top-0 bg-muted/50 z-10" />
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {paged.map((member) => {
                   const initials = `${member.firstName.charAt(0)}${member.lastName.charAt(0)}`;
                   return (
-                    <TableRow key={member.id} className="group hover:bg-forest-50/30 transition-colors">
-                      <TableCell>
+                    <TableRow key={member.id} className="group hover:bg-maroon-50/30 transition-colors">
+                      <TableCell className="py-3.5">
                         <div className="flex items-center gap-3">
                           <Avatar className="h-8 w-8 shrink-0">
-                            <AvatarFallback className="bg-forest-100 text-forest-700 text-xs font-semibold">
+                            <AvatarFallback className="bg-maroon-100 text-maroon-700 text-xs font-semibold">
                               {initials}
                             </AvatarFallback>
                           </Avatar>
                           <div className="min-w-0">
-                            <p className="text-sm font-medium text-neutral-900 truncate">
+                            <p className="text-sm font-medium text-foreground truncate">
                               {member.firstName} {member.lastName}
                             </p>
                             <p className="text-xs text-muted-foreground truncate">{member.email}</p>
                           </div>
                         </div>
                       </TableCell>
-                      <TableCell className="hidden md:table-cell text-sm text-muted-foreground">
+                      <TableCell className="hidden md:table-cell text-sm text-muted-foreground py-3.5">
                         {member.phone}
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="py-3.5">
                         <Badge
                           className={cn(
-                            'border-0 text-xs font-medium capitalize',
+                            'border-0 text-xs font-medium capitalize rounded-md',
                             statusColor[member.status]
                           )}
                         >
                           {member.status}
                         </Badge>
                       </TableCell>
-                      <TableCell className="hidden lg:table-cell text-sm text-muted-foreground">
+                      <TableCell className="hidden lg:table-cell text-sm text-muted-foreground py-3.5">
                         {new Date(member.joinDate).toLocaleDateString('en-ZA', {
                           day: 'numeric',
                           month: 'short',
                           year: 'numeric',
                         })}
                       </TableCell>
-                      <TableCell className="hidden xl:table-cell text-sm text-right font-medium text-neutral-700">
+                      <TableCell className="hidden xl:table-cell text-sm text-right font-medium text-foreground py-3.5">
                         {member.ticketsPurchased}
                       </TableCell>
-                      <TableCell className="hidden xl:table-cell text-sm text-right font-medium text-neutral-700">
+                      <TableCell className="hidden xl:table-cell text-sm text-right font-semibold text-foreground py-3.5">
                         {formatZAR(member.totalSpent)}
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="py-3.5">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button
@@ -417,9 +418,9 @@ export function ManagerMembers() {
           {/* Pagination */}
           <div className="flex items-center justify-between border-t px-6 py-3">
             <p className="text-sm text-muted-foreground">
-              Showing <span className="font-medium text-neutral-700">{showingFrom}</span> to{' '}
-              <span className="font-medium text-neutral-700">{showingTo}</span> of{' '}
-              <span className="font-medium text-neutral-700">{filtered.length}</span> members
+              Showing <span className="font-medium text-foreground">{showingFrom}</span> to{' '}
+              <span className="font-medium text-foreground">{showingTo}</span> of{' '}
+              <span className="font-medium text-foreground">{filtered.length}</span> members
             </p>
             <div className="flex items-center gap-1">
               <Button
@@ -439,7 +440,7 @@ export function ManagerMembers() {
                   onClick={() => setPage(p)}
                   className={cn(
                     'h-8 w-8 p-0 text-xs font-medium',
-                    page === p && 'bg-forest-600 hover:bg-forest-700 text-white'
+                    page === p && 'bg-maroon-500 hover:bg-maroon-600 text-white'
                   )}
                 >
                   {p}
@@ -467,7 +468,7 @@ export function ManagerMembers() {
               <DialogHeader>
                 <DialogTitle className="flex items-center gap-3">
                   <Avatar className="h-10 w-10">
-                    <AvatarFallback className="bg-forest-100 text-forest-700 text-sm font-semibold">
+                    <AvatarFallback className="bg-maroon-500 text-white text-sm font-semibold">
                       {detailsMember.firstName.charAt(0)}{detailsMember.lastName.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
@@ -481,13 +482,13 @@ export function ManagerMembers() {
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <Mail className="w-3.5 h-3.5" /> Email
                     </div>
-                    <p className="text-sm font-medium text-neutral-900">{detailsMember.email}</p>
+                    <p className="text-sm font-medium text-foreground">{detailsMember.email}</p>
                   </div>
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <Phone className="w-3.5 h-3.5" /> Phone
                     </div>
-                    <p className="text-sm font-medium text-neutral-900">{detailsMember.phone}</p>
+                    <p className="text-sm font-medium text-foreground">{detailsMember.phone}</p>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -495,7 +496,7 @@ export function ManagerMembers() {
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <Calendar className="w-3.5 h-3.5" /> Joined
                     </div>
-                    <p className="text-sm font-medium text-neutral-900">
+                    <p className="text-sm font-medium text-foreground">
                       {new Date(detailsMember.joinDate).toLocaleDateString('en-ZA', {
                         day: 'numeric', month: 'long', year: 'numeric',
                       })}
@@ -505,7 +506,7 @@ export function ManagerMembers() {
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       Status
                     </div>
-                    <Badge className={cn('border-0 text-xs font-medium capitalize mt-0.5', statusColor[detailsMember.status])}>
+                    <Badge className={cn('border-0 text-xs font-medium capitalize rounded-md mt-0.5', statusColor[detailsMember.status])}>
                       {detailsMember.status}
                     </Badge>
                   </div>
@@ -515,19 +516,19 @@ export function ManagerMembers() {
                     Activity Summary
                   </h4>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="rounded-lg bg-forest-50 p-3">
-                      <div className="flex items-center gap-2 text-forest-700">
+                    <div className="rounded-xl bg-maroon-50 p-4">
+                      <div className="flex items-center gap-2 text-maroon-700">
                         <Ticket className="w-4 h-4" />
                         <span className="text-xs font-medium">Tickets Purchased</span>
                       </div>
-                      <p className="text-xl font-bold text-forest-900 mt-1">{detailsMember.ticketsPurchased}</p>
+                      <p className="text-xl font-bold text-foreground mt-1">{detailsMember.ticketsPurchased}</p>
                     </div>
-                    <div className="rounded-lg bg-gold-50 p-3">
+                    <div className="rounded-xl bg-gold-50 p-4">
                       <div className="flex items-center gap-2 text-gold-700">
                         <Banknote className="w-4 h-4" />
                         <span className="text-xs font-medium">Total Spent</span>
                       </div>
-                      <p className="text-xl font-bold text-gold-900 mt-1">{formatZAR(detailsMember.totalSpent)}</p>
+                      <p className="text-xl font-bold text-foreground mt-1">{formatZAR(detailsMember.totalSpent)}</p>
                     </div>
                   </div>
                 </div>
@@ -535,14 +536,14 @@ export function ManagerMembers() {
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
                     Branch
                   </div>
-                  <p className="text-sm font-medium text-neutral-900">{branch?.name ?? 'Johannesburg North'} ({branch?.code ?? 'JHB-N'})</p>
+                  <p className="text-sm font-medium text-foreground">{branch?.name ?? 'Johannesburg North'} ({branch?.code ?? 'JHB-N'})</p>
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline" onClick={() => setDetailsMember(null)}>
+                <Button variant="outline" onClick={() => setDetailsMember(null)} className="rounded-[10px]">
                   Close
                 </Button>
-                <Button className="bg-forest-600 hover:bg-forest-700 text-white gap-2">
+                <Button className="bg-maroon-500 hover:bg-maroon-600 text-white gap-2 rounded-[10px]">
                   <Pencil className="w-4 h-4" />
                   Edit Member
                 </Button>

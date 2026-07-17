@@ -262,7 +262,7 @@ export function CommandPalette() {
                     key={`recent-${view}`}
                     value={`recent ${label}`}
                     onSelect={() => handleNavigate(view)}
-                    className="gap-3 rounded-lg px-3 py-2.5 cursor-pointer data-[selected=true]:bg-forest-500/10 data-[selected=true]:text-forest-600 dark:data-[selected=true]:text-forest-400"
+                    className="gap-3 rounded-lg px-3 py-2.5 cursor-pointer data-[selected=true]:bg-maroon-500/10 data-[selected=true]:text-maroon-600 dark:data-[selected=true]:text-maroon-400"
                   >
                     <IconComp className="size-4 text-muted-foreground" />
                     <span>{label}</span>
@@ -282,12 +282,12 @@ export function CommandPalette() {
                 key={item.portal}
                 value={`portal ${item.label}`}
                 onSelect={() => handlePortalSwitch(item.portal)}
-                className="gap-3 rounded-lg px-3 py-2.5 cursor-pointer data-[selected=true]:bg-forest-500/10 data-[selected=true]:text-forest-600 dark:data-[selected=true]:text-forest-400"
+                className="gap-3 rounded-lg px-3 py-2.5 cursor-pointer data-[selected=true]:bg-maroon-500/10 data-[selected=true]:text-maroon-600 dark:data-[selected=true]:text-maroon-400"
               >
                 <item.icon className="size-4 text-muted-foreground" />
                 <span>{item.label}</span>
                 {currentPortal === item.portal && (
-                  <span className="ml-auto text-[10px] text-forest-600 dark:text-forest-400 font-medium">
+                  <span className="ml-auto text-[10px] text-maroon-600 dark:text-maroon-400 font-medium">
                     current
                   </span>
                 )}
@@ -304,7 +304,7 @@ export function CommandPalette() {
                 key={item.view}
                 value={`nav ${item.label} ${item.view}`}
                 onSelect={() => handleNavigate(item.view)}
-                className="gap-3 rounded-lg px-3 py-2.5 cursor-pointer data-[selected=true]:bg-forest-500/10 data-[selected=true]:text-forest-600 dark:data-[selected=true]:text-forest-400"
+                className="gap-3 rounded-lg px-3 py-2.5 cursor-pointer data-[selected=true]:bg-maroon-500/10 data-[selected=true]:text-maroon-600 dark:data-[selected=true]:text-maroon-400"
               >
                 <item.icon className="size-4 text-muted-foreground" />
                 <span>{item.label}</span>
@@ -319,7 +319,7 @@ export function CommandPalette() {
             <CommandItem
               value="action toggle dark mode theme"
               onSelect={handleToggleDarkMode}
-              className="gap-3 rounded-lg px-3 py-2.5 cursor-pointer data-[selected=true]:bg-forest-500/10 data-[selected=true]:text-forest-600 dark:data-[selected=true]:text-forest-400"
+              className="gap-3 rounded-lg px-3 py-2.5 cursor-pointer data-[selected=true]:bg-maroon-500/10 data-[selected=true]:text-maroon-600 dark:data-[selected=true]:text-maroon-400"
             >
               {isDark ? (
                 <Sun className="size-4 text-muted-foreground" />
@@ -334,7 +334,7 @@ export function CommandPalette() {
             <CommandItem
               value="action toggle sidebar panel"
               onSelect={handleToggleSidebar}
-              className="gap-3 rounded-lg px-3 py-2.5 cursor-pointer data-[selected=true]:bg-forest-500/10 data-[selected=true]:text-forest-600 dark:data-[selected=true]:text-forest-400"
+              className="gap-3 rounded-lg px-3 py-2.5 cursor-pointer data-[selected=true]:bg-maroon-500/10 data-[selected=true]:text-maroon-600 dark:data-[selected=true]:text-maroon-400"
             >
               {sidebarOpen ? (
                 <PanelLeftClose className="size-4 text-muted-foreground" />

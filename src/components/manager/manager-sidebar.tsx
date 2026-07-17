@@ -42,14 +42,14 @@ export function ManagerSidebar() {
     <TooltipProvider delayDuration={0}>
       <aside
         className={cn(
-          'fixed top-0 left-0 z-40 h-screen bg-white border-r border-neutral-200 flex flex-col transition-all duration-300 ease-in-out',
+          'fixed top-0 left-0 z-40 h-screen bg-[#130304] border-r border-[#2E0910]/50 flex flex-col transition-all duration-300 ease-in-out',
           sidebarOpen ? 'w-72' : 'w-20'
         )}
       >
         {/* Logo & Brand */}
-        <div className="flex items-center h-16 px-4 border-b border-neutral-100">
+        <div className="flex items-center h-16 px-4 border-b border-[#2E0910]">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-forest-600 text-white shrink-0">
+            <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-[#3D0C16] text-[#f4a9b8] shrink-0">
               <Leaf className="w-5 h-5" />
             </div>
             <div
@@ -58,10 +58,10 @@ export function ManagerSidebar() {
                 sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'
               )}
             >
-              <p className="text-sm font-bold text-forest-800 whitespace-nowrap">
+              <p className="text-sm font-bold text-white whitespace-nowrap tracking-tight">
                 JK Raffle
               </p>
-              <p className="text-[11px] text-muted-foreground whitespace-nowrap">
+              <p className="text-[11px] text-[#f4a9b8]/50 whitespace-nowrap">
                 Branch Manager
               </p>
             </div>
@@ -72,12 +72,12 @@ export function ManagerSidebar() {
         <div className={cn('px-4 py-4', !sidebarOpen && 'px-2')}>
           <div
             className={cn(
-              'flex items-center gap-3 rounded-lg p-2.5 bg-forest-50 transition-all',
+              'flex items-center gap-3 rounded-lg p-2.5 bg-[#1F060B] border border-[#2E0910]/50 transition-all',
               !sidebarOpen && 'justify-center p-2'
             )}
           >
-            <Avatar className="h-9 w-9 shrink-0 ring-2 ring-forest-400 ring-offset-1">
-              <AvatarFallback className="bg-forest-600 text-white text-xs font-semibold">
+            <Avatar className="h-9 w-9 shrink-0">
+              <AvatarFallback className="bg-[#3D0C16] text-white text-xs font-semibold">
                 {initials}
               </AvatarFallback>
             </Avatar>
@@ -87,15 +87,15 @@ export function ManagerSidebar() {
                 sidebarOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'
               )}
             >
-              <p className="text-sm font-semibold text-forest-900 truncate">
+              <p className="text-sm font-semibold text-white truncate tracking-tight">
                 {mockBranchManager.firstName} {mockBranchManager.lastName}
               </p>
-              <p className="text-xs text-forest-700 truncate">{branch?.name ?? 'Unknown Branch'}</p>
+              <p className="text-xs text-[#f4a9b8]/60 truncate">{branch?.name ?? 'Unknown Branch'}</p>
             </div>
           </div>
         </div>
 
-        <Separator className="bg-neutral-100" />
+        <Separator className="bg-[#2E0910]/50" />
 
         {/* Navigation */}
         <ScrollArea className="flex-1 px-3 py-3">
@@ -109,19 +109,17 @@ export function ManagerSidebar() {
                   key={item.id}
                   onClick={() => setView(item.id)}
                   className={cn(
-                    'flex items-center gap-3 w-full rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 group',
-                    sidebarOpen ? 'justify-start' : 'justify-center',
+                    'flex items-center gap-3 w-full rounded-lg text-sm font-medium transition-all duration-200 group border-l-2',
+                    sidebarOpen ? 'justify-start px-3 py-2.5' : 'justify-center px-2 py-2.5 border-l-0',
                     isActive
-                      ? 'bg-forest-600 text-white shadow-md shadow-forest-600/20'
-                      : 'text-neutral-600 hover:bg-forest-50 hover:text-forest-700'
+                      ? 'border-[#D4AF37] bg-[#5B1322]/15 text-white'
+                      : 'border-transparent text-[#f4a9b8]/70 hover:bg-[#2E0910]/60 hover:text-[#fce7eb]'
                   )}
                 >
                   <Icon
                     className={cn(
                       'w-5 h-5 shrink-0 transition-colors',
-                      isActive
-                        ? 'text-white'
-                        : 'text-neutral-500 group-hover:text-forest-600'
+                      !sidebarOpen && 'mx-auto'
                     )}
                   />
                   <span
@@ -132,9 +130,6 @@ export function ManagerSidebar() {
                   >
                     {item.label}
                   </span>
-                  {isActive && sidebarOpen && (
-                    <div className="ml-auto w-1.5 h-1.5 rounded-full bg-gold-400" />
-                  )}
                 </button>
               );
 
@@ -154,7 +149,7 @@ export function ManagerSidebar() {
           </nav>
         </ScrollArea>
 
-        <Separator className="bg-neutral-100" />
+        <Separator className="bg-[#2E0910]/50" />
 
         {/* Collapse Toggle */}
         <div className="p-3">
@@ -163,8 +158,8 @@ export function ManagerSidebar() {
             size="sm"
             onClick={toggleSidebar}
             className={cn(
-              'w-full justify-center rounded-lg text-muted-foreground hover:text-forest-700 hover:bg-forest-50 transition-colors',
-              sidebarOpen && 'justify-start'
+              'w-full rounded-lg text-[#f4a9b8]/40 hover:text-[#f4a9b8]/70 hover:bg-[#2E0910]/40 transition-colors',
+              sidebarOpen ? 'justify-start' : 'justify-center'
             )}
           >
             {sidebarOpen ? (

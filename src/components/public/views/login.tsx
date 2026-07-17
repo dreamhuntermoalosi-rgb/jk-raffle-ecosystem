@@ -52,13 +52,18 @@ export function PublicLogin() {
   };
 
   return (
-    <div className="pt-16 lg:pt-18 min-h-[calc(100vh-4.5rem)] flex items-center">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-16">
+    <div className="pt-16 lg:pt-18 min-h-[calc(100vh-4.5rem)] flex items-center relative overflow-hidden">
+      {/* Subtle maroon gradient background pattern */}
+      <div className="absolute inset-0 bg-gradient-to-br from-maroon-50 via-background to-maroon-50/30" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-maroon-100/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-maroon-100/20 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-16 relative z-10">
         <div className="max-w-md mx-auto">
           <motion.div {...fadeInUp}>
-            {/* Logo */}
+            {/* Logo — maroon */}
             <div className="text-center mb-8">
-              <div className="w-14 h-14 rounded-2xl bg-forest-500 flex items-center justify-center mx-auto mb-5 shadow-lg shadow-forest-500/20">
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-maroon-500 to-maroon-600 flex items-center justify-center mx-auto mb-5 shadow-royal-lg">
                 <span className="text-white font-bold text-xl">JK</span>
               </div>
               <h1 className="text-2xl font-bold tracking-tight mb-2">Member Login</h1>
@@ -67,7 +72,8 @@ export function PublicLogin() {
               </p>
             </div>
 
-            <Card className="border-border/50 shadow-lg shadow-black/5 overflow-hidden">
+            {/* Card — shadow-royal-lg, rounded-2xl */}
+            <Card className="border-border/30 shadow-royal-lg rounded-2xl overflow-hidden bg-white">
               {/* Important Notice */}
               <div className="bg-gold-50 border-b border-gold-200/50 px-6 py-4">
                 <div className="flex items-start gap-3">
@@ -97,7 +103,7 @@ export function PublicLogin() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
-                        className="h-11"
+                        className="h-11 rounded-lg border-border/50 focus-visible:ring-maroon-500/20"
                       />
                     </div>
                   </div>
@@ -107,7 +113,7 @@ export function PublicLogin() {
                       <Label htmlFor="password">Password</Label>
                       <button
                         type="button"
-                        className="text-xs text-muted-foreground hover:text-forest-500 transition-colors"
+                        className="text-xs text-muted-foreground hover:text-maroon-500 transition-colors"
                         onClick={() => toast.info('Password reset link sent to your email.')}
                       >
                         Forgot Password?
@@ -121,22 +127,23 @@ export function PublicLogin() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        className="h-11 pr-10"
+                        className="h-11 pr-10 rounded-lg border-border/50 focus-visible:ring-maroon-500/20"
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-maroon-500 transition-colors"
                       >
                         {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                       </button>
                     </div>
                   </div>
 
+                  {/* Login button — maroon-500, rounded-[10px] */}
                   <Button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-forest-500 hover:bg-forest-600 text-white h-11 font-medium"
+                    className="w-full bg-maroon-500 hover:bg-maroon-600 text-white h-11 font-medium rounded-[10px] shadow-sm shadow-maroon-500/20"
                   >
                     {loading ? (
                       <span className="flex items-center gap-2">
@@ -155,10 +162,10 @@ export function PublicLogin() {
                 <Separator className="my-6" />
 
                 {/* 2FA Placeholder */}
-                <div className="bg-muted/50 rounded-lg p-4">
+                <div className="bg-maroon-50/50 rounded-lg p-4 border border-maroon-100/50">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-forest-50 flex items-center justify-center shrink-0">
-                      <KeyRound className="h-4 w-4 text-forest-500" />
+                    <div className="w-8 h-8 rounded-lg bg-maroon-100/60 flex items-center justify-center shrink-0">
+                      <KeyRound className="h-4 w-4 text-maroon-500" />
                     </div>
                     <div>
                       <p className="text-sm font-medium mb-0.5">Two-Factor Authentication</p>

@@ -1,0 +1,557 @@
+     1→     1→'use client';
+     2→     2→
+     3→     3→import { useState, useMemo } from 'react';
+     4→     4→import {
+     5→     5→  Card,
+     6→     6→  CardContent,
+     7→     7→  CardHeader,
+     8→     8→  CardTitle,
+     9→     9→} from '@/components/ui/card';
+    10→    10→import { Badge } from '@/components/ui/badge';
+    11→    11→import { Button } from '@/components/ui/button';
+    12→    12→import { Input } from '@/components/ui/input';
+    13→    13→import { Label } from '@/components/ui/label';
+    14→    14→import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+    15→    15→import {
+    16→    16→  Dialog,
+    17→    17→  DialogContent,
+    18→    18→  DialogDescription,
+    19→    19→  DialogHeader,
+    20→    20→  DialogTitle,
+    21→    21→  DialogTrigger,
+    22→    22→  DialogFooter,
+    23→    23→} from '@/components/ui/dialog';
+    24→    24→import {
+    25→    25→  DropdownMenu,
+    26→    26→  DropdownMenuContent,
+    27→    27→  DropdownMenuItem,
+    28→    28→  DropdownMenuSeparator,
+    29→    29→  DropdownMenuTrigger,
+    30→    30→} from '@/components/ui/dropdown-menu';
+    31→    31→import {
+    32→    32→  Select,
+    33→    33→  SelectContent,
+    34→    34→  SelectItem,
+    35→    35→  SelectTrigger,
+    36→    36→  SelectValue,
+    37→    37→} from '@/components/ui/select';
+    38→    38→import {
+    39→    39→  Table,
+    40→    40→  TableBody,
+    41→    41→  TableCell,
+    42→    42→  TableHead,
+    43→    43→  TableHeader,
+    44→    44→  TableRow,
+    45→    45→} from '@/components/ui/table';
+    46→    46→import { ScrollArea } from '@/components/ui/scroll-area';
+    47→    47→import {
+    48→    48→  UserPlus,
+    49→    49→  Search,
+    50→    50→  MoreHorizontal,
+    51→    51→  Pencil,
+    52→    52→  Ban,
+    53→    53→  KeyRound,
+    54→    54→  Eye,
+    55→    55→  ChevronLeft,
+    56→    56→  ChevronRight,
+    57→    57→  Mail,
+    58→    58→  Phone,
+    59→    59→  Calendar,
+    60→    60→  Ticket,
+    61→    61→  Banknote,
+    62→    62→} from 'lucide-react';
+    63→    63→import { mockBranches, mockBranchManager } from '@/mock-data';
+    64→    64→import { cn } from '@/lib/utils';
+    65→    65→import type { UserStatus } from '@/types';
+    66→    66→
+    67→    67→const branchId = mockBranchManager.branchId ?? 'branch-jhb-n';
+    68→    68→const branch = mockBranches.find(b => b.id === branchId);
+    69→    69→
+    70→    70→// Generate 20 mock members for this branch
+    71→    71→const branchMembers = [
+    72→    72→  { id: 'm-001', firstName: 'James', lastName: 'Peterson', email: 'james.peterson@email.co.za', phone: '+27 85 555 4004', status: 'active' as UserStatus, joinDate: '2024-09-22', ticketsPurchased: 12, totalSpent: 3600 },
+    73→    73→  { id: 'm-002', firstName: 'Aiden', lastName: 'Mabena', email: 'aiden.mabena@email.co.za', phone: '+27 72 555 8101', status: 'active' as UserStatus, joinDate: '2025-06-10', ticketsPurchased: 2, totalSpent: 400 },
+    74→    74→  { id: 'm-003', firstName: 'Zanele', lastName: 'Khumalo', email: 'zanele.k@email.co.za', phone: '+27 73 555 8202', status: 'active' as UserStatus, joinDate: '2025-06-08', ticketsPurchased: 7, totalSpent: 3500 },
+    75→    75→  { id: 'm-004', firstName: 'Pieter', lastName: 'du Plessis', email: 'pieter.dp@email.co.za', phone: '+27 82 555 8303', status: 'pending' as UserStatus, joinDate: '2025-06-05', ticketsPurchased: 0, totalSpent: 0 },
+    76→    76→  { id: 'm-005', firstName: 'Nomsa', lastName: 'Dlamini', email: 'nomsa.d@email.co.za', phone: '+27 74 555 8404', status: 'active' as UserStatus, joinDate: '2025-06-03', ticketsPurchased: 5, totalSpent: 1500 },
+    77→    77→  { id: 'm-006', firstName: 'Kyle', lastName: 'van Niekerk', email: 'kyle.vn@email.co.za', phone: '+27 83 555 8505', status: 'suspended' as UserStatus, joinDate: '2025-06-01', ticketsPurchased: 3, totalSpent: 900 },
+    78→    78→  { id: 'm-007', firstName: 'Thandiwe', lastName: 'Mthembu', email: 'thandi.m@email.co.za', phone: '+27 76 555 8606', status: 'active' as UserStatus, joinDate: '2025-05-28', ticketsPurchased: 18, totalSpent: 7200 },
+    79→    79→  { id: 'm-008', firstName: 'Johan', lastName: 'Steyn', email: 'johan.s@email.co.za', phone: '+27 84 555 8707', status: 'active' as UserStatus, joinDate: '2025-05-25', ticketsPurchased: 4, totalSpent: 1200 },
+    80→    80→  { id: 'm-009', firstName: 'Lerato', lastName: 'Molefe', email: 'lerato.m@email.co.za', phone: '+27 71 555 8808', status: 'active' as UserStatus, joinDate: '2025-05-20', ticketsPurchased: 9, totalSpent: 2700 },
+    81→    81→  { id: 'm-010', firstName: 'Sipho', lastName: 'Ndlovu', email: 'sipho.n@email.co.za', phone: '+27 77 555 8909', status: 'deactivated' as UserStatus, joinDate: '2025-05-15', ticketsPurchased: 1, totalSpent: 50 },
+    82→    82→  { id: 'm-011', firstName: 'Anri', lastName: 'Potgieter', email: 'anri.p@email.co.za', phone: '+27 86 555 9010', status: 'active' as UserStatus, joinDate: '2025-05-12', ticketsPurchased: 6, totalSpent: 1800 },
+    83→    83→  { id: 'm-012', firstName: 'Bongani', lastName: 'Zulu', email: 'bongani.z@email.co.za', phone: '+27 78 555 9111', status: 'active' as UserStatus, joinDate: '2025-05-08', ticketsPurchased: 14, totalSpent: 5600 },
+    84→    84→  { id: 'm-013', firstName: 'Carel', lastName: 'Viljoen', email: 'carel.v@email.co.za', phone: '+27 87 555 9212', status: 'active' as UserStatus, joinDate: '2025-04-30', ticketsPurchased: 3, totalSpent: 900 },
+    85→    85→  { id: 'm-014', firstName: 'Dineo', lastName: 'Mokoena', email: 'dineo.m@email.co.za', phone: '+27 79 555 9313', status: 'pending' as UserStatus, joinDate: '2025-04-28', ticketsPurchased: 0, totalSpent: 0 },
+    86→    86→  { id: 'm-015', firstName: 'Ethan', lastName: 'Coetzee', email: 'ethan.c@email.co.za', phone: '+27 81 555 9414', status: 'active' as UserStatus, joinDate: '2025-04-22', ticketsPurchased: 8, totalSpent: 2400 },
+    87→    87→  { id: 'm-016', firstName: 'Fikile', lastName: 'Maseko', email: 'fikile.m@email.co.za', phone: '+27 75 555 9515', status: 'active' as UserStatus, joinDate: '2025-04-18', ticketsPurchased: 10, totalSpent: 4000 },
+    88→    88→  { id: 'm-017', firstName: 'Gideon', lastName: 'Muller', email: 'gideon.m@email.co.za', phone: '+27 88 555 9616', status: 'suspended' as UserStatus, joinDate: '2025-04-12', ticketsPurchased: 2, totalSpent: 600 },
+    89→    89→  { id: 'm-018', firstName: 'Hlengiwe', lastName: 'Mkhize', email: 'hlengiwe.mk@email.co.za', phone: '+27 70 555 9717', status: 'active' as UserStatus, joinDate: '2025-04-05', ticketsPurchased: 15, totalSpent: 6000 },
+    90→    90→  { id: 'm-019', firstName: 'Ian', lastName: 'Hendricks', email: 'ian.h@email.co.za', phone: '+27 89 555 9818', status: 'active' as UserStatus, joinDate: '2025-03-28', ticketsPurchased: 5, totalSpent: 1500 },
+    91→    91→  { id: 'm-020', firstName: 'Jabulile', lastName: 'Sithole', email: 'jabulile.s@email.co.za', phone: '+27 68 555 9919', status: 'active' as UserStatus, joinDate: '2025-03-20', ticketsPurchased: 11, totalSpent: 4400 },
+    92→    92→];
+    93→    93→
+    94→    94→const ITEMS_PER_PAGE = 8;
+    95→    95→
+    96→    96→const statusColor: Record<string, string> = {
+    97→    97→  active: 'bg-maroon-100 text-maroon-700',
+    98→    98→  pending: 'bg-gold-100 text-gold-700',
+    99→    99→  suspended: 'bg-red-100 text-red-700',
+   100→   100→  deactivated: 'bg-neutral-100 text-neutral-500',
+   101→   101→};
+   102→   102→
+   103→   103→function formatZAR(amount: number) {
+   104→   104→  return new Intl.NumberFormat('en-ZA', {
+   105→   105→    style: 'currency',
+   106→   106→    currency: 'ZAR',
+   107→   107→    minimumFractionDigits: 0,
+   108→   108→    maximumFractionDigits: 0,
+   109→   109→  }).format(amount);
+   110→   110→}
+   111→   111→
+   112→   112→export function ManagerMembers() {
+   113→   113→  const [search, setSearch] = useState('');
+   114→   114→  const [statusFilter, setStatusFilter] = useState('all');
+   115→   115→  const [sortBy, setSortBy] = useState('name');
+   116→   116→  const [page, setPage] = useState(1);
+   117→   117→  const [createOpen, setCreateOpen] = useState(false);
+   118→   118→  const [detailsMember, setDetailsMember] = useState<(typeof branchMembers)[0] | null>(null);
+   119→   119→
+   120→   120→  // Create form state
+   121→   121→  const [formFirst, setFormFirst] = useState('');
+   122→   122→  const [formLast, setFormLast] = useState('');
+   123→   123→  const [formEmail, setFormEmail] = useState('');
+   124→   124→  const [formPhone, setFormPhone] = useState('');
+   125→   125→
+   126→   126→  const filtered = useMemo(() => {
+   127→   127→    let list = [...branchMembers];
+   128→   128→
+   129→   129→    if (statusFilter !== 'all') {
+   130→   130→      list = list.filter(m => m.status === statusFilter);
+   131→   131→    }
+   132→   132→
+   133→   133→    if (search.trim()) {
+   134→   134→      const q = search.toLowerCase();
+   135→   135→      list = list.filter(
+   136→   136→        m =>
+   137→   137→          `${m.firstName} ${m.lastName}`.toLowerCase().includes(q) ||
+   138→   138→          m.email.toLowerCase().includes(q)
+   139→   139→      );
+   140→   140→    }
+   141→   141→
+   142→   142→    list.sort((a, b) => {
+   143→   143→      if (sortBy === 'name') return `${a.firstName} ${a.lastName}`.localeCompare(`${b.firstName} ${b.lastName}`);
+   144→   144→      if (sortBy === 'date') return new Date(b.joinDate).getTime() - new Date(a.joinDate).getTime();
+   145→   145→      if (sortBy === 'status') return a.status.localeCompare(b.status);
+   146→   146→      return 0;
+   147→   147→    });
+   148→   148→
+   149→   149→    return list;
+   150→   150→  }, [search, statusFilter, sortBy]);
+   151→   151→
+   152→   152→  const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
+   153→   153→  const paged = filtered.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
+   154→   154→  const showingFrom = (page - 1) * ITEMS_PER_PAGE + 1;
+   155→   155→  const showingTo = Math.min(page * ITEMS_PER_PAGE, filtered.length);
+   156→   156→
+   157→   157→  function handleCreateSubmit() {
+   158→   158→    setCreateOpen(false);
+   159→   159→    setFormFirst('');
+   160→   160→    setFormLast('');
+   161→   161→    setFormEmail('');
+   162→   162→    setFormPhone('');
+   163→   163→  }
+   164→   164→
+   165→   165→  return (
+   166→   166→    <div className="space-y-6">
+   167→   167→      {/* Page Header */}
+   168→   168→      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+   169→   169→        <div>
+   170→   170→          <h1 className="text-2xl font-bold text-foreground tracking-tight">
+   171→   171→            Members
+   172→   172→            <Badge className="bg-maroon-100 text-maroon-700 hover:bg-maroon-200 border-0 text-xs font-medium ml-2 rounded-md">
+   173→   173→              {branchMembers.length}
+   174→   174→            </Badge>
+   175→   175→          </h1>
+   176→   176→          <p className="text-sm text-muted-foreground mt-1">
+   177→   177→            Manage members for {branch?.name ?? 'Johannesburg North'}
+   178→   178→          </p>
+   179→   179→        </div>
+   180→   180→        <Dialog open={createOpen} onOpenChange={setCreateOpen}>
+   181→   181→          <DialogTrigger asChild>
+   182→   182→            <Button className="bg-maroon-500 hover:bg-maroon-600 text-white gap-2 rounded-[10px]">
+   183→   183→              <UserPlus className="w-4 h-4" />
+   184→   184→              Create Member
+   185→   185→            </Button>
+   186→   186→          </DialogTrigger>
+   187→   187→          <DialogContent className="sm:max-w-md">
+   188→   188→            <DialogHeader>
+   189→   189→              <DialogTitle>Create New Member</DialogTitle>
+   190→   190→              <DialogDescription>
+   191→   191→                Add a new member to {branch?.name ?? 'your branch'}.
+   192→   192→              </DialogDescription>
+   193→   193→            </DialogHeader>
+   194→   194→            <div className="grid gap-4 py-4">
+   195→   195→              <div className="grid grid-cols-2 gap-4">
+   196→   196→                <div className="space-y-2">
+   197→   197→                  <Label htmlFor="firstName">First Name</Label>
+   198→   198→                  <Input
+   199→   199→                    id="firstName"
+   200→   200→                    placeholder="e.g. Sipho"
+   201→   201→                    value={formFirst}
+   202→   202→                    onChange={(e) => setFormFirst(e.target.value)}
+   203→   203→                    className="rounded-lg"
+   204→   204→                  />
+   205→   205→                </div>
+   206→   206→                <div className="space-y-2">
+   207→   207→                  <Label htmlFor="lastName">Last Name</Label>
+   208→   208→                  <Input
+   209→   209→                    id="lastName"
+   210→   210→                    placeholder="e.g. Ndlovu"
+   211→   211→                    value={formLast}
+   212→   212→                    onChange={(e) => setFormLast(e.target.value)}
+   213→   213→                    className="rounded-lg"
+   214→   214→                  />
+   215→   215→                </div>
+   216→   216→              </div>
+   217→   217→              <div className="space-y-2">
+   218→   218→                <Label htmlFor="email">Email</Label>
+   219→   219→                <Input
+   220→   220→                  id="email"
+   221→   221→                  type="email"
+   222→   222→                  placeholder="sipho@example.co.za"
+   223→   223→                  value={formEmail}
+   224→   224→                  onChange={(e) => setFormEmail(e.target.value)}
+   225→   225→                  className="rounded-lg"
+   226→   226→                />
+   227→   227→              </div>
+   228→   228→              <div className="space-y-2">
+   229→   229→                <Label htmlFor="phone">Phone</Label>
+   230→   230→                <Input
+   231→   231→                  id="phone"
+   232→   232→                  placeholder="+27 82 555 0000"
+   233→   233→                  value={formPhone}
+   234→   234→                  onChange={(e) => setFormPhone(e.target.value)}
+   235→   235→                  className="rounded-lg"
+   236→   236→                />
+   237→   237→              </div>
+   238→   238→              <div className="space-y-2">
+   239→   239→                <Label>Branch</Label>
+   240→   240→                <Input value={branch?.name ?? 'Johannesburg North'} disabled className="bg-muted rounded-lg" />
+   241→   241→              </div>
+   242→   242→            </div>
+   243→   243→            <DialogFooter>
+   244→   244→              <Button variant="outline" onClick={() => setCreateOpen(false)} className="rounded-[10px]">
+   245→   245→                Cancel
+   246→   246→              </Button>
+   247→   247→              <Button className="bg-maroon-500 hover:bg-maroon-600 text-white rounded-[10px]" onClick={handleCreateSubmit}>
+   248→   248→                Create Member
+   249→   249→              </Button>
+   250→   250→            </DialogFooter>
+   251→   251→          </DialogContent>
+   252→   252→        </Dialog>
+   253→   253→      </div>
+   254→   254→
+   255→   255→      {/* Filters Row */}
+   256→   256→      <Card className="shadow-royal-sm rounded-xl border-0">
+   257→   257→        <CardContent className="p-4">
+   258→   258→          <div className="flex flex-col sm:flex-row gap-3">
+   259→   259→            <div className="relative flex-1">
+   260→   260→              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+   261→   261→              <Input
+   262→   262→                placeholder="Search by name or email..."
+   263→   263→                value={search}
+   264→   264→                onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+   265→   265→                className="pl-9 rounded-lg"
+   266→   266→              />
+   267→   267→            </div>
+   268→   268→            <Select value={statusFilter} onValueChange={(v) => { setStatusFilter(v); setPage(1); }}>
+   269→   269→              <SelectTrigger className="w-full sm:w-44 rounded-lg">
+   270→   270→                <SelectValue placeholder="Status" />
+   271→   271→              </SelectTrigger>
+   272→   272→              <SelectContent>
+   273→   273→                <SelectItem value="all">All Statuses</SelectItem>
+   274→   274→                <SelectItem value="active">Active</SelectItem>
+   275→   275→                <SelectItem value="suspended">Suspended</SelectItem>
+   276→   276→                <SelectItem value="deactivated">Deactivated</SelectItem>
+   277→   277→                <SelectItem value="pending">Pending</SelectItem>
+   278→   278→              </SelectContent>
+   279→   279→            </Select>
+   280→   280→            <Select value={sortBy} onValueChange={setSortBy}>
+   281→   281→              <SelectTrigger className="w-full sm:w-40 rounded-lg">
+   282→   282→                <SelectValue placeholder="Sort by" />
+   283→   283→              </SelectTrigger>
+   284→   284→              <SelectContent>
+   285→   285→                <SelectItem value="name">Name</SelectItem>
+   286→   286→                <SelectItem value="date">Date</SelectItem>
+   287→   287→                <SelectItem value="status">Status</SelectItem>
+   288→   288→              </SelectContent>
+   289→   289→            </Select>
+   290→   290→          </div>
+   291→   291→        </CardContent>
+   292→   292→      </Card>
+   293→   293→
+   294→   294→      {/* Members Table */}
+   295→   295→      <Card className="shadow-royal-sm rounded-xl border-0 overflow-hidden">
+   296→   296→        <CardContent className="p-0">
+   297→   297→          <ScrollArea className="max-h-[520px] overflow-y-auto">
+   298→   298→            <Table>
+   299→   299→              <TableHeader>
+   300→   300→                <TableRow className="hover:bg-transparent bg-muted/50">
+   301→   301→                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider sticky top-0 bg-muted/50 z-10">
+   302→   302→                    Member
+   303→   303→                  </TableHead>
+   304→   304→                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider hidden md:table-cell sticky top-0 bg-muted/50 z-10">
+   305→   305→                    Phone
+   306→   306→                  </TableHead>
+   307→   307→                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider sticky top-0 bg-muted/50 z-10">
+   308→   308→                    Status
+   309→   309→                  </TableHead>
+   310→   310→                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider hidden lg:table-cell sticky top-0 bg-muted/50 z-10">
+   311→   311→                    Join Date
+   312→   312→                  </TableHead>
+   313→   313→                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider hidden xl:table-cell text-right sticky top-0 bg-muted/50 z-10">
+   314→   314→                    Tickets
+   315→   315→                  </TableHead>
+   316→   316→                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider hidden xl:table-cell text-right sticky top-0 bg-muted/50 z-10">
+   317→   317→                    Total Spent
+   318→   318→                  </TableHead>
+   319→   319→                  <TableHead className="w-12 sticky top-0 bg-muted/50 z-10" />
+   320→   320→                </TableRow>
+   321→   321→              </TableHeader>
+   322→   322→              <TableBody>
+   323→   323→                {paged.map((member) => {
+   324→   324→                  const initials = `${member.firstName.charAt(0)}${member.lastName.charAt(0)}`;
+   325→   325→                  return (
+   326→   326→                    <TableRow key={member.id} className="group hover:bg-maroon-50/30 transition-colors">
+   327→   327→                      <TableCell className="py-3.5">
+   328→   328→                        <div className="flex items-center gap-3">
+   329→   329→                          <Avatar className="h-8 w-8 shrink-0">
+   330→   330→                            <AvatarFallback className="bg-maroon-100 text-maroon-700 text-xs font-semibold">
+   331→   331→                              {initials}
+   332→   332→                            </AvatarFallback>
+   333→   333→                          </Avatar>
+   334→   334→                          <div className="min-w-0">
+   335→   335→                            <p className="text-sm font-medium text-foreground truncate">
+   336→   336→                              {member.firstName} {member.lastName}
+   337→   337→                            </p>
+   338→   338→                            <p className="text-xs text-muted-foreground truncate">{member.email}</p>
+   339→   339→                          </div>
+   340→   340→                        </div>
+   341→   341→                      </TableCell>
+   342→   342→                      <TableCell className="hidden md:table-cell text-sm text-muted-foreground py-3.5">
+   343→   343→                        {member.phone}
+   344→   344→                      </TableCell>
+   345→   345→                      <TableCell className="py-3.5">
+   346→   346→                        <Badge
+   347→   347→                          className={cn(
+   348→   348→                            'border-0 text-xs font-medium capitalize rounded-md',
+   349→   349→                            statusColor[member.status]
+   350→   350→                          )}
+   351→   351→                        >
+   352→   352→                          {member.status}
+   353→   353→                        </Badge>
+   354→   354→                      </TableCell>
+   355→   355→                      <TableCell className="hidden lg:table-cell text-sm text-muted-foreground py-3.5">
+   356→   356→                        {new Date(member.joinDate).toLocaleDateString('en-ZA', {
+   357→   357→                          day: 'numeric',
+   358→   358→                          month: 'short',
+   359→   359→                          year: 'numeric',
+   360→   360→                        })}
+   361→   361→                      </TableCell>
+   362→   362→                      <TableCell className="hidden xl:table-cell text-sm text-right font-medium text-foreground py-3.5">
+   363→   363→                        {member.ticketsPurchased}
+   364→   364→                      </TableCell>
+   365→   365→                      <TableCell className="hidden xl:table-cell text-sm text-right font-semibold text-foreground py-3.5">
+   366→   366→                        {formatZAR(member.totalSpent)}
+   367→   367→                      </TableCell>
+   368→   368→                      <TableCell className="py-3.5">
+   369→   369→                        <DropdownMenu>
+   370→   370→                          <DropdownMenuTrigger asChild>
+   371→   371→                            <Button
+   372→   372→                              variant="ghost"
+   373→   373→                              size="sm"
+   374→   374→                              className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+   375→   375→                            >
+   376→   376→                              <MoreHorizontal className="w-4 h-4" />
+   377→   377→                              <span className="sr-only">Open menu</span>
+   378→   378→                            </Button>
+   379→   379→                          </DropdownMenuTrigger>
+   380→   380→                          <DropdownMenuContent align="end" className="w-48">
+   381→   381→                            <DropdownMenuItem
+   382→   382→                              className="cursor-pointer gap-2"
+   383→   383→                              onClick={() => setDetailsMember(member)}
+   384→   384→                            >
+   385→   385→                              <Eye className="w-4 h-4" />
+   386→   386→                              View Profile
+   387→   387→                            </DropdownMenuItem>
+   388→   388→                            <DropdownMenuItem className="cursor-pointer gap-2">
+   389→   389→                              <Pencil className="w-4 h-4" />
+   390→   390→                              Edit Member
+   391→   391→                            </DropdownMenuItem>
+   392→   392→                            <DropdownMenuSeparator />
+   393→   393→                            <DropdownMenuItem className="cursor-pointer gap-2 text-amber-600">
+   394→   394→                              <Ban className="w-4 h-4" />
+   395→   395→                              Suspend Member
+   396→   396→                            </DropdownMenuItem>
+   397→   397→                            <DropdownMenuItem className="cursor-pointer gap-2 text-amber-600">
+   398→   398→                              <KeyRound className="w-4 h-4" />
+   399→   399→                              Reset Password
+   400→   400→                            </DropdownMenuItem>
+   401→   401→                          </DropdownMenuContent>
+   402→   402→                        </DropdownMenu>
+   403→   403→                      </TableCell>
+   404→   404→                    </TableRow>
+   405→   405→                  );
+   406→   406→                })}
+   407→   407→                {paged.length === 0 && (
+   408→   408→                  <TableRow>
+   409→   409→                    <TableCell colSpan={7} className="text-center py-12 text-muted-foreground">
+   410→   410→                      No members found matching your filters.
+   411→   411→                    </TableCell>
+   412→   412→                  </TableRow>
+   413→   413→                )}
+   414→   414→              </TableBody>
+   415→   415→            </Table>
+   416→   416→          </ScrollArea>
+   417→   417→
+   418→   418→          {/* Pagination */}
+   419→   419→          <div className="flex items-center justify-between border-t px-6 py-3">
+   420→   420→            <p className="text-sm text-muted-foreground">
+   421→   421→              Showing <span className="font-medium text-foreground">{showingFrom}</span> to{' '}
+   422→   422→              <span className="font-medium text-foreground">{showingTo}</span> of{' '}
+   423→   423→              <span className="font-medium text-foreground">{filtered.length}</span> members
+   424→   424→            </p>
+   425→   425→            <div className="flex items-center gap-1">
+   426→   426→              <Button
+   427→   427→                variant="outline"
+   428→   428→                size="sm"
+   429→   429→                onClick={() => setPage(p => Math.max(1, p - 1))}
+   430→   430→                disabled={page <= 1}
+   431→   431→                className="h-8 w-8 p-0"
+   432→   432→              >
+   433→   433→                <ChevronLeft className="w-4 h-4" />
+   434→   434→              </Button>
+   435→   435→              {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
+   436→   436→                <Button
+   437→   437→                  key={p}
+   438→   438→                  variant={page === p ? 'default' : 'outline'}
+   439→   439→                  size="sm"
+   440→   440→                  onClick={() => setPage(p)}
+   441→   441→                  className={cn(
+   442→   442→                    'h-8 w-8 p-0 text-xs font-medium',
+   443→   443→                    page === p && 'bg-maroon-500 hover:bg-maroon-600 text-white'
+   444→   444→                  )}
+   445→   445→                >
+   446→   446→                  {p}
+   447→   447→                </Button>
+   448→   448→              ))}
+   449→   449→              <Button
+   450→   450→                variant="outline"
+   451→   451→                size="sm"
+   452→   452→                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+   453→   453→                disabled={page >= totalPages}
+   454→   454→                className="h-8 w-8 p-0"
+   455→   455→              >
+   456→   456→                <ChevronRight className="w-4 h-4" />
+   457→   457→              </Button>
+   458→   458→            </div>
+   459→   459→          </div>
+   460→   460→        </CardContent>
+   461→   461→      </Card>
+   462→   462→
+   463→   463→      {/* Member Details Dialog */}
+   464→   464→      <Dialog open={!!detailsMember} onOpenChange={(open) => !open && setDetailsMember(null)}>
+   465→   465→        <DialogContent className="sm:max-w-lg">
+   466→   466→          {detailsMember && (
+   467→   467→            <>
+   468→   468→              <DialogHeader>
+   469→   469→                <DialogTitle className="flex items-center gap-3">
+   470→   470→                  <Avatar className="h-10 w-10">
+   471→   471→                    <AvatarFallback className="bg-maroon-500 text-white text-sm font-semibold">
+   472→   472→                      {detailsMember.firstName.charAt(0)}{detailsMember.lastName.charAt(0)}
+   473→   473→                    </AvatarFallback>
+   474→   474→                  </Avatar>
+   475→   475→                  {detailsMember.firstName} {detailsMember.lastName}
+   476→   476→                </DialogTitle>
+   477→   477→                <DialogDescription>Member profile details</DialogDescription>
+   478→   478→              </DialogHeader>
+   479→   479→              <div className="grid gap-4 py-4">
+   480→   480→                <div className="grid grid-cols-2 gap-4">
+   481→   481→                  <div className="space-y-1.5">
+   482→   482→                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+   483→   483→                      <Mail className="w-3.5 h-3.5" /> Email
+   484→   484→                    </div>
+   485→   485→                    <p className="text-sm font-medium text-foreground">{detailsMember.email}</p>
+   486→   486→                  </div>
+   487→   487→                  <div className="space-y-1.5">
+   488→   488→                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+   489→   489→                      <Phone className="w-3.5 h-3.5" /> Phone
+   490→   490→                    </div>
+   491→   491→                    <p className="text-sm font-medium text-foreground">{detailsMember.phone}</p>
+   492→   492→                  </div>
+   493→   493→                </div>
+   494→   494→                <div className="grid grid-cols-2 gap-4">
+   495→   495→                  <div className="space-y-1.5">
+   496→   496→                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+   497→   497→                      <Calendar className="w-3.5 h-3.5" /> Joined
+   498→   498→                    </div>
+   499→   499→                    <p className="text-sm font-medium text-foreground">
+   500→   500→                      {new Date(detailsMember.joinDate).toLocaleDateString('en-ZA', {
+   501→   501→                        day: 'numeric', month: 'long', year: 'numeric',
+   502→   502→                      })}
+   503→   503→                    </p>
+   504→   504→                  </div>
+   505→   505→                  <div className="space-y-1.5">
+   506→   506→                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+   507→   507→                      Status
+   508→   508→                    </div>
+   509→   509→                    <Badge className={cn('border-0 text-xs font-medium capitalize rounded-md mt-0.5', statusColor[detailsMember.status])}>
+   510→   510→                      {detailsMember.status}
+   511→   511→                    </Badge>
+   512→   512→                  </div>
+   513→   513→                </div>
+   514→   514→                <div className="border-t pt-4">
+   515→   515→                  <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">
+   516→   516→                    Activity Summary
+   517→   517→                  </h4>
+   518→   518→                  <div className="grid grid-cols-2 gap-4">
+   519→   519→                    <div className="rounded-xl bg-maroon-50 p-4">
+   520→   520→                      <div className="flex items-center gap-2 text-maroon-700">
+   521→   521→                        <Ticket className="w-4 h-4" />
+   522→   522→                        <span className="text-xs font-medium">Tickets Purchased</span>
+   523→   523→                      </div>
+   524→   524→                      <p className="text-xl font-bold text-foreground mt-1">{detailsMember.ticketsPurchased}</p>
+   525→   525→                    </div>
+   526→   526→                    <div className="rounded-xl bg-gold-50 p-4">
+   527→   527→                      <div className="flex items-center gap-2 text-gold-700">
+   528→   528→                        <Banknote className="w-4 h-4" />
+   529→   529→                        <span className="text-xs font-medium">Total Spent</span>
+   530→   530→                      </div>
+   531→   531→                      <p className="text-xl font-bold text-foreground mt-1">{formatZAR(detailsMember.totalSpent)}</p>
+   532→   532→                    </div>
+   533→   533→                  </div>
+   534→   534→                </div>
+   535→   535→                <div className="space-y-1.5">
+   536→   536→                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+   537→   537→                    Branch
+   538→   538→                  </div>
+   539→   539→                  <p className="text-sm font-medium text-foreground">{branch?.name ?? 'Johannesburg North'} ({branch?.code ?? 'JHB-N'})</p>
+   540→   540→                </div>
+   541→   541→              </div>
+   542→   542→              <DialogFooter>
+   543→   543→                <Button variant="outline" onClick={() => setDetailsMember(null)} className="rounded-[10px]">
+   544→   544→                  Close
+   545→   545→                </Button>
+   546→   546→                <Button className="bg-maroon-500 hover:bg-maroon-600 text-white gap-2 rounded-[10px]">
+   547→   547→                  <Pencil className="w-4 h-4" />
+   548→   548→                  Edit Member
+   549→   549→                </Button>
+   550→   550→              </DialogFooter>
+   551→   551→            </>
+   552→   552→          )}
+   553→   553→        </DialogContent>
+   554→   554→      </Dialog>
+   555→   555→    </div>
+   556→   556→  );
+   557→   557→}

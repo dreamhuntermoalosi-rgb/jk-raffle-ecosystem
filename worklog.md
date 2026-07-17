@@ -164,3 +164,61 @@ Unresolved/Risks:
 - Agent-browser visual QA could not be performed due to memory constraints (Chrome OOM-kills Next.js server). Code verified via lint + curl HTML verification instead.
 - Tour guide spotlight uses a large box-shadow which may have performance implications on very old mobile devices
 - The `z-index: 100` on the demo overlay may need adjustment if modals with higher z-index are added
+---
+Task ID: 5
+Agent: Main Architect + 7 Parallel Subagents
+Task: Complete UI/UX Redesign — Royal Luxury Edition
+
+Work Log:
+- Analyzed the full codebase (68+ custom files, 4 portals, 30+ views)
+- Completely rewrote `src/app/globals.css` with new Royal Luxury Design System:
+  - Color palette: Royal Maroon (#5B1322) primary, Deep Burgundy (#4A0F1B) secondary, Royal Gold (#D4AF37) accent
+  - Surface colors: Pure White (#FFFFFF), Soft Ivory (#FAF9F7), Warm Grey (#F4F4F2)
+  - Text: Near Black (#222222)
+  - Reduced border radius: Cards 12px, Buttons 10px, Inputs 8px, Dialogs 16px
+  - New shadow system: shadow-royal-sm/md/lg/xl, shadow-gold-sm/md
+  - Dark mode: Charcoal (#111111) with maroon (#7A1D30) and gold (#D4AF37) accents
+  - New utilities: animate-float, animate-parallax-slow, btn-premium, divider-gold, progress-royal, shadow-royal-*
+  - Enhanced typography: tighter letter-spacing, stronger weight hierarchy
+  - Maroon selection color, gold dark mode selection
+- Bulk-renamed all `forest-xxx` → `maroon-xxx` and `emerald-xxx` → `maroon-xxx` across all component files
+- Launched 7 parallel subagents to redesign all components simultaneously:
+  - Agent 4-a: Public header, footer, portal-switcher ✅
+  - Agent 4-b: Public home page (cinematic hero) ✅
+  - Agent 4-c: Public campaigns + winners pages ✅
+  - Agent 4-d: All 3 dashboard sidebars (member, manager, admin) ✅
+  - Agent 4-e: All 6 member portal views ✅
+  - Agent 4-f: Manager + admin dashboard views (timed out, split into 2)
+  - Agent 4-f1: Manager dashboard views ✅
+  - Agent 4-f2: All 11 admin dashboard views ✅
+  - Agent 4-g: Remaining public pages + demo selector + tour guide ✅
+
+Design Changes Applied:
+1. **Public Header**: Premium glass with maroon tint, gold JK logo, maroon underline active indicator
+2. **Public Footer**: Dark maroon-800 bg, gold dividers, editorial typography, gold social hover
+3. **Portal Switcher**: Maroon active tabs, gold JK logo, refined spacing
+4. **Home Hero**: Cinematic 85vh dark maroon gradient, floating gradient orbs, luxury pattern overlay, floating campaign summary card with animate-float, gold progress bars
+5. **Campaign Cards**: Dark maroon image areas, gold prize values, gold-to-maroon gradient progress, shadow-royal-sm
+6. **Winners**: Luxury testimonial cards, maroon gradient avatars, gold prize accents
+7. **CTA Banner**: Full-width dark maroon gradient, gold decorative elements, "Ready to Change Your Future?"
+8. **All Sidebars**: Always-dark maroon-950 bg, gold active indicator (border-l-2), hardcoded hex for theme stability
+9. **All KPI Cards**: White bg, shadow-royal-sm, rounded-xl, maroon-50 icon circles, bold tracking-tight values
+10. **All Tables**: Premium enterprise style, sticky headers, maroon-50/30 hover, rounded-md badges
+11. **Charts**: Maroon primary, gold accent, subtle grid
+12. **Demo Selector**: Dark maroon gradient overlay, glass-card role cards, gold accent borders
+13. **Tour Guide**: Maroon-tinted overlay, gold step indicators, shadow-royal-lg tooltips
+14. **All remaining pages** (about, how-it-works, faq, contact, login, privacy, terms): Dark maroon hero sections, editorial typography
+
+Stage Summary:
+- Complete visual transformation from green/gold to royal maroon/gold luxury theme
+- Inspired by Rolls-Royce, Stripe, Linear, Vercel aesthetic
+- Zero ESLint errors
+- Server compiles and returns HTTP 200
+- All 68+ component files updated
+- Dark mode fully supported with charcoal/maroon/gold palette
+- Responsive design maintained across all components
+
+Unresolved/Risks:
+- Agent-browser visual QA not performed due to sandbox memory constraints (Chrome OOM)
+- Image placeholders still use emoji (ready for real luxury photography)
+- Some emerald/green references intentionally kept for positive trend indicators and WhatsApp channel

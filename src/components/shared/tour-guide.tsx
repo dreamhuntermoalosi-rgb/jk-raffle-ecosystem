@@ -227,7 +227,7 @@ export function TourGuide({
     height: targetRect.height + PADDING * 2,
     borderRadius: '12px',
     zIndex: 9998,
-    boxShadow: `0 0 0 ${Math.max(window.innerWidth, window.innerHeight) * 2}px rgba(0, 0, 0, 0.75)`,
+    boxShadow: `0 0 0 ${Math.max(window.innerWidth, window.innerHeight) * 2}px rgba(91, 19, 34, 0.55)`,
     pointerEvents: 'none',
   };
 
@@ -235,7 +235,7 @@ export function TourGuide({
 
   return createPortal(
     <AnimatePresence>
-      {/* Overlay */}
+      {/* Overlay — maroon-tinted */}
       <motion.div
         key="tour-overlay"
         initial={{ opacity: 0 }}
@@ -245,7 +245,7 @@ export function TourGuide({
         className="fixed inset-0 z-[9997]"
         aria-hidden="true"
       >
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-maroon-900/30" />
       </motion.div>
 
       {/* Spotlight cutout around target */}
@@ -257,12 +257,12 @@ export function TourGuide({
         transition={{ duration: 0.3, ease: 'easeOut' }}
         style={spotlightStyle}
       >
-        {/* Pulsing ring */}
+        {/* Pulsing ring — gold */}
         <motion.div
-          className="absolute inset-0 rounded-xl border-2 border-gold-400"
+          className="absolute inset-0 rounded-xl border-2 border-gold-400/80"
           animate={{
             boxShadow: [
-              '0 0 0 0px rgba(212, 160, 23, 0.5)',
+              '0 0 0 0px rgba(212, 160, 23, 0.4)',
               '0 0 0 8px rgba(212, 160, 23, 0)',
             ],
           }}
@@ -273,10 +273,10 @@ export function TourGuide({
           }}
         />
         {/* Inner ring */}
-        <div className="absolute inset-0 rounded-xl border border-gold-400/60" />
+        <div className="absolute inset-0 rounded-xl border border-gold-400/40" />
       </motion.div>
 
-      {/* Tooltip card */}
+      {/* Tooltip card — white bg, shadow-royal-lg, rounded-xl */}
       <motion.div
         key={`tour-tooltip-${currentStep}`}
         ref={tooltipRef}
@@ -287,7 +287,7 @@ export function TourGuide({
         style={tooltipStyle}
         className="fixed z-[9999] w-[320px] sm:w-[360px]"
       >
-        <div className="bg-white dark:bg-forest-900 rounded-2xl shadow-2xl shadow-black/20 border border-border/50 overflow-hidden">
+        <div className="bg-white rounded-xl shadow-royal-lg border border-border/30 overflow-hidden relative">
           {/* Close button */}
           <div className="absolute top-3 right-3 z-10">
             <button
@@ -312,24 +312,25 @@ export function TourGuide({
                     className={cn(
                       'h-1.5 w-1.5 rounded-full transition-colors duration-300',
                       i === currentStep
-                        ? 'bg-gold-500 scale-110'
+                        ? 'bg-gold-400 scale-110'
                         : i < currentStep
-                          ? 'bg-gold-400/50'
-                          : 'bg-muted-foreground/20'
+                          ? 'bg-maroon-500/40'
+                          : 'bg-muted-foreground/15'
                     )}
                   />
                 ))}
               </div>
             </div>
+            {/* Progress bar — maroon-500 fill */}
             <Progress
               value={progressPercent}
-              className="h-1 [&>div]:bg-gold-500"
+              className="h-1 [&>div]:bg-maroon-500"
             />
           </div>
 
-          {/* Content */}
+          {/* Content — clean, premium typography */}
           <div className="px-5 pb-4 pt-2">
-            <h3 className="text-base font-semibold text-foreground mb-1.5 pr-6">
+            <h3 className="text-[15px] font-semibold text-foreground mb-1.5 pr-6 leading-snug">
               {step.title}
             </h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
@@ -337,7 +338,7 @@ export function TourGuide({
             </p>
           </div>
 
-          {/* Actions */}
+          {/* Actions — maroon-500 primary buttons */}
           <div className="px-5 pb-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               {!isFirst && (
@@ -364,7 +365,7 @@ export function TourGuide({
               <Button
                 size="sm"
                 onClick={isLast ? onFinish : onNext}
-                className="bg-gold-500 hover:bg-gold-400 text-forest-900 font-medium shadow-sm"
+                className="bg-maroon-500 hover:bg-maroon-600 text-white font-medium rounded-[10px] shadow-sm shadow-maroon-500/20"
               >
                 {isLast ? 'Finish' : 'Next'}
                 {!isLast && <ChevronRight className="h-4 w-4 ml-1" />}

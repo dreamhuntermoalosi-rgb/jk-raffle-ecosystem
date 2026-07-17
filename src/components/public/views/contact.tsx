@@ -51,18 +51,19 @@ export function PublicContact() {
 
   return (
     <div className="pt-16 lg:pt-18">
-      {/* Header */}
-      <section className="bg-gradient-to-b from-forest-50 to-transparent">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+      {/* Header — dark maroon gradient */}
+      <section className="relative bg-gradient-to-br from-maroon-900 via-maroon-800 to-maroon-950 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 relative z-10">
           <motion.div {...fadeInUp} className="text-center max-w-3xl mx-auto">
-            <Badge variant="secondary" className="mb-4">
+            <Badge className="mb-5 bg-white/10 text-gold-400 border-gold-400/20 hover:bg-white/15">
               <HeadphonesIcon className="h-3 w-3 mr-1" />
               Get In Touch
             </Badge>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-              Contact <span className="gradient-text">Us</span>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-white">
+              Contact <span className="gradient-gold">Us</span>
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-maroon-200/70">
               Have a question or need assistance? Our support team is here to help.
               Reach out through any of the channels below.
             </p>
@@ -73,16 +74,16 @@ export function PublicContact() {
       <section className="py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14">
-            {/* Contact Info */}
+            {/* Contact Info — white cards, shadow-royal-sm, rounded-xl */}
             <motion.div {...fadeInUp} className="lg:col-span-2 space-y-6">
               <div>
                 <h2 className="text-xl font-semibold mb-6">Contact Information</h2>
 
-                <div className="space-y-5">
-                  <Card className="border-border/50 shadow-sm">
+                <div className="space-y-4">
+                  <Card className="border-border/30 shadow-royal-sm rounded-xl bg-white">
                     <CardContent className="p-5 flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-forest-50 flex items-center justify-center shrink-0">
-                        <MapPin className="h-5 w-5 text-forest-500" />
+                      <div className="w-10 h-10 rounded-lg bg-maroon-50 flex items-center justify-center shrink-0">
+                        <MapPin className="h-5 w-5 text-maroon-500" />
                       </div>
                       <div>
                         <h3 className="font-medium text-sm mb-1">Head Office</h3>
@@ -96,44 +97,44 @@ export function PublicContact() {
                     </CardContent>
                   </Card>
 
-                  <Card className="border-border/50 shadow-sm">
+                  <Card className="border-border/30 shadow-royal-sm rounded-xl bg-white">
                     <CardContent className="p-5 flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-forest-50 flex items-center justify-center shrink-0">
-                        <Phone className="h-5 w-5 text-forest-500" />
+                      <div className="w-10 h-10 rounded-lg bg-maroon-50 flex items-center justify-center shrink-0">
+                        <Phone className="h-5 w-5 text-maroon-500" />
                       </div>
                       <div>
                         <h3 className="font-medium text-sm mb-1">Phone</h3>
                         <p className="text-sm text-muted-foreground">
-                          General: <a href="tel:+27800001234" className="text-forest-500 hover:underline">+27 80 000 1234</a>
+                          General: <a href="tel:+27800001234" className="text-maroon-500 hover:underline">+27 80 000 1234</a>
                         </p>
                         <p className="text-sm text-muted-foreground">
-                          Support: <a href="tel:+27800005678" className="text-forest-500 hover:underline">+27 80 000 5678</a>
+                          Support: <a href="tel:+27800005678" className="text-maroon-500 hover:underline">+27 80 000 5678</a>
                         </p>
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card className="border-border/50 shadow-sm">
+                  <Card className="border-border/30 shadow-royal-sm rounded-xl bg-white">
                     <CardContent className="p-5 flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-forest-50 flex items-center justify-center shrink-0">
-                        <Mail className="h-5 w-5 text-forest-500" />
+                      <div className="w-10 h-10 rounded-lg bg-maroon-50 flex items-center justify-center shrink-0">
+                        <Mail className="h-5 w-5 text-maroon-500" />
                       </div>
                       <div>
                         <h3 className="font-medium text-sm mb-1">Email</h3>
                         <p className="text-sm text-muted-foreground">
-                          General: <a href="mailto:info@jkraffle.co.za" className="text-forest-500 hover:underline">info@jkraffle.co.za</a>
+                          General: <a href="mailto:info@jkraffle.co.za" className="text-maroon-500 hover:underline">info@jkraffle.co.za</a>
                         </p>
                         <p className="text-sm text-muted-foreground">
-                          Support: <a href="mailto:support@jkraffle.co.za" className="text-forest-500 hover:underline">support@jkraffle.co.za</a>
+                          Support: <a href="mailto:support@jkraffle.co.za" className="text-maroon-500 hover:underline">support@jkraffle.co.za</a>
                         </p>
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card className="border-border/50 shadow-sm">
+                  <Card className="border-border/30 shadow-royal-sm rounded-xl bg-white">
                     <CardContent className="p-5 flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-forest-50 flex items-center justify-center shrink-0">
-                        <Clock className="h-5 w-5 text-forest-500" />
+                      <div className="w-10 h-10 rounded-lg bg-maroon-50 flex items-center justify-center shrink-0">
+                        <Clock className="h-5 w-5 text-maroon-500" />
                       </div>
                       <div>
                         <h3 className="font-medium text-sm mb-1">Office Hours</h3>
@@ -149,13 +150,13 @@ export function PublicContact() {
               </div>
             </motion.div>
 
-            {/* Contact Form */}
+            {/* Contact Form — clean inputs, rounded-lg */}
             <motion.div {...fadeInUp} className="lg:col-span-3">
-              <Card className="border-border/50 shadow-sm">
+              <Card className="border-border/30 shadow-royal-md rounded-xl bg-white">
                 <CardContent className="p-6 sm:p-8">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 rounded-lg bg-forest-50 flex items-center justify-center">
-                      <MessageSquare className="h-5 w-5 text-forest-500" />
+                    <div className="w-10 h-10 rounded-lg bg-maroon-50 flex items-center justify-center">
+                      <MessageSquare className="h-5 w-5 text-maroon-500" />
                     </div>
                     <div>
                       <h2 className="text-lg font-semibold">Submit a Support Ticket</h2>
@@ -175,6 +176,7 @@ export function PublicContact() {
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                           required
+                          className="h-11 rounded-lg border-border/50 focus-visible:ring-maroon-500/20"
                         />
                       </div>
                       <div className="space-y-2">
@@ -186,6 +188,7 @@ export function PublicContact() {
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                           required
+                          className="h-11 rounded-lg border-border/50 focus-visible:ring-maroon-500/20"
                         />
                       </div>
                     </div>
@@ -198,6 +201,7 @@ export function PublicContact() {
                         value={formData.subject}
                         onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                         required
+                        className="h-11 rounded-lg border-border/50 focus-visible:ring-maroon-500/20"
                       />
                     </div>
 
@@ -210,14 +214,14 @@ export function PublicContact() {
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         required
-                        className="resize-none"
+                        className="resize-none rounded-lg border-border/50 focus-visible:ring-maroon-500/20"
                       />
                     </div>
 
                     <Button
                       type="submit"
                       disabled={submitting}
-                      className="w-full bg-forest-500 hover:bg-forest-600 text-white"
+                      className="w-full bg-maroon-500 hover:bg-maroon-600 text-white rounded-[10px] h-11 font-medium shadow-sm shadow-maroon-500/20"
                     >
                       {submitting ? (
                         <span className="flex items-center gap-2">
@@ -236,6 +240,21 @@ export function PublicContact() {
               </Card>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Map placeholder — maroon-tinted */}
+      <section className="pb-16 lg:pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div {...fadeInUp}>
+            <div className="w-full h-64 sm:h-80 rounded-xl bg-gradient-to-br from-maroon-100/80 via-maroon-50 to-maroon-100/60 shadow-royal-sm border border-maroon-200/30 flex items-center justify-center">
+              <div className="text-center">
+                <MapPin className="h-8 w-8 text-maroon-400 mx-auto mb-3" />
+                <p className="text-sm font-medium text-maroon-500">145 Sandton City Mall, Rivonia Rd</p>
+                <p className="text-xs text-maroon-400 mt-1">Sandton, Johannesburg, 2196</p>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>

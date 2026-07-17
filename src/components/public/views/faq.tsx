@@ -60,18 +60,19 @@ export function PublicFAQ() {
 
   return (
     <div className="pt-16 lg:pt-18">
-      {/* Header */}
-      <section className="bg-gradient-to-b from-forest-50 to-transparent">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+      {/* Header — dark maroon gradient */}
+      <section className="relative bg-gradient-to-br from-maroon-900 via-maroon-800 to-maroon-950 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 relative z-10">
           <motion.div {...fadeInUp} className="text-center max-w-3xl mx-auto">
-            <Badge variant="secondary" className="mb-4">
+            <Badge className="mb-5 bg-white/10 text-gold-400 border-gold-400/20 hover:bg-white/15">
               <HelpCircle className="h-3 w-3 mr-1" />
               Help Centre
             </Badge>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-              Frequently Asked <span className="gradient-text">Questions</span>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-6 text-white">
+              Frequently Asked <span className="gradient-gold">Questions</span>
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-maroon-200/70">
               Find answers to the most common questions about JK Raffle.
               Can&apos;t find what you&apos;re looking for? Contact our support team.
             </p>
@@ -81,14 +82,14 @@ export function PublicFAQ() {
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {/* Search */}
-        <motion.div {...fadeInUp} className="mb-8">
+        <motion.div {...fadeInUp} className="mb-8 -mt-8 relative z-10">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search questions..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-10"
+              className="pl-11 h-11 rounded-xl bg-white shadow-royal-md border-border/30"
             />
           </div>
         </motion.div>
@@ -102,9 +103,10 @@ export function PublicFAQ() {
               size="sm"
               onClick={() => setActiveCategory(cat)}
               className={cn(
+                'rounded-[10px]',
                 activeCategory === cat
-                  ? 'bg-forest-500 hover:bg-forest-600 text-white'
-                  : 'text-muted-foreground'
+                  ? 'bg-maroon-500 hover:bg-maroon-600 text-white shadow-sm'
+                  : 'text-muted-foreground border-border/40 hover:bg-maroon-50 hover:text-maroon-600 hover:border-maroon-200'
               )}
             >
               {categoryLabels[cat] || cat.charAt(0).toUpperCase() + cat.slice(1)}
@@ -129,7 +131,7 @@ export function PublicFAQ() {
             {Object.entries(groupedFAQ).map(([category, faqs]) => (
               <motion.div key={category} {...fadeInUp}>
                 {Object.keys(groupedFAQ).length > 1 && (
-                  <h3 className="text-sm font-semibold text-forest-500 uppercase tracking-wider mb-3">
+                  <h3 className="text-xs font-semibold text-maroon-500 uppercase tracking-widest mb-3">
                     {categoryLabels[category] || category.charAt(0).toUpperCase() + category.slice(1)}
                   </h3>
                 )}
@@ -138,9 +140,9 @@ export function PublicFAQ() {
                     <AccordionItem
                       key={faq.id}
                       value={faq.id}
-                      className="border border-border/50 rounded-xl px-5 data-[state=open]:bg-muted/30 transition-colors"
+                      className="border border-border/30 rounded-xl px-5 data-[state=open]:bg-white data-[state=open]:shadow-royal-sm data-[state=open]:border-maroon-200/50 bg-white/60 transition-all duration-200"
                     >
-                      <AccordionTrigger className="text-left text-sm font-medium hover:no-underline py-4">
+                      <AccordionTrigger className="text-left text-sm font-medium hover:no-underline py-4 text-foreground/90 [&>svg]:text-maroon-500">
                         {faq.question}
                       </AccordionTrigger>
                       <AccordionContent className="text-sm text-muted-foreground leading-relaxed pb-4">

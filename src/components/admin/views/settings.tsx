@@ -29,7 +29,7 @@ import {
   Save,
   Pencil,
 } from 'lucide-react';
-import { formatDate, getInitials } from '@/lib/utils';
+import { formatDate } from '@/lib/utils';
 import { mockUsers, mockAdmin } from '@/mock-data';
 
 // Template items for each channel
@@ -95,19 +95,19 @@ function TemplateList({ templates, icon: Icon, accent }: { templates: TemplateIt
       {templates.map(tpl => (
         <div
           key={tpl.id}
-          className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors group"
+          className="flex items-center justify-between p-3 rounded-lg hover:bg-maroon-50/30 transition-colors group"
         >
           <div className="flex items-center gap-3 min-w-0 flex-1">
             <div className={`p-2 rounded-lg ${accent}`}>
               <Icon className="w-4 h-4" />
             </div>
             <div className="min-w-0">
-              <p className="text-sm font-medium text-slate-900">{tpl.name}</p>
-              <p className="text-xs text-slate-500">{tpl.description}</p>
+              <p className="text-sm font-medium text-foreground">{tpl.name}</p>
+              <p className="text-xs text-muted-foreground">{tpl.description}</p>
             </div>
           </div>
           <div className="flex items-center gap-2 flex-shrink-0 ml-4">
-            <span className="text-xs text-slate-400 hidden sm:inline">
+            <span className="text-xs text-muted-foreground hidden sm:inline">
               {formatDate(tpl.lastModified, 'relative')}
             </span>
             <Button
@@ -143,12 +143,12 @@ export function AdminSettings() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Settings</h1>
-        <p className="text-sm text-slate-500 mt-1">Platform configuration and management</p>
+        <h1 className="text-2xl font-bold text-foreground tracking-tight">Settings</h1>
+        <p className="text-sm text-muted-foreground mt-1">Platform configuration and management</p>
       </div>
 
       <Tabs defaultValue="branding">
-        <TabsList className="bg-slate-100">
+        <TabsList className="bg-muted">
           <TabsTrigger value="branding">Branding</TabsTrigger>
           <TabsTrigger value="email">Email Templates</TabsTrigger>
           <TabsTrigger value="whatsapp">WhatsApp Templates</TabsTrigger>
@@ -159,10 +159,10 @@ export function AdminSettings() {
 
         {/* Branding */}
         <TabsContent value="branding" className="mt-6">
-          <Card>
+          <Card className="shadow-royal-sm rounded-xl border-0">
             <CardHeader>
               <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <Palette className="w-5 h-5 text-[hsl(43,96%,56%)]" />
+                <Palette className="w-5 h-5 text-gold-600" />
                 Brand Settings
               </CardTitle>
             </CardHeader>
@@ -170,10 +170,10 @@ export function AdminSettings() {
               <div className="space-y-2">
                 <Label>Platform Logo</Label>
                 <div className="flex items-center gap-4">
-                  <div className="w-20 h-20 rounded-xl bg-[hsl(152,68%,35%)] flex items-center justify-center text-white text-xl font-bold">
+                  <div className="w-20 h-20 rounded-xl bg-maroon-500 flex items-center justify-center text-white text-xl font-bold">
                     JK
                   </div>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="rounded-[10px]">
                     <Upload className="w-4 h-4 mr-2" />
                     Upload Logo
                   </Button>
@@ -187,6 +187,7 @@ export function AdminSettings() {
                     id="plat-name"
                     value={platformName}
                     onChange={(e) => setPlatformName(e.target.value)}
+                    className="rounded-lg"
                   />
                 </div>
                 <div className="space-y-2">
@@ -195,6 +196,7 @@ export function AdminSettings() {
                     id="plat-tagline"
                     value={tagline}
                     onChange={(e) => setTagline(e.target.value)}
+                    className="rounded-lg"
                   />
                 </div>
               </div>
@@ -202,9 +204,9 @@ export function AdminSettings() {
               <div className="space-y-2">
                 <Label>Primary Brand Color</Label>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-[hsl(152,68%,35%)] border-2 border-slate-200" />
-                  <Input value="hsl(152, 68%, 35%)" className="w-48 font-mono text-sm" readOnly />
-                  <Button variant="outline" size="sm" onClick={() => toast.info('Color picker would open here')}>
+                  <div className="w-10 h-10 rounded-lg bg-maroon-500 border-2 border-border" />
+                  <Input value="#5B1322" className="w-48 font-mono text-sm rounded-lg" readOnly />
+                  <Button variant="outline" size="sm" className="rounded-[10px]" onClick={() => toast.info('Color picker would open here')}>
                     Change
                   </Button>
                 </div>
@@ -213,7 +215,7 @@ export function AdminSettings() {
               <Separator />
               <div className="flex justify-end">
                 <Button
-                  className="bg-[hsl(152,68%,35%)] hover:bg-[hsl(152,68%,30%)] text-white"
+                  className="bg-maroon-500 hover:bg-maroon-600 text-white rounded-[10px]"
                   onClick={saveBranding}
                 >
                   <Save className="w-4 h-4 mr-2" />
@@ -226,106 +228,106 @@ export function AdminSettings() {
 
         {/* Email Templates */}
         <TabsContent value="email" className="mt-6">
-          <Card>
+          <Card className="shadow-royal-sm rounded-xl border-0">
             <CardHeader>
               <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <Mail className="w-5 h-5 text-[hsl(152,68%,35%)]" />
+                <Mail className="w-5 h-5 text-maroon-500" />
                 Email Templates
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <TemplateList templates={emailTemplates} icon={Mail} accent="bg-[hsl(152,68%,35%)]/10 text-[hsl(152,68%,35%)]" />
+              <TemplateList templates={emailTemplates} icon={Mail} accent="bg-maroon-50 text-maroon-600" />
             </CardContent>
           </Card>
         </TabsContent>
 
         {/* WhatsApp Templates */}
         <TabsContent value="whatsapp" className="mt-6">
-          <Card>
+          <Card className="shadow-royal-sm rounded-xl border-0">
             <CardHeader>
               <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <MessageSquare className="w-5 h-5 text-emerald-600" />
+                <MessageSquare className="w-5 h-5 text-maroon-500" />
                 WhatsApp Templates
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <TemplateList templates={whatsappTemplates} icon={MessageSquare} accent="bg-emerald-100 text-emerald-600" />
+              <TemplateList templates={whatsappTemplates} icon={MessageSquare} accent="bg-maroon-100 text-maroon-600" />
             </CardContent>
           </Card>
         </TabsContent>
 
         {/* SMS Templates */}
         <TabsContent value="sms" className="mt-6">
-          <Card>
+          <Card className="shadow-royal-sm rounded-xl border-0">
             <CardHeader>
               <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <Smartphone className="w-5 h-5 text-amber-600" />
+                <Smartphone className="w-5 h-5 text-maroon-500" />
                 SMS Templates
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <TemplateList templates={smsTemplates} icon={Smartphone} accent="bg-amber-100 text-amber-600" />
+              <TemplateList templates={smsTemplates} icon={Smartphone} accent="bg-maroon-50 text-maroon-500" />
             </CardContent>
           </Card>
         </TabsContent>
 
         {/* Security */}
         <TabsContent value="security" className="mt-6">
-          <Card>
+          <Card className="shadow-royal-sm rounded-xl border-0">
             <CardHeader>
               <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <Shield className="w-5 h-5 text-red-500" />
+                <Shield className="w-5 h-5 text-maroon-500" />
                 Security Settings
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-3">
-                <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
+                <div className="flex items-center justify-between p-4 rounded-lg border border-border">
                   <div>
-                    <p className="text-sm font-medium text-slate-900">Session Timeout</p>
-                    <p className="text-xs text-slate-500">Automatically log out inactive users</p>
+                    <p className="text-sm font-medium text-foreground">Session Timeout</p>
+                    <p className="text-xs text-muted-foreground">Automatically log out inactive users</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <Input
                       type="number"
                       value={sessionTimeout}
                       onChange={(e) => setSessionTimeout(e.target.value)}
-                      className="w-20 text-center text-sm"
+                      className="w-20 text-center text-sm rounded-lg"
                     />
-                    <span className="text-xs text-slate-500">minutes</span>
+                    <span className="text-xs text-muted-foreground">minutes</span>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
+                <div className="flex items-center justify-between p-4 rounded-lg border border-border">
                   <div>
-                    <p className="text-sm font-medium text-slate-900">Minimum Password Length</p>
-                    <p className="text-xs text-slate-500">Minimum characters required for passwords</p>
+                    <p className="text-sm font-medium text-foreground">Minimum Password Length</p>
+                    <p className="text-xs text-muted-foreground">Minimum characters required for passwords</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <Input
                       type="number"
                       value={minPassword}
                       onChange={(e) => setMinPassword(e.target.value)}
-                      className="w-20 text-center text-sm"
+                      className="w-20 text-center text-sm rounded-lg"
                     />
-                    <span className="text-xs text-slate-500">chars</span>
+                    <span className="text-xs text-muted-foreground">chars</span>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
+                <div className="flex items-center justify-between p-4 rounded-lg border border-border">
                   <div>
-                    <p className="text-sm font-medium text-slate-900">Require 2FA for Admin Users</p>
-                    <p className="text-xs text-slate-500">Enforce two-factor authentication for admin and super admin roles</p>
+                    <p className="text-sm font-medium text-foreground">Require 2FA for Admin Users</p>
+                    <p className="text-xs text-muted-foreground">Enforce two-factor authentication for admin and super admin roles</p>
                   </div>
                   <Switch checked={require2FA} onCheckedChange={setRequire2FA} />
                 </div>
 
-                <div className="flex items-center justify-between p-4 rounded-lg border border-slate-200">
+                <div className="flex items-center justify-between p-4 rounded-lg border border-border">
                   <div>
-                    <p className="text-sm font-medium text-slate-900">IP Whitelist</p>
-                    <p className="text-xs text-slate-500">Restrict admin access to specific IP addresses</p>
+                    <p className="text-sm font-medium text-foreground">IP Whitelist</p>
+                    <p className="text-xs text-muted-foreground">Restrict admin access to specific IP addresses</p>
                   </div>
-                  <Button variant="outline" size="sm" onClick={() => toast.info('IP whitelist editor would open')}>
+                  <Button variant="outline" size="sm" className="rounded-[10px]" onClick={() => toast.info('IP whitelist editor would open')}>
                     Configure
                   </Button>
                 </div>
@@ -334,7 +336,7 @@ export function AdminSettings() {
               <Separator />
               <div className="flex justify-end">
                 <Button
-                  className="bg-[hsl(152,68%,35%)] hover:bg-[hsl(152,68%,30%)] text-white"
+                  className="bg-maroon-500 hover:bg-maroon-600 text-white rounded-[10px]"
                   onClick={saveSecurity}
                 >
                   <Save className="w-4 h-4 mr-2" />
@@ -347,48 +349,50 @@ export function AdminSettings() {
 
         {/* Audit Log */}
         <TabsContent value="audit" className="mt-6">
-          <Card>
+          <Card className="shadow-royal-sm rounded-xl border-0 overflow-hidden">
             <CardHeader>
               <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <History className="w-5 h-5 text-slate-500" />
+                <History className="w-5 h-5 text-muted-foreground" />
                 Audit Log
               </CardTitle>
             </CardHeader>
             <CardContent className="p-0">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="text-xs">User</TableHead>
-                    <TableHead className="text-xs">Action</TableHead>
-                    <TableHead className="text-xs">Entity</TableHead>
-                    <TableHead className="text-xs">IP Address</TableHead>
-                    <TableHead className="text-xs">Timestamp</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {auditLog.map(entry => (
-                    <TableRow key={entry.id} className="hover:bg-slate-50">
-                      <TableCell className="text-sm font-medium text-slate-900">{entry.userName}</TableCell>
-                      <TableCell>
-                        <Badge
-                          variant="secondary"
-                          className={`text-[10px] ${
-                            entry.action === 'Created' ? 'bg-emerald-100 text-emerald-700' :
-                            entry.action === 'Refunded' ? 'bg-pink-100 text-pink-700' :
-                            entry.action === 'Deleted' ? 'bg-red-100 text-red-700' :
-                            'bg-slate-100 text-slate-600'
-                          }`}
-                        >
-                          {entry.action}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="text-xs text-slate-600 max-w-[200px] truncate">{entry.entity}</TableCell>
-                      <TableCell className="text-xs font-mono text-slate-500">{entry.ip}</TableCell>
-                      <TableCell className="text-xs text-slate-500">{formatDate(entry.timestamp, 'relative')}</TableCell>
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="hover:bg-transparent bg-muted/50">
+                      <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider py-3">User</TableHead>
+                      <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider py-3">Action</TableHead>
+                      <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider py-3">Entity</TableHead>
+                      <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider py-3">IP Address</TableHead>
+                      <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider py-3">Timestamp</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {auditLog.map(entry => (
+                      <TableRow key={entry.id} className="hover:bg-maroon-50/30 transition-colors">
+                        <TableCell className="text-sm font-medium text-foreground py-3">{entry.userName}</TableCell>
+                        <TableCell className="py-3">
+                          <Badge
+                            variant="secondary"
+                            className={`text-[10px] rounded-md ${
+                              entry.action === 'Created' ? 'bg-maroon-100 text-maroon-700' :
+                              entry.action === 'Refunded' ? 'bg-gold-50 text-gold-700' :
+                              entry.action === 'Deleted' ? 'bg-red-50 text-red-700' :
+                              'bg-muted text-muted-foreground'
+                            }`}
+                          >
+                            {entry.action}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-xs text-muted-foreground max-w-[200px] truncate py-3">{entry.entity}</TableCell>
+                        <TableCell className="text-xs font-mono text-muted-foreground py-3">{entry.ip}</TableCell>
+                        <TableCell className="text-xs text-muted-foreground py-3">{formatDate(entry.timestamp, 'relative')}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

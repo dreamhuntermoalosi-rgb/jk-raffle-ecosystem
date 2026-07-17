@@ -11,6 +11,7 @@ import {
   UserCircle,
   Headphones,
   TrendingUp,
+  TrendingDown,
   Clock,
   MapPin,
   Sparkles,
@@ -42,11 +43,11 @@ function CountdownTimer({ targetDate }: { targetDate: string }) {
   }, [targetDate]);
 
   if (countdown.expired) {
-    return <span className="text-amber-600 font-semibold">Draw in progress</span>;
+    return <span className="text-gold-400 font-semibold text-sm">Draw in progress</span>;
   }
 
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-2.5">
       {[
         { value: countdown.days, label: 'Days' },
         { value: countdown.hours, label: 'Hours' },
@@ -54,12 +55,12 @@ function CountdownTimer({ targetDate }: { targetDate: string }) {
         { value: countdown.seconds, label: 'Sec' },
       ].map((unit) => (
         <div key={unit.label} className="text-center">
-          <div className="bg-white/20 backdrop-blur-sm rounded-lg px-3 py-1.5 min-w-[48px]">
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-1.5 min-w-[48px]">
             <span className="text-2xl font-bold text-white tabular-nums">
               {String(unit.value).padStart(2, '0')}
             </span>
           </div>
-          <span className="text-[10px] text-emerald-100 uppercase tracking-wider mt-1 block">
+          <span className="text-[10px] text-white/50 uppercase tracking-wider mt-1 block">
             {unit.label}
           </span>
         </div>
@@ -135,68 +136,64 @@ export function MemberDashboard() {
       label: 'Active Tickets',
       value: activeTickets.length,
       icon: Ticket,
-      color: 'text-emerald-600',
-      bg: 'bg-emerald-50 dark:bg-emerald-950/30',
       trend: '+3 this week',
+      trendUp: true,
     },
     {
       label: 'Total Spent',
       value: formatCurrency(totalSpent),
       icon: Wallet,
-      color: 'text-amber-600',
-      bg: 'bg-amber-50 dark:bg-amber-950/30',
       trend: 'Lifetime',
+      trendUp: null,
     },
     {
       label: 'Campaigns Entered',
       value: campaignsEntered,
       icon: Trophy,
-      color: 'text-purple-600',
-      bg: 'bg-purple-50 dark:bg-purple-950/30',
       trend: `${activeTickets.length} tickets active`,
+      trendUp: true,
     },
     {
       label: 'Notifications',
       value: unreadCount,
       icon: Bell,
-      color: 'text-rose-500',
-      bg: 'bg-rose-50 dark:bg-rose-950/30',
       trend: unreadCount > 0 ? 'Unread' : 'All caught up',
+      trendUp: null,
     },
   ];
 
   const quickActions = [
-    { label: 'Buy Tickets', icon: ShoppingCart, view: 'purchase', color: 'bg-emerald-600 hover:bg-emerald-700 text-white' },
-    { label: 'View All Tickets', icon: Ticket, view: 'tickets', color: 'bg-white hover:bg-muted text-foreground border' },
-    { label: 'My Profile', icon: UserCircle, view: 'profile', color: 'bg-white hover:bg-muted text-foreground border' },
-    { label: 'Support', icon: Headphones, view: 'notifications', color: 'bg-white hover:bg-muted text-foreground border' },
+    { label: 'Buy Tickets', icon: ShoppingCart, view: 'purchase', color: 'bg-maroon-500 hover:bg-maroon-600 text-white' },
+    { label: 'View All Tickets', icon: Ticket, view: 'tickets', color: 'bg-white hover:bg-maroon-50 text-foreground border border-border shadow-royal-sm' },
+    { label: 'My Profile', icon: UserCircle, view: 'profile', color: 'bg-white hover:bg-maroon-50 text-foreground border border-border shadow-royal-sm' },
+    { label: 'Support', icon: Headphones, view: 'notifications', color: 'bg-white hover:bg-maroon-50 text-foreground border border-border shadow-royal-sm' },
   ];
 
   return (
     <div className="space-y-6">
       {/* Welcome Card */}
-      <Card id="member-welcome" className="overflow-hidden border-0">
-        <div className="bg-gradient-to-br from-emerald-700 via-emerald-800 to-emerald-900 p-6 sm:p-8">
+      <Card id="member-welcome" className="overflow-hidden border-0 shadow-royal-lg rounded-xl">
+        <div className="bg-gradient-to-br from-maroon-600 via-maroon-500 to-maroon-700 p-6 sm:p-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <Sparkles className="h-5 w-5 text-amber-400" />
-                <span className="text-emerald-200 text-sm font-medium">
+                <Sparkles className="h-4 w-4 text-gold-400" />
+                <span className="text-white/60 text-sm font-medium">
                   Member since {new Date(user.createdAt).toLocaleDateString('en-ZA', { month: 'long', year: 'numeric' })}
                 </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-white">
+              <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                 Welcome back, {user.firstName}
               </h1>
-              <p className="text-emerald-200 mt-1">
-                You have <span className="text-amber-300 font-semibold">{activeTickets.length} active tickets</span> across{' '}
+              <p className="text-white/50 mt-1 text-sm">
+                You have <span className="text-gold-400 font-semibold">{activeTickets.length} active tickets</span> across{' '}
                 {campaignsEntered} campaigns. Good luck!
               </p>
             </div>
             <div className="flex gap-2">
               <Button
                 onClick={() => setView('purchase')}
-                className="bg-amber-500 hover:bg-amber-600 text-emerald-900 font-semibold shadow-lg"
+                className="bg-gold-400 hover:bg-gold-500 text-maroon-900 font-semibold shadow-lg rounded-[10px] h-10 px-5"
               >
                 <ShoppingCart className="h-4 w-4 mr-2" />
                 Buy Tickets
@@ -207,24 +204,30 @@ export function MemberDashboard() {
       </Card>
 
       {/* Stats Grid */}
-      <div id="member-stats" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div id="member-stats" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
-            <Card key={stat.label} className="hover:shadow-md transition-shadow">
+            <Card key={stat.label} className="hover:shadow-royal-md transition-all duration-200 shadow-royal-sm border-0 rounded-xl bg-white">
               <CardContent className="p-5">
                 <div className="flex items-start justify-between">
                   <div>
                     <p className="text-sm text-muted-foreground">{stat.label}</p>
-                    <p className="text-2xl font-bold mt-1 tabular-nums">{stat.value}</p>
+                    <p className="text-3xl font-bold mt-1.5 tabular-nums tracking-tight text-foreground">{stat.value}</p>
                   </div>
-                  <div className={cn('p-2.5 rounded-lg', stat.bg)}>
-                    <Icon className={cn('h-5 w-5', stat.color)} />
+                  <div className="w-10 h-10 rounded-full bg-maroon-50 flex items-center justify-center">
+                    <Icon className="h-5 w-5 text-maroon-500" />
                   </div>
                 </div>
                 <div className="flex items-center gap-1 mt-3">
-                  <TrendingUp className="h-3.5 w-3.5 text-muted-foreground" />
-                  <span className="text-xs text-muted-foreground">{stat.trend}</span>
+                  {stat.trendUp === true && <TrendingUp className="h-3.5 w-3.5 text-emerald-500" />}
+                  {stat.trendUp === false && <TrendingDown className="h-3.5 w-3.5 text-red-500" />}
+                  <span className={cn(
+                    'text-xs',
+                    stat.trendUp === true && 'text-emerald-600',
+                    stat.trendUp === false && 'text-red-500',
+                    stat.trendUp === null && 'text-muted-foreground'
+                  )}>{stat.trend}</span>
                 </div>
               </CardContent>
             </Card>
@@ -236,49 +239,49 @@ export function MemberDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Upcoming Draw - spans 2 cols */}
         {nearestDraw && (
-          <Card id="member-countdown" className="lg:col-span-2 overflow-hidden border-2 border-emerald-200 dark:border-emerald-800">
+          <Card id="member-countdown" className="lg:col-span-2 overflow-hidden border-0 shadow-royal-sm rounded-xl bg-white">
             <CardHeader className="pb-3">
               <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-emerald-600" />
-                <CardTitle className="text-base">Upcoming Draw</CardTitle>
+                <Clock className="h-4 w-4 text-maroon-500" />
+                <CardTitle className="text-base font-semibold tracking-tight">Ticket Activity</CardTitle>
               </div>
             </CardHeader>
             <CardContent className="pb-6">
-              <div className="bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-xl p-5 text-white">
+              <div className="bg-gradient-to-br from-maroon-600 to-maroon-700 rounded-xl p-5 text-white">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div className="flex-1">
-                    <Badge className="bg-amber-500 text-emerald-900 font-semibold mb-3">
+                    <Badge className="bg-gold-400/20 text-gold-400 font-semibold mb-3 rounded-md border-0">
                       {nearestDraw.progress}% Sold
                     </Badge>
-                    <h3 className="text-xl font-bold mb-1">{nearestDraw.title}</h3>
-                    <p className="text-emerald-200 text-sm">
+                    <h3 className="text-xl font-bold mb-1 tracking-tight">{nearestDraw.title}</h3>
+                    <p className="text-white/50 text-sm">
                       {formatCurrency(nearestDraw.product.value)} prize
                     </p>
-                    <div className="flex items-center gap-2 mt-3 text-emerald-200 text-xs">
+                    <div className="flex items-center gap-2 mt-3 text-white/40 text-xs">
                       <MapPin className="h-3.5 w-3.5" />
                       {nearestDraw.drawLocation}
                     </div>
                     <div className="mt-3 flex items-center gap-2">
-                      <Ticket className="h-4 w-4 text-amber-300" />
-                      <span className="text-sm">
-                        You own <span className="font-bold text-amber-300">{ticketsOwnedForDraw}</span> ticket{ticketsOwnedForDraw !== 1 ? 's' : ''}
+                      <Ticket className="h-4 w-4 text-gold-400" />
+                      <span className="text-sm text-white/70">
+                        You own <span className="font-bold text-gold-400">{ticketsOwnedForDraw}</span> ticket{ticketsOwnedForDraw !== 1 ? 's' : ''}
                       </span>
                     </div>
                   </div>
                   <div className="flex flex-col items-center gap-2">
-                    <span className="text-xs text-emerald-200 uppercase tracking-wider">Time Remaining</span>
+                    <span className="text-[10px] text-white/40 uppercase tracking-widest">Time Remaining</span>
                     <CountdownTimer targetDate={nearestDraw.drawDate} />
                   </div>
                 </div>
                 {/* Progress bar */}
                 <div className="mt-5">
-                  <div className="flex justify-between text-xs text-emerald-200 mb-1">
+                  <div className="flex justify-between text-xs text-white/40 mb-1.5">
                     <span>{nearestDraw.soldTickets} sold</span>
                     <span>{nearestDraw.maxTickets} total</span>
                   </div>
-                  <div className="w-full bg-emerald-900/50 rounded-full h-2">
+                  <div className="w-full bg-white/10 rounded-full h-1.5">
                     <div
-                      className="bg-amber-400 h-2 rounded-full transition-all duration-500"
+                      className="bg-gold-400 h-1.5 rounded-full transition-all duration-500"
                       style={{ width: `${nearestDraw.progress}%` }}
                     />
                   </div>
@@ -289,9 +292,9 @@ export function MemberDashboard() {
         )}
 
         {/* Quick Actions */}
-        <Card id="member-actions">
+        <Card id="member-actions" className="border-0 shadow-royal-sm rounded-xl bg-white">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base">Quick Actions</CardTitle>
+            <CardTitle className="text-base font-semibold tracking-tight">Quick Actions</CardTitle>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-3">
             {quickActions.map((action) => {
@@ -302,7 +305,7 @@ export function MemberDashboard() {
                   variant="ghost"
                   onClick={() => setView(action.view)}
                   className={cn(
-                    'h-auto py-4 flex-col gap-2 rounded-xl transition-all',
+                    'h-auto py-4 flex-col gap-2 rounded-xl transition-all duration-200',
                     action.color
                   )}
                 >
@@ -318,16 +321,16 @@ export function MemberDashboard() {
       {/* Recent Tickets Table + Activity Timeline */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Tickets */}
-        <Card id="member-tickets-table">
+        <Card id="member-tickets-table" className="border-0 shadow-royal-sm rounded-xl bg-white">
           <CardHeader className="flex flex-row items-center justify-between pb-3">
-            <CardTitle className="text-base flex items-center gap-2">
-              <List className="h-5 w-5 text-muted-foreground" />
+            <CardTitle className="text-base font-semibold tracking-tight flex items-center gap-2">
+              <List className="h-4 w-4 text-maroon-500" />
               My Recent Tickets
             </CardTitle>
             <Button
               variant="ghost"
               size="sm"
-              className="text-emerald-700 hover:text-emerald-800 text-xs"
+              className="text-maroon-500 hover:text-maroon-600 hover:bg-maroon-50 text-xs rounded-lg"
               onClick={() => setView('tickets')}
             >
               View All
@@ -336,28 +339,28 @@ export function MemberDashboard() {
           <CardContent>
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead className="text-xs">Reference</TableHead>
-                  <TableHead className="text-xs">Campaign</TableHead>
-                  <TableHead className="text-xs">Status</TableHead>
-                  <TableHead className="text-xs text-right">Date</TableHead>
+                <TableRow className="hover:bg-transparent bg-muted/50 sticky top-0">
+                  <TableHead className="text-xs font-medium text-muted-foreground">Reference</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground">Campaign</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground">Status</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground text-right">Date</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {recentTickets.map((ticket) => {
                   const campaign = mockCampaigns.find((c) => c.id === ticket.campaignId);
                   return (
-                    <TableRow key={ticket.id} className="text-sm">
-                      <TableCell className="font-mono text-xs font-medium">
+                    <TableRow key={ticket.id} className="text-sm hover:bg-maroon-50/50 transition-colors">
+                      <TableCell className="font-mono text-xs font-medium text-foreground">
                         {ticket.reference}
                       </TableCell>
-                      <TableCell className="text-xs truncate max-w-[140px]">
+                      <TableCell className="text-xs truncate max-w-[140px] text-muted-foreground">
                         {campaign?.title || 'Unknown'}
                       </TableCell>
                       <TableCell>
                         <Badge
                           variant="secondary"
-                          className={cn('text-[10px] px-2 py-0.5', getStatusColor(ticket.status))}
+                          className={cn('text-[10px] px-2 py-0.5 rounded-md', getStatusColor(ticket.status))}
                         >
                           {ticket.status}
                         </Badge>
@@ -374,10 +377,10 @@ export function MemberDashboard() {
         </Card>
 
         {/* Recent Activity Timeline */}
-        <Card id="member-activity">
+        <Card id="member-activity" className="border-0 shadow-royal-sm rounded-xl bg-white">
           <CardHeader className="pb-3">
-            <CardTitle className="text-base flex items-center gap-2">
-              <Clock className="h-5 w-5 text-muted-foreground" />
+            <CardTitle className="text-base font-semibold tracking-tight flex items-center gap-2">
+              <Clock className="h-4 w-4 text-maroon-500" />
               Recent Activity
             </CardTitle>
           </CardHeader>
@@ -389,12 +392,12 @@ export function MemberDashboard() {
               {mockActivityLogs.slice(0, 7).map((log, index) => (
                 <div key={log.id} className="flex gap-4 pb-5 relative">
                   {/* Dot */}
-                  <div className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted text-sm">
+                  <div className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-maroon-50 text-sm">
                     {getActivityIcon(log.action)}
                   </div>
                   {/* Content */}
                   <div className="flex-1 min-w-0 pt-0.5">
-                    <p className="text-sm text-foreground leading-snug">
+                    <p className="text-sm text-foreground/80 leading-snug">
                       {getActivityDescription(log)}
                     </p>
                     <p className="text-xs text-muted-foreground mt-0.5">

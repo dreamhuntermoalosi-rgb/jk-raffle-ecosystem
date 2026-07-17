@@ -69,7 +69,15 @@ const roleLabels: Record<UserRole, string> = {
   auditor: 'Auditor',
 };
 
-// Generate extra users to make table full
+const roleBadgeColor: Record<UserRole, string> = {
+  super_admin: 'bg-maroon-100 text-maroon-700',
+  admin: 'bg-maroon-100 text-maroon-700',
+  branch_manager: 'bg-maroon-50 text-maroon-600',
+  member: 'bg-muted text-muted-foreground',
+  support: 'bg-muted text-muted-foreground',
+  auditor: 'bg-muted text-muted-foreground',
+};
+
 const extraUsers: User[] = [
   { id: 'u-10', email: 'zanele.khumalo@email.co.za', phone: '+27 82 456 7890', firstName: 'Zanele', lastName: 'Khumalo', avatar: null, occupation: 'Teacher', biography: null, role: 'member', status: 'active', branchId: 'branch-jhb-n', twoFactorEnabled: true, lastLoginAt: '2025-06-11T14:30:00Z', createdAt: '2024-08-15T10:00:00Z', updatedAt: '2025-06-11T14:30:00Z' },
   { id: 'u-11', email: 'pieter.du.plessis@email.co.za', phone: '+27 83 567 8901', firstName: 'Pieter', lastName: 'du Plessis', avatar: null, occupation: 'Engineer', biography: null, role: 'member', status: 'active', branchId: 'branch-cpt-c', twoFactorEnabled: false, lastLoginAt: '2025-06-10T09:00:00Z', createdAt: '2024-06-20T08:00:00Z', updatedAt: '2025-06-10T09:00:00Z' },
@@ -120,12 +128,12 @@ export function AdminUsers() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Users</h1>
-          <p className="text-sm text-slate-500 mt-1">{allUsers.length} registered users</p>
+          <h1 className="text-2xl font-bold text-foreground tracking-tight">Users</h1>
+          <p className="text-sm text-muted-foreground mt-1">{allUsers.length} registered users</p>
         </div>
         <Dialog open={createOpen} onOpenChange={setCreateOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-[hsl(152,68%,35%)] hover:bg-[hsl(152,68%,30%)] text-white">
+            <Button className="bg-maroon-500 hover:bg-maroon-600 text-white rounded-[10px]">
               <Plus className="w-4 h-4 mr-2" />
               Create User
             </Button>
@@ -138,26 +146,26 @@ export function AdminUsers() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="user-first">First Name</Label>
-                  <Input id="user-first" placeholder="First name" />
+                  <Input id="user-first" placeholder="First name" className="rounded-lg" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="user-last">Last Name</Label>
-                  <Input id="user-last" placeholder="Last name" />
+                  <Input id="user-last" placeholder="Last name" className="rounded-lg" />
                 </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="user-email">Email</Label>
-                <Input id="user-email" type="email" placeholder="user@jkraffle.co.za" />
+                <Input id="user-email" type="email" placeholder="user@jkraffle.co.za" className="rounded-lg" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="user-phone">Phone</Label>
-                <Input id="user-phone" placeholder="+27 XX XXX XXXX" />
+                <Input id="user-phone" placeholder="+27 XX XXX XXXX" className="rounded-lg" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label>Role</Label>
                   <Select>
-                    <SelectTrigger><SelectValue placeholder="Select role" /></SelectTrigger>
+                    <SelectTrigger className="rounded-lg"><SelectValue placeholder="Select role" /></SelectTrigger>
                     <SelectContent>
                       {Object.entries(roleLabels).map(([key, label]) => (
                         <SelectItem key={key} value={key}>{label}</SelectItem>
@@ -168,7 +176,7 @@ export function AdminUsers() {
                 <div className="space-y-2">
                   <Label>Branch</Label>
                   <Select>
-                    <SelectTrigger><SelectValue placeholder="Assign branch" /></SelectTrigger>
+                    <SelectTrigger className="rounded-lg"><SelectValue placeholder="Assign branch" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="none">No Branch</SelectItem>
                       {mockBranches.map(b => (
@@ -180,7 +188,7 @@ export function AdminUsers() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="user-pass">Initial Password</Label>
-                <Input id="user-pass" type="password" placeholder="Min 8 characters" />
+                <Input id="user-pass" type="password" placeholder="Min 8 characters" className="rounded-lg" />
               </div>
               <div className="flex items-center gap-3">
                 <Switch id="user-2fa" />
@@ -189,9 +197,9 @@ export function AdminUsers() {
             </div>
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline" className="rounded-[10px]">Cancel</Button>
               </DialogClose>
-              <Button className="bg-[hsl(152,68%,35%)] hover:bg-[hsl(152,68%,30%)] text-white" onClick={() => { toast.success('User created successfully!'); setCreateOpen(false); }}>
+              <Button className="bg-maroon-500 hover:bg-maroon-600 text-white rounded-[10px]" onClick={() => { toast.success('User created successfully!'); setCreateOpen(false); }}>
                 Create User
               </Button>
             </DialogFooter>
@@ -202,12 +210,12 @@ export function AdminUsers() {
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
             placeholder="Search by name or email..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9"
+            className="pl-9 rounded-lg"
           />
         </div>
         <div className="flex flex-wrap gap-1.5">
@@ -216,7 +224,7 @@ export function AdminUsers() {
               key={f.value}
               variant={roleFilter === f.value ? 'default' : 'outline'}
               size="sm"
-              className={`h-8 text-xs ${roleFilter === f.value ? 'bg-[hsl(152,68%,35%)] hover:bg-[hsl(152,68%,30%)] text-white' : ''}`}
+              className={`h-8 text-xs rounded-[10px] ${roleFilter === f.value ? 'bg-maroon-500 hover:bg-maroon-600 text-white' : ''}`}
               onClick={() => setRoleFilter(f.value)}
             >
               {f.label}
@@ -226,60 +234,60 @@ export function AdminUsers() {
       </div>
 
       {/* Users Table */}
-      <Card>
+      <Card className="shadow-royal-sm rounded-xl border-0 overflow-hidden">
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead className="text-xs">User</TableHead>
-                  <TableHead className="text-xs">Email</TableHead>
-                  <TableHead className="text-xs">Role</TableHead>
-                  <TableHead className="text-xs">Branch</TableHead>
-                  <TableHead className="text-xs">Status</TableHead>
-                  <TableHead className="text-xs text-center">2FA</TableHead>
-                  <TableHead className="text-xs">Last Login</TableHead>
-                  <TableHead className="text-xs text-right">Actions</TableHead>
+                <TableRow className="hover:bg-transparent bg-muted/50">
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">User</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Email</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Role</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Branch</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider text-center">2FA</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Last Login</TableHead>
+                  <TableHead className="text-xs font-medium text-muted-foreground uppercase tracking-wider text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filtered.map((user) => (
-                  <TableRow key={user.id} className="hover:bg-slate-50">
-                    <TableCell>
+                  <TableRow key={user.id} className="hover:bg-maroon-50/30 transition-colors">
+                    <TableCell className="py-3.5">
                       <div className="flex items-center gap-2.5">
                         <Avatar className="w-8 h-8">
-                          <AvatarFallback className="bg-slate-100 text-slate-600 text-[11px] font-semibold">
+                          <AvatarFallback className="bg-maroon-100 text-maroon-700 text-[11px] font-semibold">
                             {getInitials(user.firstName, user.lastName)}
                           </AvatarFallback>
                         </Avatar>
-                        <span className="text-sm font-medium text-slate-900 whitespace-nowrap">
+                        <span className="text-sm font-medium text-foreground whitespace-nowrap">
                           {user.firstName} {user.lastName}
                         </span>
                       </div>
                     </TableCell>
-                    <TableCell className="text-xs text-slate-500 max-w-[180px] truncate">{user.email}</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary" className="text-[10px]">
+                    <TableCell className="text-xs text-muted-foreground max-w-[180px] truncate py-3.5">{user.email}</TableCell>
+                    <TableCell className="py-3.5">
+                      <Badge variant="secondary" className={`text-[10px] rounded-md border-0 ${roleBadgeColor[user.role]}`}>
                         {roleLabels[user.role]}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-xs text-slate-500">{getBranchName(user.branchId)}</TableCell>
-                    <TableCell>
-                      <Badge variant="secondary" className={`text-[10px] ${getStatusColor(user.status)}`}>
+                    <TableCell className="text-xs text-muted-foreground py-3.5">{getBranchName(user.branchId)}</TableCell>
+                    <TableCell className="py-3.5">
+                      <Badge variant="secondary" className={`text-[10px] rounded-md ${getStatusColor(user.status)}`}>
                         {user.status}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-center">
+                    <TableCell className="text-center py-3.5">
                       {user.twoFactorEnabled ? (
-                        <ShieldCheck className="w-4 h-4 text-emerald-500 mx-auto" />
+                        <ShieldCheck className="w-4 h-4 text-maroon-500 mx-auto" />
                       ) : (
-                        <ShieldX className="w-4 h-4 text-slate-300 mx-auto" />
+                        <ShieldX className="w-4 h-4 text-muted-foreground/30 mx-auto" />
                       )}
                     </TableCell>
-                    <TableCell className="text-xs text-slate-500">
+                    <TableCell className="text-xs text-muted-foreground py-3.5">
                       {user.lastLoginAt ? formatDate(user.lastLoginAt, 'relative') : 'Never'}
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right py-3.5">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="ghost" size="icon" className="h-7 w-7">
@@ -312,52 +320,52 @@ export function AdminUsers() {
               <DialogHeader>
                 <div className="flex items-center gap-3">
                   <Avatar className="w-12 h-12">
-                    <AvatarFallback className="bg-[hsl(152,68%,35%)] text-white text-sm font-semibold">
+                    <AvatarFallback className="bg-maroon-500 text-white text-sm font-semibold">
                       {getInitials(selectedUser.firstName, selectedUser.lastName)}
                     </AvatarFallback>
                   </Avatar>
                   <div>
                     <DialogTitle>{selectedUser.firstName} {selectedUser.lastName}</DialogTitle>
-                    <p className="text-sm text-slate-500">{selectedUser.email}</p>
+                    <p className="text-sm text-muted-foreground">{selectedUser.email}</p>
                   </div>
                 </div>
               </DialogHeader>
               <div className="space-y-4 py-2">
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="p-3 rounded-lg bg-slate-50">
-                    <p className="text-[11px] text-slate-500 uppercase">Role</p>
+                  <div className="p-3 rounded-xl bg-muted/50">
+                    <p className="text-[11px] text-muted-foreground uppercase tracking-wider">Role</p>
                     <p className="text-sm font-medium mt-0.5">{roleLabels[selectedUser.role]}</p>
                   </div>
-                  <div className="p-3 rounded-lg bg-slate-50">
-                    <p className="text-[11px] text-slate-500 uppercase">Status</p>
-                    <Badge variant="secondary" className={`text-[10px] mt-0.5 ${getStatusColor(selectedUser.status)}`}>
+                  <div className="p-3 rounded-xl bg-muted/50">
+                    <p className="text-[11px] text-muted-foreground uppercase tracking-wider">Status</p>
+                    <Badge variant="secondary" className={`text-[10px] mt-0.5 rounded-md ${getStatusColor(selectedUser.status)}`}>
                       {selectedUser.status}
                     </Badge>
                   </div>
-                  <div className="p-3 rounded-lg bg-slate-50">
-                    <p className="text-[11px] text-slate-500 uppercase">Branch</p>
+                  <div className="p-3 rounded-xl bg-muted/50">
+                    <p className="text-[11px] text-muted-foreground uppercase tracking-wider">Branch</p>
                     <p className="text-sm font-medium mt-0.5">{getBranchName(selectedUser.branchId)}</p>
                   </div>
-                  <div className="p-3 rounded-lg bg-slate-50">
-                    <p className="text-[11px] text-slate-500 uppercase">2FA</p>
+                  <div className="p-3 rounded-xl bg-muted/50">
+                    <p className="text-[11px] text-muted-foreground uppercase tracking-wider">2FA</p>
                     <p className="text-sm font-medium mt-0.5">{selectedUser.twoFactorEnabled ? 'Enabled' : 'Disabled'}</p>
                   </div>
                 </div>
                 <Separator />
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-slate-700 uppercase tracking-wide">Activity Summary</p>
+                  <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Activity Summary</p>
                   <div className="grid grid-cols-3 gap-3">
-                    <div className="text-center p-3 rounded-lg bg-slate-50">
-                      <p className="text-lg font-bold text-slate-900">{mockOrders.filter(o => o.userId === selectedUser.id).length}</p>
-                      <p className="text-[10px] text-slate-500">Orders</p>
+                    <div className="text-center p-3 rounded-xl bg-muted/50">
+                      <p className="text-lg font-bold text-foreground">{mockOrders.filter(o => o.userId === selectedUser.id).length}</p>
+                      <p className="text-[10px] text-muted-foreground">Orders</p>
                     </div>
-                    <div className="text-center p-3 rounded-lg bg-slate-50">
-                      <p className="text-lg font-bold text-slate-900">{mockTickets.filter(t => t.userId === selectedUser.id).length}</p>
-                      <p className="text-[10px] text-slate-500">Tickets</p>
+                    <div className="text-center p-3 rounded-xl bg-muted/50">
+                      <p className="text-lg font-bold text-foreground">{mockTickets.filter(t => t.userId === selectedUser.id).length}</p>
+                      <p className="text-[10px] text-muted-foreground">Tickets</p>
                     </div>
-                    <div className="text-center p-3 rounded-lg bg-slate-50">
-                      <p className="text-lg font-bold text-slate-900">{formatDate(selectedUser.createdAt)}</p>
-                      <p className="text-[10px] text-slate-500">Joined</p>
+                    <div className="text-center p-3 rounded-xl bg-muted/50">
+                      <p className="text-lg font-bold text-foreground">{formatDate(selectedUser.createdAt)}</p>
+                      <p className="text-[10px] text-muted-foreground">Joined</p>
                     </div>
                   </div>
                 </div>
@@ -365,9 +373,9 @@ export function AdminUsers() {
                   <>
                     <Separator />
                     <div>
-                      <p className="text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">Profile</p>
-                      <p className="text-sm text-slate-600">{selectedUser.occupation}</p>
-                      {selectedUser.phone && <p className="text-sm text-slate-500 mt-0.5">{selectedUser.phone}</p>}
+                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">Profile</p>
+                      <p className="text-sm text-muted-foreground">{selectedUser.occupation}</p>
+                      {selectedUser.phone && <p className="text-sm text-muted-foreground mt-0.5">{selectedUser.phone}</p>}
                     </div>
                   </>
                 )}

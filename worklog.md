@@ -114,3 +114,53 @@ Priority Recommendations for Next Phase:
 6. Add breadcrumbs to portal pages
 7. Enhance chart interactivity (tooltips, click-through to details)
 8. Add keyboard shortcuts documentation page
+
+---
+Task ID: 3
+Agent: Main Architect
+Task: Add "Check Demo" button, role selection overlay, tour guide system, and gold-primary theme update
+
+Work Log:
+- Analyzed uploaded theme image (luxurious gold throne/landscape) with VLM to extract color palette:
+  - Gold Metallic (#D4AF37), Light Gold (#F5E6A3), Earthy Brown (#8B4513), Dark Slate (#2F4F4F), Vibrant Red (#B22222), Olive Green (#6B8E23)
+  - Design aesthetic: Luxurious, grandiose, aspirational, premium
+- Updated `globals.css` theme system: swapped primary from forest-green to gold, accent from gold to forest-green
+  - Updated all semantic shadcn colors (primary, primary-foreground, accent, accent-foreground, ring, chart-1, chart-2)
+  - Updated dark mode overrides to match
+  - Updated utility classes: gradient-text, card-hover, pulse-glow, hover-lift, hover-glow, glass-card all now gold-tinted
+- Created `src/components/shared/demo-role-selector.tsx`: Full-viewport overlay with dark forest gradient background, 3 role cards (Member/Manager/Admin) with unique accent colors, framer-motion stagger animations, hover glow effects, keyboard support (Escape)
+- Created `src/components/shared/tour-guide.tsx`: Interactive step-by-step tour with spotlight cutout (box-shadow technique), pulsing gold ring, smart tooltip positioning (auto-detect), progress bar + step dots, keyboard navigation (arrows/escape), auto-scroll to target, ResizeObserver for responsive tracking
+- Created `src/components/shared/tour-data.ts`: Tour step definitions for all 3 dashboards (Member: 6 steps, Manager: 5 steps, Admin: 7 steps) with target IDs
+- Added `demoOpen`, `tourOpen`, `tourStep` state + actions to Zustand app store
+- Added "Check Demo" button (with Play icon + pulse-glow animation) to public homepage hero section
+- Added tour target IDs to all 3 dashboards: member-welcome, member-stats, member-countdown, member-tickets-table, member-activity, member-actions, manager-branch-info, manager-stats, manager-chart, manager-members-table, manager-activity, admin-kpis, admin-revenue-chart, admin-campaigns-table, admin-branch-chart, admin-activity, admin-system-health, admin-sidebar
+- Updated `page.tsx` to render DemoRoleSelector and TourGuide globally, with auto-tour-start on portal switch from public to dashboard
+- All changes pass ESLint with zero errors
+- Page renders correctly (94KB HTML, HTTP 200, no compile errors)
+
+Stage Summary:
+- Theme updated from forest-green primary to luxurious gold primary (inspired by user's uploaded image)
+- "Check Demo" button prominently placed in hero with pulsing gold glow animation
+- Beautiful role selection overlay with 3 themed cards
+- Complete tour guide system with spotlight, progress tracking, and keyboard navigation
+- Tour auto-starts when user selects a role from the demo overlay
+
+Files Modified:
+- `src/app/globals.css` (theme colors updated to gold-primary)
+- `src/stores/app-store.ts` (added demo/tour state)
+- `src/app/page.tsx` (integrated DemoRoleSelector + TourGuide)
+- `src/components/public/views/home.tsx` (added Check Demo button)
+- `src/components/member/views/dashboard.tsx` (added 6 tour target IDs)
+- `src/components/manager/views/dashboard.tsx` (added 5 tour target IDs)
+- `src/components/admin/views/dashboard.tsx` (added 6 tour target IDs)
+- `src/components/admin/admin-sidebar.tsx` (added admin-sidebar tour target ID)
+
+Files Created:
+- `src/components/shared/demo-role-selector.tsx` (314 lines)
+- `src/components/shared/tour-guide.tsx` (379 lines)
+- `src/components/shared/tour-data.ts` (152 lines)
+
+Unresolved/Risks:
+- Agent-browser visual QA could not be performed due to memory constraints (Chrome OOM-kills Next.js server). Code verified via lint + curl HTML verification instead.
+- Tour guide spotlight uses a large box-shadow which may have performance implications on very old mobile devices
+- The `z-index: 100` on the demo overlay may need adjustment if modals with higher z-index are added

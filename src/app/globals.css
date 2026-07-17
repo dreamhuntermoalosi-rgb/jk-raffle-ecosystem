@@ -5,6 +5,7 @@
 /* ============================================
    JK RAFFLE ECOSYSTEM - Theme System
    Tailwind CSS v4 compatible
+   Luxurious Gold-Primary Palette
    ============================================ */
 
 @theme {
@@ -28,28 +29,28 @@
   --color-gold-500: #b8860b;
   --color-gold-600: #92400e;
 
-  /* shadcn/ui Semantic Colors - Light Mode */
+  /* shadcn/ui Semantic Colors - Light Mode (Gold Primary) */
   --color-background: hsl(0 0% 100%);
   --color-foreground: hsl(0 0% 5%);
   --color-card: hsl(0 0% 100%);
   --color-card-foreground: hsl(0 0% 5%);
   --color-popover: hsl(0 0% 100%);
   --color-popover-foreground: hsl(0 0% 5%);
-  --color-primary: hsl(152 68% 20%);
-  --color-primary-foreground: hsl(0 0% 98%);
+  --color-primary: hsl(43 76% 52%);
+  --color-primary-foreground: hsl(30 50% 10%);
   --color-secondary: hsl(0 0% 96%);
   --color-secondary-foreground: hsl(152 68% 20%);
   --color-muted: hsl(0 0% 96%);
   --color-muted-foreground: hsl(0 0% 45%);
-  --color-accent: hsl(43 96% 56%);
-  --color-accent-foreground: hsl(0 0% 5%);
+  --color-accent: hsl(152 68% 20%);
+  --color-accent-foreground: hsl(0 0% 98%);
   --color-destructive: hsl(0 84% 60%);
   --color-destructive-foreground: hsl(0 0% 98%);
   --color-border: hsl(0 0% 90%);
   --color-input: hsl(0 0% 90%);
-  --color-ring: hsl(152 68% 20%);
-  --color-chart-1: hsl(152 68% 30%);
-  --color-chart-2: hsl(43 96% 56%);
+  --color-ring: hsl(43 76% 52%);
+  --color-chart-1: hsl(43 76% 52%);
+  --color-chart-2: hsl(152 68% 30%);
   --color-chart-3: hsl(200 84% 50%);
   --color-chart-4: hsl(280 65% 50%);
   --color-chart-5: hsl(0 84% 60%);
@@ -86,21 +87,21 @@
   --color-card-foreground: hsl(0 0% 98%);
   --color-popover: hsl(152 20% 8%);
   --color-popover-foreground: hsl(0 0% 98%);
-  --color-primary: hsl(152 68% 35%);
-  --color-primary-foreground: hsl(0 0% 98%);
+  --color-primary: hsl(43 76% 62%);
+  --color-primary-foreground: hsl(30 50% 10%);
   --color-secondary: hsl(152 15% 14%);
   --color-secondary-foreground: hsl(0 0% 98%);
   --color-muted: hsl(152 15% 14%);
   --color-muted-foreground: hsl(0 0% 64%);
-  --color-accent: hsl(43 96% 56%);
-  --color-accent-foreground: hsl(0 0% 5%);
+  --color-accent: hsl(152 68% 35%);
+  --color-accent-foreground: hsl(0 0% 98%);
   --color-destructive: hsl(0 84% 50%);
   --color-destructive-foreground: hsl(0 0% 98%);
   --color-border: hsl(152 15% 18%);
   --color-input: hsl(152 15% 18%);
-  --color-ring: hsl(152 68% 35%);
-  --color-chart-1: hsl(152 68% 45%);
-  --color-chart-2: hsl(43 96% 56%);
+  --color-ring: hsl(43 76% 62%);
+  --color-chart-1: hsl(43 76% 62%);
+  --color-chart-2: hsl(152 68% 45%);
   --color-chart-3: hsl(200 84% 60%);
   --color-chart-4: hsl(280 65% 60%);
   --color-chart-5: hsl(0 84% 60%);
@@ -160,13 +161,13 @@
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   }
   .dark .glass-card {
-    background: rgba(20, 83, 45, 0.15);
+    background: rgba(212, 175, 55, 0.1);
     border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
   }
   
-  /* Gradient text */
+  /* Gradient text - Gold tones */
   .gradient-text {
-    background: linear-gradient(to right, var(--color-forest-600), var(--color-forest-400));
+    background: linear-gradient(to right, var(--color-gold-500), var(--color-gold-300));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -178,7 +179,7 @@
     background-clip: text;
   }
 
-  /* Animated gradient border */
+  /* Animated gradient border - Gold to green */
   .gradient-border {
     position: relative;
   }
@@ -195,16 +196,16 @@
     pointer-events: none;
   }
 
-  /* Premium card hover */
+  /* Premium card hover - Gold tinted */
   .card-hover {
     transition: all 0.3s ease-out;
   }
   .card-hover:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px -5px rgba(22, 101, 52, 0.1);
+    box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.15);
   }
   .dark .card-hover:hover {
-    box-shadow: 0 10px 25px -5px rgba(22, 101, 52, 0.2);
+    box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.25);
   }
 
   /* Smooth page transitions */
@@ -216,13 +217,13 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Pulse glow */
+  /* Pulse glow - Gold */
   .pulse-glow {
     animation: pulseGlow 2s ease-in-out infinite;
   }
   @keyframes pulseGlow {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(22, 101, 52, 0.2); }
-    50% { box-shadow: 0 0 20px 4px rgba(22, 101, 52, 0.1); }
+    0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.25); }
+    50% { box-shadow: 0 0 20px 4px rgba(212, 175, 55, 0.15); }
   }
 
   /* Shimmer effect */
@@ -288,21 +289,21 @@
     text-wrap: balance;
   }
 
-  /* Hover lift effect */
+  /* Hover lift effect - Gold tinted */
   .hover-lift {
     transition: transform 0.2s, box-shadow 0.2s;
   }
   .hover-lift:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px -5px rgba(22, 101, 52, 0.15);
+    box-shadow: 0 8px 25px -5px rgba(212, 175, 55, 0.2);
   }
 
-  /* Hover glow effect */
+  /* Hover glow effect - Gold */
   .hover-glow {
     transition: box-shadow 0.3s;
   }
   .hover-glow:hover {
-    box-shadow: 0 0 20px rgba(22, 101, 52, 0.2);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
   }
 }
 

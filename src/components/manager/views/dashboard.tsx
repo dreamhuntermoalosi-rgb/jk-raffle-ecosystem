@@ -149,7 +149,7 @@ export function ManagerDashboard() {
       </div>
 
       {/* Branch Info Card */}
-      <Card className="border-l-4 border-l-forest-500 bg-gradient-to-r from-forest-50/50 to-white">
+      <Card id="manager-branch-info" className="border-l-4 border-l-forest-500 bg-gradient-to-r from-forest-50/50 to-white">
         <CardContent className="p-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-start gap-4">
@@ -178,7 +178,7 @@ export function ManagerDashboard() {
       </Card>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div id="manager-stats" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
@@ -220,7 +220,7 @@ export function ManagerDashboard() {
       {/* Revenue Chart + Activity Feed */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Revenue Chart */}
-        <Card className="lg:col-span-2">
+        <Card id="manager-chart" className="lg:col-span-2">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold">Revenue Overview</CardTitle>
             <CardDescription>Monthly revenue for your branch (last 6 months)</CardDescription>
@@ -274,7 +274,7 @@ export function ManagerDashboard() {
         </Card>
 
         {/* Activity Feed */}
-        <Card>
+        <Card id="manager-activity">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold">Recent Activity</CardTitle>
             <CardDescription>Latest events in your branch</CardDescription>
@@ -309,7 +309,7 @@ export function ManagerDashboard() {
       </div>
 
       {/* Recent Members Table */}
-      <Card>
+      <Card id="manager-members-table">
         <CardHeader className="pb-2">
           <CardTitle className="text-base font-semibold">Recent Members</CardTitle>
           <CardDescription>Newest members in your branch</CardDescription>

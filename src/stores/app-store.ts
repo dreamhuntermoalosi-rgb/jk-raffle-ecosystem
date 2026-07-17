@@ -27,6 +27,11 @@ interface AppState {
   // Loading
   globalLoading: boolean;
   
+  // Demo & Tour
+  demoOpen: boolean;
+  tourOpen: boolean;
+  tourStep: number;
+  
   // Actions
   setPortal: (portal: Portal) => void;
   setView: (view: string) => void;
@@ -43,6 +48,11 @@ interface AppState {
   setNotifications: (notifications: Notification[]) => void;
   markNotificationRead: (id: string) => void;
   setGlobalLoading: (loading: boolean) => void;
+  setDemoOpen: (open: boolean) => void;
+  setTourOpen: (open: boolean) => void;
+  setTourStep: (step: number) => void;
+  startTour: () => void;
+  endTour: () => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -66,6 +76,11 @@ export const useAppStore = create<AppState>((set) => ({
   
   // Loading
   globalLoading: false,
+  
+  // Demo & Tour
+  demoOpen: false,
+  tourOpen: false,
+  tourStep: 0,
   
   // Actions
   setPortal: (portal) => set({ 
@@ -115,4 +130,9 @@ export const useAppStore = create<AppState>((set) => ({
     unreadCount: Math.max(0, s.unreadCount - 1),
   })),
   setGlobalLoading: (loading) => set({ globalLoading: loading }),
+  setDemoOpen: (open) => set({ demoOpen: open }),
+  setTourOpen: (open) => set({ tourOpen: open }),
+  setTourStep: (step) => set({ tourStep: step }),
+  startTour: () => set({ tourOpen: true, tourStep: 0 }),
+  endTour: () => set({ tourOpen: false, tourStep: 0 }),
 }));

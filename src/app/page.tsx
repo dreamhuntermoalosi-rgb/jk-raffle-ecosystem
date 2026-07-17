@@ -9,10 +9,27 @@ import { AdminPortal } from '@/components/admin/admin-portal';
 import { PortalSwitcher } from '@/components/shared/portal-switcher';
 import { CommandPalette } from '@/components/shared/command-palette';
 import { MobileNav } from '@/components/shared/mobile-nav';
-import { useEffect, useCallback } from 'react';
+import { DemoRoleSelector } from '@/components/shared/demo-role-selector';
+import { TourGuide } from '@/components/shared/tour-guide';
+import { memberTourSteps, managerTourSteps, adminTourSteps } from '@/components/shared/tour-data';
+import { useEffect, useCallback, useRef } from 'react';
 
 export default function Home() {
-  const { currentPortal, currentUser, login, setCommandOpen, commandOpen } = useAppStore();
+  const {
+    currentPortal,
+    currentUser,
+    login,
+    setCommandOpen,
+    commandOpen,
+    demoOpen,
+    setDemoOpen,
+    tourOpen,
+    tourStep,
+    setTourStep,
+    setTourOpen,
+    startTour,
+    endTour,
+  } = useAppStore();
 
   // Auto-login based on portal
   useEffect(() => {
@@ -24,6 +41,28 @@ export default function Home() {
       login(mockAdmin);
     }
   }, [currentPortal, currentUser, login]);
+
+  // Detect portal transitions using ref to start tour
+  const portalRef = useRef('public');
+  useEffect(() => {
+    const prev = portalRef.current;
+    portalRef.current = currentPortal;
+    // Start tour when switching from public to any dashboard portal
+    if (currentPortal !== 'public' && prev === 'public') {
+      const timer = setTimeout(() => startTour(), 800);
+      return () => clearTimeout(timer);
+    }
+  }, [currentPortal, startTour]);
+
+  // Get tour steps based on current portal
+  const getTourSteps = () => {
+    switch (currentPortal) {
+      case 'member': return memberTourSteps;
+      case 'manager': return managerTourSteps;
+      case 'admin': return adminTourSteps;
+      default: return [];
+    }
+  };
 
   // Cmd+K / Ctrl+K keyboard shortcut
   const handleKeyDown = useCallback(
@@ -41,6 +80,8 @@ export default function Home() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
 
+  const tourSteps = getTourSteps();
+
   return (
     <div className="min-h-screen flex flex-col">
       <PortalSwitcher />
@@ -52,6 +93,19 @@ export default function Home() {
       </div>
       <MobileNav />
       <CommandPalette />
+      <DemoRoleSelector
+        open={demoOpen}
+        onClose={() => setDemoOpen(false)}
+      />
+      <TourGuide
+        steps={tourSteps}
+        isOpen={tourOpen && currentPortal !== 'public' && tourSteps.length > 0}
+        onClose={endTour}
+        currentStep={tourStep}
+        onNext={() => setTourStep(Math.min(tourStep + 1, tourSteps.length - 1))}
+        onPrev={() => setTourStep(Math.max(tourStep - 1, 0))}
+        onFinish={endTour}
+      />
     </div>
   );
 }

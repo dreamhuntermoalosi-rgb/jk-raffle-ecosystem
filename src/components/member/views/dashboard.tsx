@@ -175,7 +175,7 @@ export function MemberDashboard() {
   return (
     <div className="space-y-6">
       {/* Welcome Card */}
-      <Card className="overflow-hidden border-0">
+      <Card id="member-welcome" className="overflow-hidden border-0">
         <div className="bg-gradient-to-br from-emerald-700 via-emerald-800 to-emerald-900 p-6 sm:p-8">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
@@ -207,7 +207,7 @@ export function MemberDashboard() {
       </Card>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div id="member-stats" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
@@ -236,7 +236,7 @@ export function MemberDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Upcoming Draw - spans 2 cols */}
         {nearestDraw && (
-          <Card className="lg:col-span-2 overflow-hidden border-2 border-emerald-200 dark:border-emerald-800">
+          <Card id="member-countdown" className="lg:col-span-2 overflow-hidden border-2 border-emerald-200 dark:border-emerald-800">
             <CardHeader className="pb-3">
               <div className="flex items-center gap-2">
                 <Clock className="h-5 w-5 text-emerald-600" />
@@ -289,7 +289,7 @@ export function MemberDashboard() {
         )}
 
         {/* Quick Actions */}
-        <Card>
+        <Card id="member-actions">
           <CardHeader className="pb-3">
             <CardTitle className="text-base">Quick Actions</CardTitle>
           </CardHeader>
@@ -318,7 +318,7 @@ export function MemberDashboard() {
       {/* Recent Tickets Table + Activity Timeline */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Tickets */}
-        <Card>
+        <Card id="member-tickets-table">
           <CardHeader className="flex flex-row items-center justify-between pb-3">
             <CardTitle className="text-base flex items-center gap-2">
               <List className="h-5 w-5 text-muted-foreground" />
@@ -374,7 +374,7 @@ export function MemberDashboard() {
         </Card>
 
         {/* Recent Activity Timeline */}
-        <Card>
+        <Card id="member-activity">
           <CardHeader className="pb-3">
             <CardTitle className="text-base flex items-center gap-2">
               <Clock className="h-5 w-5 text-muted-foreground" />

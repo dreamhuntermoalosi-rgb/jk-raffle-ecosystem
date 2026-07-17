@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useAppStore } from '@/stores/app-store';
+import { Play } from 'lucide-react';
 import { getFeaturedCampaigns, getRecentWinners, mockDashboardStats, mockRecentWinners } from '@/mock-data';
 import { formatCurrency, formatCountdown, formatDate, formatNumber, getCategoryIcon, getInitials } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -40,7 +41,7 @@ const staggerContainer = {
 };
 
 export function PublicHome() {
-  const { setView } = useAppStore();
+  const { setView, setDemoOpen } = useAppStore();
   const featuredCampaigns = getFeaturedCampaigns();
   const recentWinners = getRecentWinners();
   const stats = mockDashboardStats;
@@ -115,16 +116,32 @@ export function PublicHome() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14 animate-slide-up"
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6 animate-slide-up"
             >
               <Button
                 size="lg"
-                onClick={() => navTo('campaigns')}
-                className="bg-gold-500 hover:bg-gold-400 text-forest-900 font-semibold px-8 h-12 text-base shadow-lg shadow-gold-500/20 hover:shadow-xl hover:shadow-gold-500/30 transition-all duration-300"
+                onClick={() => setDemoOpen(true)}
+                className="bg-gold-500 hover:bg-gold-400 text-forest-900 font-semibold px-8 h-12 text-base shadow-lg shadow-gold-500/20 hover:shadow-xl hover:shadow-gold-500/30 transition-all duration-300 pulse-glow"
               >
-                View Current Campaigns
+                <Play className="mr-2 h-4 w-4" />
+                Check Demo
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() => navTo('campaigns')}
+                className="border-white/20 text-white hover:bg-white/10 hover:text-white px-8 h-12 text-base"
+              >
+                View Campaigns
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.45, ease: 'easeOut' }}
+              className="mb-14"
+            >
               <Button
                 size="lg"
                 variant="outline"

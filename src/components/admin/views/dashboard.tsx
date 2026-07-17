@@ -201,7 +201,7 @@ export function AdminDashboard() {
       </div>
 
       {/* KPI Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div id="admin-kpis" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {kpiCards.map((kpi) => {
           const Icon = kpi.icon;
           return (
@@ -233,7 +233,7 @@ export function AdminDashboard() {
       </div>
 
       {/* Revenue Chart */}
-      <Card>
+      <Card id="admin-revenue-chart">
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between">
             <CardTitle className="text-base font-semibold">Revenue Trend</CardTitle>
@@ -305,7 +305,7 @@ export function AdminDashboard() {
       {/* Two Column: Campaigns + Branch Performance */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Campaigns Overview */}
-        <Card>
+        <Card id="admin-campaigns-table">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold">Top Campaigns</CardTitle>
           </CardHeader>
@@ -351,7 +351,7 @@ export function AdminDashboard() {
         </Card>
 
         {/* Branch Performance */}
-        <Card>
+        <Card id="admin-branch-chart">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold">Branch Revenue (Top 5)</CardTitle>
           </CardHeader>
@@ -394,7 +394,7 @@ export function AdminDashboard() {
       {/* Bottom Row: Activity + System Health */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Activity */}
-        <Card className="lg:col-span-2">
+        <Card className="lg:col-span-2" id="admin-activity">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold">Recent Activity</CardTitle>
           </CardHeader>
@@ -429,7 +429,7 @@ export function AdminDashboard() {
         </Card>
 
         {/* System Health */}
-        <Card>
+        <Card id="admin-system-health">
           <CardHeader className="pb-2">
             <CardTitle className="text-base font-semibold">System Health</CardTitle>
           </CardHeader>

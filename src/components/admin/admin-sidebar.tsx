@@ -15,6 +15,8 @@ import {
   Users,
   CreditCard,
   Bell,
+  CalendarDays,
+  LifeBuoy,
   BarChart3,
   Settings,
   ChevronLeft,
@@ -38,6 +40,8 @@ const navItems: NavItem[] = [
   { id: 'users', label: 'Users', icon: Users, section: 'Management' },
   { id: 'payments', label: 'Payments', icon: CreditCard, section: 'Management' },
   { id: 'notifications', label: 'Notifications', icon: Bell, section: 'System' },
+  { id: 'events', label: 'Events', icon: CalendarDays, section: 'System' },
+  { id: 'support', label: 'Support', icon: LifeBuoy, section: 'System' },
   { id: 'reports', label: 'Reports', icon: BarChart3, section: 'System' },
   { id: 'settings', label: 'Settings', icon: Settings, section: 'System' },
 ];

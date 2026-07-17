@@ -11,6 +11,7 @@ interface AppState {
   currentView: string;
   sidebarOpen: boolean;
   commandOpen: boolean;
+  recentViews: string[];
   
   // Auth (mock)
   currentUser: User | null;
@@ -32,6 +33,7 @@ interface AppState {
   toggleSidebar: () => void;
   setSidebarOpen: (open: boolean) => void;
   setCommandOpen: (open: boolean) => void;
+  addRecentView: (view: string) => void;
   login: (user: User) => void;
   logout: () => void;
   addToCart: (item: CartItem) => void;
@@ -49,6 +51,7 @@ export const useAppStore = create<AppState>((set) => ({
   currentView: 'home',
   sidebarOpen: true,
   commandOpen: false,
+  recentViews: [],
   
   // Auth
   currentUser: null,
@@ -73,6 +76,10 @@ export const useAppStore = create<AppState>((set) => ({
   toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
   setSidebarOpen: (open) => set({ sidebarOpen: open }),
   setCommandOpen: (open) => set({ commandOpen: open }),
+  addRecentView: (view) => set((s) => {
+    const filtered = s.recentViews.filter((v) => v !== view);
+    return { recentViews: [view, ...filtered].slice(0, 8) };
+  }),
   login: (user) => set({ currentUser: user, isAuthenticated: true }),
   logout: () => set({ currentUser: null, isAuthenticated: false, cart: [] }),
   addToCart: (item) => set((s) => {

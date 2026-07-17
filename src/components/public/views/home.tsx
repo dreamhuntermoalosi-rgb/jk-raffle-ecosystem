@@ -94,7 +94,7 @@ export function PublicHome() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-6"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-6 animate-slide-up"
             >
               Your Dream Home{' '}
               <span className="gradient-gold">Awaits</span>
@@ -104,7 +104,7 @@ export function PublicHome() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
-              className="text-lg sm:text-xl text-forest-200/80 leading-relaxed mb-10 max-w-2xl mx-auto"
+              className="text-lg sm:text-xl text-forest-200/80 leading-relaxed mb-10 max-w-2xl mx-auto text-balance"
             >
               South Africa&apos;s premier community-driven raffle platform. Win incredible
               prizes from houses to holidays — powered by the FLG Empire in
@@ -115,7 +115,7 @@ export function PublicHome() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14"
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-14 animate-slide-up"
             >
               <Button
                 size="lg"
@@ -142,9 +142,18 @@ export function PublicHome() {
               transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
               className="inline-flex flex-col items-center"
             >
-              <p className="text-sm font-medium text-forest-300/60 uppercase tracking-wider mb-3">
+              <p className="text-sm font-medium text-forest-300/60 uppercase tracking-wider mb-2">
                 Next Draw In
               </p>
+              <p className="text-xs text-forest-300/40 mb-4 max-w-xs text-center">
+                {featuredCampaigns[0]?.title || 'Featured Campaign'}
+              </p>
+              {countdown.expired ? (
+                <div className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gold-500/20 border border-gold-500/30">
+                  <Trophy className="w-5 h-5 text-gold-400" />
+                  <span className="text-gold-300 font-semibold">Draw Complete!</span>
+                </div>
+              ) : (
               <div className="flex items-center gap-3">
                 {[
                   { label: 'Days', value: countdown.days },
@@ -171,6 +180,7 @@ export function PublicHome() {
                   </div>
                 ))}
               </div>
+              )}
             </motion.div>
           </div>
         </div>
@@ -181,7 +191,7 @@ export function PublicHome() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             {...fadeInUp}
-            className="glass-card rounded-2xl p-6 sm:p-8 shadow-xl shadow-black/5"
+            className="glass-card rounded-2xl p-6 sm:p-8 shadow-xl shadow-black/5 bg-gradient-to-b from-forest-50/50 to-transparent dark:from-forest-950/30 dark:to-transparent"
           >
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
               {[
@@ -227,7 +237,7 @@ export function PublicHome() {
               const remaining = campaign.maxTickets - campaign.soldTickets;
               return (
                 <motion.div key={campaign.id} {...fadeInUp}>
-                  <Card className="card-hover overflow-hidden border-border/50 shadow-sm">
+                  <Card className="hover-lift overflow-hidden border-border/50 shadow-sm">
                     {/* Product Image Placeholder */}
                     <div className="relative h-48 bg-gradient-to-br from-forest-50 to-forest-100 flex items-center justify-center">
                       <span className="text-6xl">{getCategoryIcon(campaign.product.category)}</span>

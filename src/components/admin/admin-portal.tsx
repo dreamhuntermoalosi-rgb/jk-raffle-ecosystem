@@ -9,6 +9,8 @@ import { AdminUsers } from './views/users';
 import { AdminNotifications } from './views/notifications';
 import { AdminReports } from './views/reports';
 import { AdminSettings } from './views/settings';
+import { AdminEvents } from './views/events';
+import { AdminSupport } from './views/support';
 import { AdminSidebar } from './admin-sidebar';
 import { useAppStore } from '@/stores/app-store';
 import { cn } from '@/lib/utils';
@@ -21,6 +23,8 @@ const views: Record<string, React.ComponentType> = {
   payments: AdminPayments,
   users: AdminUsers,
   notifications: AdminNotifications,
+  events: AdminEvents,
+  support: AdminSupport,
   reports: AdminReports,
   settings: AdminSettings,
 };

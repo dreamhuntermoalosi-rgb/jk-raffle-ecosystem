@@ -33,6 +33,7 @@ import {
 import { cn, formatDate, getStatusColor, formatCurrency, getCategoryIcon, generateTicketReference } from '@/lib/utils';
 import { mockTickets, mockCampaigns, mockCurrentUser } from '@/mock-data';
 import type { Ticket as TicketType, TicketStatus } from '@/types';
+import { TicketDetailDialog } from './ticket-detail';
 
 // Generate extra tickets to reach 55+ for visual richness
 function generateExtraTickets(): TicketType[] {
@@ -77,6 +78,8 @@ export function MemberTickets() {
   const [activeTab, setActiveTab] = useState<TabFilter>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [selectedTicket, setSelectedTicket] = useState<TicketType | null>(null);
+  const [detailOpen, setDetailOpen] = useState(false);
 
   const filteredTickets = useMemo(() => {
     let tickets = allTickets;
@@ -184,7 +187,7 @@ export function MemberTickets() {
       ) : viewMode === 'grid' ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredTickets.map((ticket) => (
-            <TicketCard key={ticket.id} ticket={ticket} />
+            <TicketCard key={ticket.id} ticket={ticket} onSelect={() => { setSelectedTicket(ticket); setDetailOpen(true); }} />
           ))}
         </div>
       ) : (
@@ -233,7 +236,7 @@ export function MemberTickets() {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => { setSelectedTicket(ticket); setDetailOpen(true); }}>
                           <Eye className="h-3.5 w-3.5" />
                         </Button>
                         <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -248,11 +251,13 @@ export function MemberTickets() {
           </Table>
         </Card>
       )}
+
+      <TicketDetailDialog ticket={selectedTicket} open={detailOpen} onOpenChange={setDetailOpen} />
     </div>
   );
 }
 
-function TicketCard({ ticket }: { ticket: TicketType }) {
+function TicketCard({ ticket, onSelect }: { ticket: TicketType; onSelect: () => void }) {
   const campaign = mockCampaigns.find((c) => c.id === ticket.campaignId);
   const isWon = ticket.status === 'won';
   const CatIcon = categoryIcons[campaign?.product.category || 'other'] || Gift;
@@ -260,9 +265,10 @@ function TicketCard({ ticket }: { ticket: TicketType }) {
   return (
     <Card
       className={cn(
-        'group relative overflow-hidden transition-all hover:shadow-lg hover:-translate-y-0.5',
+        'group relative overflow-hidden transition-all hover:shadow-lg hover:-translate-y-0.5 cursor-pointer',
         isWon && 'border-2 border-amber-400 shadow-amber-100 dark:shadow-amber-950/20 shadow-lg'
       )}
+      onClick={onSelect}
     >
       {/* Golden glow for won tickets */}
       {isWon && (
@@ -326,7 +332,7 @@ function TicketCard({ ticket }: { ticket: TicketType }) {
 
         {/* Actions */}
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" className="flex-1 h-8 text-xs">
+          <Button variant="outline" size="sm" className="flex-1 h-8 text-xs" onClick={(e) => { e.stopPropagation(); onSelect(); }}>
             <Eye className="h-3.5 w-3.5 mr-1.5" />
             View Details
           </Button>

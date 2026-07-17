@@ -14,8 +14,8 @@ const portals: { id: Portal; label: string; icon: React.ReactNode; description: 
 ];
 
 export function PortalSwitcher() {
-  const { currentPortal, setPortal } = useAppStore();
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { currentPortal, setPortal, setCommandOpen } = useAppStore();
+  const { setTheme, resolvedTheme } = useTheme();
 
   const isDark = resolvedTheme === 'dark';
 
@@ -55,14 +55,26 @@ export function PortalSwitcher() {
             ))}
           </nav>
 
-          {/* Theme Toggle */}
-          <button
-            onClick={() => setTheme(isDark ? 'light' : 'dark')}
-            className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors"
-            aria-label="Toggle theme"
-          >
-            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          </button>
+          {/* Right Actions */}
+          <div className="flex items-center gap-1.5">
+            {/* Command Palette Hint */}
+            <button
+              onClick={() => setCommandOpen(true)}
+              className="hidden sm:flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors"
+              aria-label="Open command palette"
+            >
+              <kbd className="inline-flex h-5 items-center rounded border border-border/60 bg-muted/50 px-1.5 font-mono text-[10px] leading-none">⌘K</kbd>
+            </button>
+
+            {/* Theme Toggle */}
+            <button
+              onClick={() => setTheme(isDark ? 'light' : 'dark')}
+              className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-colors"
+              aria-label="Toggle theme"
+            >
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
+          </div>
         </div>
       </div>
     </div>
